@@ -22,7 +22,7 @@ Respond with YES if:
 - {{agentName}} has unique insights to contribute and the users seem receptive
 
 Otherwise, respond with NO.
-` + booleanFooter;
+${booleanFooter}`;
 
 export const followRoomAction: Action = {
     name: "FOLLOW_ROOM",

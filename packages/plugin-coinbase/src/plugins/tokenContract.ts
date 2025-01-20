@@ -25,10 +25,10 @@ import {
     ReadContractSchema,
     isReadContractContent,
 } from "../types";
-import path from "path";
-import { fileURLToPath } from "url";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { createArrayCsvWriter } from "csv-writer";
-import fs from "fs";
+import fs from "node:fs";
 import { ABI } from "../constants";
 
 // Dynamically resolve the file path to the src/plugins directory

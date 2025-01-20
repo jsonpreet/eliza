@@ -14,11 +14,11 @@ import {
 } from "@elizaos/core";
 import { advancedTradeTemplate } from "../templates";
 import { isAdvancedTradeContent, AdvancedTradeSchema } from "../types";
-import { readFile } from "fs/promises";
+import { readFile } from "node:fs/promises";
 import { parse } from "csv-parse/sync";
-import path from "path";
-import { fileURLToPath } from "url";
-import fs from "fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+import fs from "node:fs";
 import { createArrayCsvWriter } from "csv-writer";
 import {
     OrderSide,
@@ -44,7 +44,8 @@ const tradeProvider: Provider = {
             );
 
             // Get accounts and products information
-            let accounts, products;
+            let accounts;
+            let products;
             try {
                 accounts = await client.listAccounts({});
             } catch (error) {
@@ -73,7 +74,8 @@ const tradeProvider: Provider = {
                 await csvWriter.writeRecords([]);
             }
 
-            let csvData, records;
+            let csvData;
+            let records;
             try {
                 csvData = await readFile(tradeCsvFilePath, "utf-8");
             } catch (error) {

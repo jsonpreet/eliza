@@ -159,7 +159,7 @@ Given a collection of price feed ids, retrieve the latest Pyth price for each pr
     errors: [
       {
         status: 404,
-        description: `Price ids not found`,
+        description: "Price ids not found",
         schema: z.void(),
       },
     ],
@@ -198,7 +198,7 @@ Given a collection of price feed ids, retrieve the latest Pyth price for each pr
     errors: [
       {
         status: 404,
-        description: `Price ids not found`,
+        description: "Price ids not found",
         schema: z.void(),
       },
     ],
@@ -207,7 +207,7 @@ Given a collection of price feed ids, retrieve the latest Pyth price for each pr
     method: "get",
     path: "/v2/updates/price/stream",
     alias: "price_stream_sse_handler",
-    description: `SSE route handler for streaming price updates.`,
+    description: "SSE route handler for streaming price updates.",
     requestFormat: "json",
     parameters: [
       {
@@ -245,7 +245,7 @@ Given a collection of price feed ids, retrieve the latest Pyth price for each pr
     errors: [
       {
         status: 404,
-        description: `Price ids not found`,
+        description: "Price ids not found",
         schema: z.void(),
       },
     ],
@@ -254,7 +254,7 @@ Given a collection of price feed ids, retrieve the latest Pyth price for each pr
     method: "get",
     path: "/v2/updates/publisher_stake_caps/latest",
     alias: "latest_publisher_stake_caps",
-    description: `Get the most recent publisher stake caps update data.`,
+    description: "Get the most recent publisher stake caps update data.",
     requestFormat: "json",
     parameters: [
       {
@@ -309,7 +309,7 @@ Given a collection of price feed ids, retrieve the latest Pyth TWAP price for ea
     errors: [
       {
         status: 404,
-        description: `Price ids not found`,
+        description: "Price ids not found",
         schema: z.void(),
       },
     ],

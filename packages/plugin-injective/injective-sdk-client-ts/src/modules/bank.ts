@@ -59,7 +59,7 @@ export async function getBankBalance(
  */
 export async function getBankBalances(
     this: InjectiveGrpcBase,
-    params: BankTypes.GetBankBalancesParams
+    _params: BankTypes.GetBankBalancesParams
 ): Promise<StandardResponse> {
     try {
         const result = await this.chainGrpcBankApi.fetchBalances(

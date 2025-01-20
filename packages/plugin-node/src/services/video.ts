@@ -9,9 +9,9 @@ import {
     elizaLogger,
 } from "@elizaos/core";
 import ffmpeg from "fluent-ffmpeg";
-import fs from "fs";
-import { tmpdir } from "os";
-import path from "path";
+import fs from "node:fs";
+import { tmpdir } from "node:os";
+import path from "node:path";
 import youtubeDl from "youtube-dl-exec";
 
 export class VideoService extends Service implements IVideoService {
@@ -223,7 +223,7 @@ export class VideoService extends Service implements IVideoService {
         elizaLogger.log("Getting transcript");
         try {
             // Check for manual subtitles
-            if (videoInfo.subtitles && videoInfo.subtitles.en) {
+            if (videoInfo.subtitles?.en) {
                 elizaLogger.log("Manual subtitles found");
                 const srtContent = await this.downloadSRT(
                     videoInfo.subtitles.en[0].url
@@ -233,8 +233,7 @@ export class VideoService extends Service implements IVideoService {
 
             // Check for automatic captions
             if (
-                videoInfo.automatic_captions &&
-                videoInfo.automatic_captions.en
+                videoInfo.automatic_captions?.en
             ) {
                 elizaLogger.log("Automatic captions found");
                 const captionUrl = videoInfo.automatic_captions.en[0].url;
@@ -244,8 +243,7 @@ export class VideoService extends Service implements IVideoService {
 
             // Check if it's a music video
             if (
-                videoInfo.categories &&
-                videoInfo.categories.includes("Music")
+                videoInfo.categories?.includes("Music")
             ) {
                 elizaLogger.log("Music video detected, no lyrics available");
                 return "No lyrics available.";
@@ -283,10 +281,9 @@ export class VideoService extends Service implements IVideoService {
                     .map((event) => event.segs.map((seg) => seg.utf8).join(""))
                     .join("")
                     .replace("\n", " ");
-            } else {
+            }
                 elizaLogger.log("Unexpected caption format:", jsonContent);
                 return "Error: Unable to parse captions";
-            }
         } catch (error) {
             elizaLogger.log("Error parsing caption:", error);
             return "Error: Unable to parse captions";

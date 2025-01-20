@@ -61,7 +61,7 @@ export const formatCurrenyAmount = (
     const significantAmount = amount.toSignificant(significant);
 
     if (+significantAmount > +fixedAmount) return significantAmount;
-    else return +fixedAmount.toString();
+    return +fixedAmount.toString();
 };
 
 export const formatPercentage = (percentage: Percent) => {
@@ -90,7 +90,7 @@ export async function fetchWithRetry<T>(
         delay = 1000,
         maxDelay = 10000,
         backoff = (retryCount, baseDelay, maxDelay) =>
-            Math.min(baseDelay * Math.pow(2, retryCount), maxDelay),
+            Math.min(baseDelay * 2 ** retryCount, maxDelay),
     } = config;
 
     let lastError: Error | null = null;

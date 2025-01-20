@@ -1,11 +1,11 @@
 
-import { Action } from "@elizaos/core";
+import type { Action } from "@elizaos/core";
 import { validatePrompt, validateApiKey, callOpenAiApi } from "./action";
 
 export const editTextAction: Action = {
     name: "editText",
     description: "Edit text using OpenAI",
-    async handler(runtime, message, state) {
+    async handler(_runtime, message, _state) {
         const input = message.content.input?.trim() || "";
         const instruction = message.content.instruction?.trim() || "";
         validatePrompt(input);

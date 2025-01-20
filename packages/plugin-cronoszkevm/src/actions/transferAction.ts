@@ -189,13 +189,12 @@ export const TransferAction: Action = {
             }
 
             elizaLogger.success(
-                "Transfer completed successfully! Transaction hash: " + hash
+                `Transfer completed successfully! Transaction hash: ${hash}`
             );
             if (callback) {
                 callback({
                     text:
-                        "Transfer completed successfully! Transaction hash: " +
-                        hash,
+                        `Transfer completed successfully! Transaction hash: ${hash}`,
                     content: {},
                 });
             }

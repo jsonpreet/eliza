@@ -124,7 +124,7 @@ export default {
                 group: client.user.id,
             });
             return true;
-        } else {
+        }
             const member = (discordMessage as DiscordMessage)
                 .member as GuildMember;
             if (member?.voice?.channel) {
@@ -219,7 +219,6 @@ You should only respond with the name of the voice channel or none, no commentar
                 "I couldn't figure out which channel you wanted me to join."
             );
             return false;
-        }
     },
     examples: [
         [

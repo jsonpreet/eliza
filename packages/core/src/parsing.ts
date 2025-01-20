@@ -32,7 +32,7 @@ export const parseShouldRespondFromText = (
               : null;
 };
 
-export const booleanFooter = `Respond with only a YES or a NO.`;
+export const booleanFooter = "Respond with only a YES or a NO.";
 
 /**
  * Parses a string to determine its boolean equivalent.
@@ -53,7 +53,7 @@ export const parseBooleanFromText = (text: string) => {
 
     if (affirmative.includes(normalizedText)) {
         return true;
-    } else if (negative.includes(normalizedText)) {
+    }if (negative.includes(normalizedText)) {
         return false;
     }
 
@@ -162,14 +162,13 @@ export function parseJSONObjectFromText(
         !Array.isArray(jsonData)
     ) {
         return jsonData;
-    } else if (typeof jsonData === "object" && Array.isArray(jsonData)) {
+    }if (typeof jsonData === "object" && Array.isArray(jsonData)) {
         return parseJsonArrayFromText(text);
-    } else {
-        return null;
     }
+        return null;
 }
 
-export const postActionResponseFooter = `Choose any combination of [LIKE], [RETWEET], [QUOTE], and [REPLY] that are appropriate. Each action must be on its own line. Your response must only include the chosen actions.`;
+export const postActionResponseFooter = "Choose any combination of [LIKE], [RETWEET], [QUOTE], and [REPLY] that are appropriate. Each action must be on its own line. Your response must only include the chosen actions.";
 
 export const parseActionResponseFromText = (
     text: string
@@ -231,11 +230,11 @@ export function truncateToCompleteSentence(
     if (lastSpaceIndex !== -1) {
         const truncatedAtSpace = text.slice(0, lastSpaceIndex).trim();
         if (truncatedAtSpace.length > 0) {
-            return truncatedAtSpace + "...";
+            return `${truncatedAtSpace}...`;
         }
     }
 
     // Fallback: Hard truncate and add ellipsis
     const hardTruncated = text.slice(0, maxLength - 3).trim();
-    return hardTruncated + "...";
+    return `${hardTruncated}...`;
 }

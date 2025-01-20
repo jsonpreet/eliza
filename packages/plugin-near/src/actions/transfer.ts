@@ -23,7 +23,7 @@ export interface TransferContent extends Content {
 }
 
 function isTransferContent(
-    runtime: IAgentRuntime,
+    _runtime: IAgentRuntime,
     content: any
 ): content is TransferContent {
     return (

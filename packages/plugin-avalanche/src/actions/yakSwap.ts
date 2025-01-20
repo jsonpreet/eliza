@@ -24,7 +24,7 @@ export interface SwapContent extends Content {
 }
 
 function isSwapContent(
-    runtime: IAgentRuntime,
+    _runtime: IAgentRuntime,
     content: any
 ): content is SwapContent {
     elizaLogger.debug("Content for swap", content);

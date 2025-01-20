@@ -1,13 +1,13 @@
 
 import { elizaLogger,  } from "@elizaos/core";
 import {
-    ActionExample,
-    Content,
-    HandlerCallback,
-    IAgentRuntime,
-    Memory,
+    type ActionExample,
+    type Content,
+    type HandlerCallback,
+    type IAgentRuntime,
+    type Memory,
     ModelClass,
-    State,
+    type State,
     type Action,
 } from "@elizaos/core";
 import { composeContext } from "@elizaos/core";
@@ -22,7 +22,7 @@ export interface GetTokenInfoContent extends Content {
 }
 
 function isGetTokenInfoContent(
-    runtime: IAgentRuntime,
+    _runtime: IAgentRuntime,
     content: any
 ): content is GetTokenInfoContent {
     elizaLogger.log("Content for transfer", content);
@@ -50,7 +50,7 @@ Respond with a JSON markdown block containing only the extracted values.`;
 export default {
     name: GET_TOKEN_INFO_ACTION.name,
     similes: GET_TOKEN_INFO_ACTION.similes,
-    validate: async (runtime: IAgentRuntime, message: Memory) => {
+    validate: async (_runtime: IAgentRuntime, message: Memory) => {
         elizaLogger.log("Validating get token info from user:", message.userId);
 
         return false;

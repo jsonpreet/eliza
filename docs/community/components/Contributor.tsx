@@ -17,7 +17,8 @@ const ContributorCard: React.FC<ContributorProps> = ({
     const [isHovered, setIsHovered] = useState(false);
 
     return (
-        <div
+        <button
+            type="button"
             style={{
                 position: "relative",
                 borderRadius: "0.5rem",
@@ -35,6 +36,9 @@ const ContributorCard: React.FC<ContributorProps> = ({
                 color: darkMode
                     ? THEME_COLORS.dark.primaryText
                     : THEME_COLORS.light.primaryText,
+                border: "none",
+                width: "100%",
+                textAlign: "left",
             }}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
@@ -90,7 +94,7 @@ const ContributorCard: React.FC<ContributorProps> = ({
                     fontSize: "0.85rem",
                 }}
             />
-        </div>
+        </button>
     );
 };
 

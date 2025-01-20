@@ -60,7 +60,7 @@ export const tokenSearchSymbolAction = {
     handler: async (
         runtime: IAgentRuntime,
         message: Memory,
-        state: State,
+        _state: State,
         _options: any,
         callback?: any
     ) => {
@@ -200,12 +200,12 @@ export const tokenSearchSymbolAction = {
 
 const formatTokenSummary = (
     symbol: string,
-    index: number,
+    _index: number,
     tokens: TokenResult[]
 ) => {
     return tokens
         .map((token, i) => {
-            let output = ``;
+            let output = "";
             if (i === 0) {
                 output += `Search Results for ${symbol}:\n\n`;
             }

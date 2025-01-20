@@ -11,9 +11,9 @@ import type {
     TodoItem,
 } from "./types/index.js";
 import type { GitManager } from "./GitManager.js";
-import fs from "fs";
+import fs from "node:fs";
 import type { Configuration } from "./Configuration.js";
-import path from "path";
+import path from "node:path";
 import type { AIService } from "./AIService/AIService.js";
 import { PluginDocumentationGenerator } from "./PluginDocumentationGenerator.js";
 import { JSDocValidator } from "./JSDocValidator.js";
@@ -345,7 +345,7 @@ export class DocumentationGenerator {
             const response = await fetch(contentsUrl);
             const data = await response.json();
             return Buffer.from(data.content, "base64").toString("utf-8");
-        } catch (error) {
+        } catch (_error) {
             console.error(
                 "Error fetching file content from GitHub API, ensure the PR has been merged"
             );

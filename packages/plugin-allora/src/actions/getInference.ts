@@ -36,7 +36,7 @@ export const getInferenceAction: Action = {
         runtime: IAgentRuntime,
         message: Memory,
         state: State,
-        options: { [key: string]: unknown },
+        _options: { [key: string]: unknown },
         callback: HandlerCallback
     ): Promise<boolean> => {
         // Initialize or update state

@@ -159,9 +159,8 @@ async function getTokenFromWallet(runtime: IAgentRuntime, tokenSymbol: string) {
 
         if (token) {
             return token.address;
-        } else {
-            return null;
         }
+            return null;
     } catch (error) {
         elizaLogger.error("Error checking token in wallet:", error);
         return null;
@@ -173,7 +172,7 @@ async function getTokenFromWallet(runtime: IAgentRuntime, tokenSymbol: string) {
 export const executeSwap: Action = {
     name: "EXECUTE_SWAP",
     similes: ["SWAP_TOKENS", "TOKEN_SWAP", "TRADE_TOKENS", "EXCHANGE_TOKENS"],
-    validate: async (runtime: IAgentRuntime, message: Memory) => {
+    validate: async (_runtime: IAgentRuntime, message: Memory) => {
         // Check if the necessary parameters are provided in the message
         elizaLogger.log("Message:", message);
         return true;

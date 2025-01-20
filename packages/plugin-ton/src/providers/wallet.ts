@@ -10,7 +10,7 @@ import { TonClient, WalletContractV4 } from "@ton/ton";
 import { type KeyPair, mnemonicToPrivateKey } from "@ton/crypto";
 
 import NodeCache from "node-cache";
-import * as path from "path";
+import * as path from "node:path";
 import BigNumber from "bignumber.js";
 
 const PROVIDER_CONFIG = {
@@ -118,9 +118,8 @@ export class WalletProvider {
                 console.error(`Attempt ${i + 1} failed:`, error);
                 lastError = error;
                 if (i < PROVIDER_CONFIG.MAX_RETRIES - 1) {
-                    const delay = PROVIDER_CONFIG.RETRY_DELAY * Math.pow(2, i);
+                    const delay = PROVIDER_CONFIG.RETRY_DELAY * 2 ** i;
                     await new Promise((resolve) => setTimeout(resolve, delay));
-                    continue;
                 }
             }
         }
@@ -274,12 +273,11 @@ export const initWalletProvider = async (runtime: IAgentRuntime) => {
 
     if (!privateKey) {
         throw new Error("TON_PRIVATE_KEY is missing");
-    } else {
+    }
         mnemonics = privateKey.split(" ");
         if (mnemonics.length < 2) {
             throw new Error("TON_PRIVATE_KEY mnemonic seems invalid");
         }
-    }
     const rpcUrl =
         runtime.getSetting("TON_RPC_URL") || PROVIDER_CONFIG.MAINNET_RPC;
 
@@ -290,8 +288,8 @@ export const initWalletProvider = async (runtime: IAgentRuntime) => {
 export const nativeWalletProvider: Provider = {
     async get(
         runtime: IAgentRuntime,
-        message: Memory,
-        state?: State
+        _message: Memory,
+        _state?: State
     ): Promise<string | null> {
         try {
             const walletProvider = await initWalletProvider(runtime);

@@ -16,9 +16,9 @@ import {
     EmbeddingProvider,
     type RAGKnowledgeItem,
 } from "@elizaos/core";
-import fs from "fs";
-import { fileURLToPath } from "url";
-import path from "path";
+import fs from "node:fs";
+import { fileURLToPath } from "node:url";
+import path from "node:path";
 import {
     PGlite,
     type PGliteOptions,
@@ -544,7 +544,7 @@ export class PGLiteDatabaseAdapter
         return this.withDatabase(async () => {
             try {
                 await this.query(
-                    `UPDATE goals SET name = $1, status = $2, objectives = $3 WHERE id = $4`,
+                    "UPDATE goals SET name = $1, status = $2, objectives = $3 WHERE id = $4",
                     [
                         goal.name,
                         goal.status,
@@ -1043,7 +1043,7 @@ export class PGLiteDatabaseAdapter
                 values.push(params.match_threshold);
             }
 
-            sql += ` ORDER BY embedding <-> $1::vector`;
+            sql += " ORDER BY embedding <-> $1::vector";
 
             if (params.count) {
                 paramCount++;

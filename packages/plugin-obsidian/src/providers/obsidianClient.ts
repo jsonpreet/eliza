@@ -1,5 +1,5 @@
 import type { NoteContent, ResultNoteApi, ResultNoteSearchApi, ServerInfo } from "../types";
-import { createHash } from "crypto";
+import { createHash } from "node:crypto";
 import {
     elizaLogger,
     type AgentRuntime,
@@ -13,7 +13,7 @@ export class ObsidianProvider {
     private static instance: ObsidianProvider | null = null;
 
     private constructor(
-        private port = 27123,
+        private port,
         private token: string,
         private host_url: string
     ) {}
@@ -32,12 +32,12 @@ export class ObsidianProvider {
         token: string,
         host_url = `http://127.0.0.1:${port}`
     ): Promise<ObsidianProvider> {
-        if (!this.instance) {
-            this.instance = new ObsidianProvider(port, token, host_url);
-            await this.instance.connect();
-            this.instance.runtime = runtime;
+        if (!ObsidianProvider.instance) {
+            ObsidianProvider.instance = new ObsidianProvider(port, token, host_url);
+            await ObsidianProvider.instance.connect();
+            ObsidianProvider.instance.runtime = runtime;
         }
-        return this.instance;
+        return ObsidianProvider.instance;
     }
 
     /**
@@ -529,7 +529,6 @@ export class ObsidianProvider {
                 }
                 body = JSON.stringify(query);
                 break;
-            case 'plaintext':
             default:
                 contentType = 'application/json';
                 if (typeof query !== 'string') {
@@ -565,7 +564,7 @@ export class ObsidianProvider {
             const results: ResultNoteSearchApi[] = await response.json();
             return results;
 
-        } else {
+        }
 
             const response = await fetch(`${this.host_url}/search/simple?query=${encodeURIComponent(body)}&contextLength=${contextLength}`, {
                 method: 'POST',
@@ -582,7 +581,6 @@ export class ObsidianProvider {
 
             const results: ResultNoteApi[] = await response.json();
             return results;
-        }
 
         } catch (error) {
             elizaLogger.error('Search failed:', error.message);
@@ -610,7 +608,7 @@ export class ObsidianProvider {
         const orQueries = query.split(/\s+OR\s+/).map((q) => q.trim());
 
         elizaLogger.log(
-            `Processing search query with OR operator:`,
+            "Processing search query with OR operator:",
             orQueries
         );
 
@@ -778,7 +776,7 @@ export class ObsidianProvider {
 
                     if (
                         existingDocument &&
-                        existingDocument.content["hash"] === contentHash
+                        existingDocument.content.hash === contentHash
                     ) {
                         elizaLogger.debug(`Skipping unchanged file: ${file}`);
                         continue;
@@ -809,7 +807,6 @@ export class ObsidianProvider {
 
                 } catch (error) {
                     elizaLogger.error(`Error processing file ${file}:`, error);
-                    continue;
                 }
             }
 

@@ -75,8 +75,7 @@ Actions (respond only with tags):
 Tweet:
 {{currentTweet}}
 
-# Respond with qualifying action tags only. Default to NO action unless extremely confident of relevance.` +
-    postActionResponseFooter;
+# Respond with qualifying action tags only. Default to NO action unless extremely confident of relevance.${postActionResponseFooter}`;
 
 interface PendingTweet {
     cleanedContent: string;
@@ -221,7 +220,7 @@ export class TwitterPostClient {
 
             const lastPost = await this.runtime.cacheManager.get<{
                 timestamp: number;
-            }>("twitter/" + this.twitterUsername + "/lastPost");
+            }>(`twitter/${this.twitterUsername}/lastPost`);
 
             const lastPostTimestamp = lastPost?.timestamp ?? 0;
             const minMinutes = this.client.twitterConfig.POST_INTERVAL_MIN;
@@ -350,7 +349,7 @@ export class TwitterPostClient {
 
         // Create a memory for the tweet
         await runtime.messageManager.createMemory({
-            id: stringToUuid(tweet.id + "-" + runtime.agentId),
+            id: stringToUuid(`${tweet.id}-${runtime.agentId}`),
             userId: runtime.agentId,
             agentId: runtime.agentId,
             content: {
@@ -386,10 +385,9 @@ export class TwitterPostClient {
                     truncateContent,
                     tweetId
                 );
-            } else {
+            }
                 return noteTweetResult.data.notetweet_create.tweet_results
                     .result;
-            }
         } catch (error) {
             throw new Error(`Note Tweet failed: ${error}`);
         }
@@ -426,7 +424,7 @@ export class TwitterPostClient {
         twitterUsername: string
     ) {
         try {
-            elizaLogger.log(`Posting new tweet:\n`);
+            elizaLogger.log("Posting new tweet:\n");
 
             let result;
 
@@ -462,7 +460,7 @@ export class TwitterPostClient {
 
         try {
             const roomId = stringToUuid(
-                "twitter_generate_room-" + this.client.profile.username
+                `twitter_generate_room-${this.client.profile.username}`
             );
             await this.runtime.ensureUserExists(
                 this.runtime.agentId,
@@ -495,7 +493,7 @@ export class TwitterPostClient {
                     twitterPostTemplate,
             });
 
-            elizaLogger.debug("generate post prompt:\n" + context);
+            elizaLogger.debug(`generate post prompt:\n${context}`);
 
             const newTweetContent = await generateText({
                 runtime: this.runtime,
@@ -611,7 +609,7 @@ export class TwitterPostClient {
             context: options?.context || context,
             modelClass: ModelClass.SMALL,
         });
-        elizaLogger.debug("generate tweet content response:\n" + response);
+        elizaLogger.debug(`generate tweet content response:\n${response}`);
 
         // First clean up any markdown and newlines
         const cleanedResponse = response
@@ -658,7 +656,7 @@ export class TwitterPostClient {
 
         // Fallback to word boundary
         return (
-            text.slice(0, text.lastIndexOf(" ", maxLength - 3)).trim() + "..."
+            `${text.slice(0, text.lastIndexOf(" ", maxLength - 3)).trim()}...`
         );
     }
 
@@ -697,7 +695,7 @@ export class TwitterPostClient {
                     // Skip if we've already processed this tweet
                     const memory =
                         await this.runtime.messageManager.getMemoryById(
-                            stringToUuid(tweet.id + "-" + this.runtime.agentId)
+                            stringToUuid(`${tweet.id}-${this.runtime.agentId}`)
                         );
                     if (memory) {
                         elizaLogger.log(
@@ -707,7 +705,7 @@ export class TwitterPostClient {
                     }
 
                     const roomId = stringToUuid(
-                        tweet.conversationId + "-" + this.runtime.agentId
+                        `${tweet.conversationId}-${this.runtime.agentId}`
                     );
 
                     const tweetState = await this.runtime.composeState(
@@ -754,7 +752,6 @@ export class TwitterPostClient {
                         `Error processing tweet ${tweet.id}:`,
                         error
                     );
-                    continue;
                 }
             }
 
@@ -918,9 +915,7 @@ export class TwitterPostClient {
                             {
                                 userId: this.runtime.agentId,
                                 roomId: stringToUuid(
-                                    tweet.conversationId +
-                                        "-" +
-                                        this.runtime.agentId
+                                    `${tweet.conversationId}-${this.runtime.agentId}`
                                 ),
                                 agentId: this.runtime.agentId,
                                 content: {
@@ -1038,7 +1033,7 @@ export class TwitterPostClient {
                 if (!this.isDryRun) {
                     // Then create the memory
                     await this.runtime.messageManager.createMemory({
-                        id: stringToUuid(tweet.id + "-" + this.runtime.agentId),
+                        id: stringToUuid(`${tweet.id}-${this.runtime.agentId}`),
                         userId: stringToUuid(tweet.userId),
                         content: {
                             text: tweet.text,
@@ -1060,7 +1055,6 @@ export class TwitterPostClient {
                 });
             } catch (error) {
                 elizaLogger.error(`Error processing tweet ${tweet.id}:`, error);
-                continue;
             }
         }
 
@@ -1073,7 +1067,7 @@ export class TwitterPostClient {
      */
     private async handleTextOnlyReply(
         tweet: Tweet,
-        tweetState: any,
+        _tweetState: any,
         executedActions: string[]
     ) {
         try {
@@ -1121,7 +1115,7 @@ export class TwitterPostClient {
                 {
                     userId: this.runtime.agentId,
                     roomId: stringToUuid(
-                        tweet.conversationId + "-" + this.runtime.agentId
+                        `${tweet.conversationId}-${this.runtime.agentId}`
                     ),
                     agentId: this.runtime.agentId,
                     content: { text: tweet.text, action: "" },

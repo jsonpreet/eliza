@@ -1,12 +1,12 @@
 import { elizaLogger } from "@elizaos/core";
 import {
-    ActionExample,
-    Content,
-    HandlerCallback,
-    IAgentRuntime,
-    Memory,
+    type ActionExample,
+    type Content,
+    type HandlerCallback,
+    type IAgentRuntime,
+    type Memory,
     ModelClass,
-    State,
+    type State,
     type Action,
 } from "@elizaos/core";
 import { composeContext } from "@elizaos/core";
@@ -21,7 +21,7 @@ export interface LendAssetContent extends Content {
 }
 
 function isLendAssetContent(
-    runtime: IAgentRuntime,
+    _runtime: IAgentRuntime,
     content: any
 ): content is LendAssetContent {
     elizaLogger.log("Content for lend", content);
@@ -49,7 +49,7 @@ Respond with a JSON markdown block containing only the extracted values.`;
 export default {
     name: LEND_ASSET_ACTION.name,
     similes: LEND_ASSET_ACTION.similes,
-    validate: async (runtime: IAgentRuntime, message: Memory) => {
+    validate: async (_runtime: IAgentRuntime, message: Memory) => {
         elizaLogger.log("Validating lend asset from user:", message.userId);
         return false;
     },

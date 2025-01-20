@@ -22,7 +22,7 @@ export interface CreateTokenContent extends Content {
 }
 
 function isCreateTokenContent(
-    runtime: IAgentRuntime,
+    _runtime: IAgentRuntime,
     content: CreateTokenContent
 ) {
     console.log("Content for create token", content);

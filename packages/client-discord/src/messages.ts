@@ -177,7 +177,7 @@ export class MessageManager {
                 const lastSelfMemories =
                     await this.runtime.messageManager.getMemories({
                         roomId: stringToUuid(
-                            channelId + "-" + this.runtime.agentId
+                            `${channelId}-${this.runtime.agentId}`
                         ),
                         unique: false,
                         count: 5,
@@ -265,7 +265,7 @@ export class MessageManager {
             if (message.author.bot) {
                 if (this._isTeamMember(authorId) && !isDirectlyMentioned) {
                     return;
-                } else if (
+                }if (
                     this.runtime.character.clientConfig.discord
                         .shouldIgnoreBotMessages
                 ) {
@@ -289,7 +289,7 @@ export class MessageManager {
                 attachments.push(...processedAudioAttachments);
             }
 
-            const roomId = stringToUuid(channelId + "-" + this.runtime.agentId);
+            const roomId = stringToUuid(`${channelId}-${this.runtime.agentId}`);
             const userIdUUID = stringToUuid(userId);
 
             await this.runtime.ensureConnection(
@@ -301,7 +301,7 @@ export class MessageManager {
             );
 
             const messageId = stringToUuid(
-                message.id + "-" + this.runtime.agentId
+                `${message.id}-${this.runtime.agentId}`
             );
 
             let shouldIgnore = false;
@@ -314,9 +314,7 @@ export class MessageManager {
                 url: message.url,
                 inReplyTo: message.reference?.messageId
                     ? stringToUuid(
-                          message.reference.messageId +
-                              "-" +
-                              this.runtime.agentId
+                          `${message.reference.messageId}-${this.runtime.agentId}`
                       )
                     : undefined,
             };
@@ -329,7 +327,7 @@ export class MessageManager {
             };
 
             const memory: Memory = {
-                id: stringToUuid(message.id + "-" + this.runtime.agentId),
+                id: stringToUuid(`${message.id}-${this.runtime.agentId}`),
                 ...userMessage,
                 userId: userIdUUID,
                 agentId: this.runtime.agentId,
@@ -434,7 +432,7 @@ export class MessageManager {
 
                 responseContent.text = responseContent.text?.trim();
                 responseContent.inReplyTo = stringToUuid(
-                    message.id + "-" + this.runtime.agentId
+                    `${message.id}-${this.runtime.agentId}`
                 );
 
                 if (!responseContent.text) {
@@ -448,7 +446,7 @@ export class MessageManager {
                     try {
                         if (message.id && !content.inReplyTo) {
                             content.inReplyTo = stringToUuid(
-                                message.id + "-" + this.runtime.agentId
+                                `${message.id}-${this.runtime.agentId}`
                             );
                         }
                         const messages = await sendMessageInChunks(
@@ -472,7 +470,7 @@ export class MessageManager {
 
                             const memory: Memory = {
                                 id: stringToUuid(
-                                    m.id + "-" + this.runtime.agentId
+                                    `${m.id}-${this.runtime.agentId}`
                                 ),
                                 userId: this.runtime.agentId,
                                 agentId: this.runtime.agentId,
@@ -597,7 +595,7 @@ export class MessageManager {
 
                 try {
                     // Create memory and generate response
-                    const roomId = stringToUuid(channel.id + "-" + this.runtime.agentId);
+                    const roomId = stringToUuid(`${channel.id}-${this.runtime.agentId}`);
 
                     const memory = {
                         id: stringToUuid(`autopost-${Date.now()}`),
@@ -629,7 +627,7 @@ export class MessageManager {
 
                     // Create and store memories
                     const memories = messages.map(m => ({
-                        id: stringToUuid(m.id + "-" + this.runtime.agentId),
+                        id: stringToUuid(`${m.id}-${this.runtime.agentId}`),
                         userId: this.runtime.agentId,
                         agentId: this.runtime.agentId,
                         content: {
@@ -684,7 +682,7 @@ export class MessageManager {
 
                             try {
                                 // Create memory and generate response
-                                const roomId = stringToUuid(mainChannel.id + "-" + this.runtime.agentId);
+                                const roomId = stringToUuid(`${mainChannel.id}-${this.runtime.agentId}`);
                                 const memory = {
                                     id: stringToUuid(`announcement-${Date.now()}`),
                                     userId: this.runtime.agentId,
@@ -722,7 +720,7 @@ export class MessageManager {
 
                                 // Create and store memories
                                 const memories = messages.map(m => ({
-                                    id: stringToUuid(m.id + "-" + this.runtime.agentId),
+                                    id: stringToUuid(`${m.id}-${this.runtime.agentId}`),
                                     userId: this.runtime.agentId,
                                     agentId: this.runtime.agentId,
                                     content: {
@@ -747,7 +745,7 @@ export class MessageManager {
                         });
                         elizaLogger.info(`[AutoPost Discord] Successfully set up collector for announcement channel: ${newsChannel.name}`);
                     } catch (error) {
-                        elizaLogger.warn(`[AutoPost Discord] Error setting up announcement channel collector:`, error);
+                        elizaLogger.warn("[AutoPost Discord] Error setting up announcement channel collector:", error);
                     }
                 } else {
                     elizaLogger.warn(`[AutoPost Discord] Channel ${announcementChannelId} is not a valid announcement or text channel, type:`, channel.type);
@@ -926,7 +924,7 @@ export class MessageManager {
 
     private _isRelevantToTeamMember(
         content: string,
-        channelId: string,
+        _channelId: string,
         lastAgentMemory: Memory | null = null
     ): boolean {
         const teamConfig = this.runtime.character.clientConfig?.discord;
@@ -1006,7 +1004,7 @@ export class MessageManager {
 
         const lastSelfMemories = await this.runtime.messageManager.getMemories({
             roomId: stringToUuid(
-                message.channel.id + "-" + this.runtime.agentId
+                `${message.channel.id}-${this.runtime.agentId}`
             ),
             unique: false,
             count: 5,
@@ -1047,7 +1045,7 @@ export class MessageManager {
         if (timeSinceLastMessage > MESSAGE_CONSTANTS.INTEREST_DECAY_TIME) {
             delete this.interestChannels[channelId];
             return false;
-        } else if (
+        }if (
             timeSinceLastMessage > MESSAGE_CONSTANTS.PARTIAL_INTEREST_DECAY
         ) {
             // Require stronger relevance for continued interest
@@ -1192,7 +1190,7 @@ export class MessageManager {
                 }
 
                 // If another team member is handling and we're not mentioned or coordinating
-                else if (
+                if (
                     !this._isMessageForMe(message) &&
                     !this._isTeamCoordinationRequest(message.content)
                 ) {
@@ -1238,18 +1236,18 @@ export class MessageManager {
         }
 
         const targetedPhrases = [
-            this.runtime.character.name + " stop responding",
-            this.runtime.character.name + " stop talking",
-            this.runtime.character.name + " shut up",
-            this.runtime.character.name + " stfu",
-            "stop talking" + this.runtime.character.name,
-            this.runtime.character.name + " stop talking",
-            "shut up " + this.runtime.character.name,
-            this.runtime.character.name + " shut up",
-            "stfu " + this.runtime.character.name,
-            this.runtime.character.name + " stfu",
-            "chill" + this.runtime.character.name,
-            this.runtime.character.name + " chill",
+            `${this.runtime.character.name} stop responding`,
+            `${this.runtime.character.name} stop talking`,
+            `${this.runtime.character.name} shut up`,
+            `${this.runtime.character.name} stfu`,
+            `stop talking${this.runtime.character.name}`,
+            `${this.runtime.character.name} stop talking`,
+            `shut up ${this.runtime.character.name}`,
+            `${this.runtime.character.name} shut up`,
+            `stfu ${this.runtime.character.name}`,
+            `${this.runtime.character.name} stfu`,
+            `chill${this.runtime.character.name}`,
+            `${this.runtime.character.name} chill`,
         ];
 
         // lose interest if pinged and told to stop responding
@@ -1421,10 +1419,10 @@ export class MessageManager {
                     // Reduce responses if we've been talking a lot
                     if (ourMessageCount > 2) {
                         // Exponentially decrease chance to respond
-                        const responseChance = Math.pow(
-                            0.5,
-                            ourMessageCount - 2
-                        );
+                        const responseChance = 
+                            0.5 ** (
+                            ourMessageCount - 2)
+                        ;
                         if (Math.random() > responseChance) {
                             return false;
                         }
@@ -1497,23 +1495,22 @@ export class MessageManager {
             }
 
             return true;
-        } else if (response === "IGNORE") {
+        }if (response === "IGNORE") {
             return false;
-        } else if (response === "STOP") {
+        }if (response === "STOP") {
             delete this.interestChannels[message.channelId];
             return false;
-        } else {
+        }
             console.error(
                 "Invalid response from response generateText:",
                 response
             );
             return false;
-        }
     }
 
     private async _generateResponse(
         message: Memory,
-        state: State,
+        _state: State,
         context: string
     ): Promise<Content> {
         const { userId, roomId } = message;

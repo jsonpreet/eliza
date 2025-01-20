@@ -9,7 +9,7 @@ import {
     type UUID,
     validateCharacterConfig,
     ServiceType,
-    Character,
+    type Character,
 } from "@elizaos/core";
 
 import type { TeeLogQuery, TeeLogService } from "@elizaos/plugin-tee-log";
@@ -63,15 +63,15 @@ export function createApiRouter(
         })
     );
 
-    router.get("/", (req, res) => {
+    router.get("/", (_req, res) => {
         res.send("Welcome, this is the REST API!");
     });
 
-    router.get("/hello", (req, res) => {
+    router.get("/hello", (_req, res) => {
         res.json({ message: "Hello World!" });
     });
 
-    router.get("/agents", (req, res) => {
+    router.get("/agents", (_req, res) => {
         const agentsList = Array.from(agents.values()).map((agent) => ({
             id: agent.agentId,
             name: agent.character.name,
@@ -95,7 +95,7 @@ export function createApiRouter(
 
         const character = agent?.character;
         if (character?.settings?.secrets) {
-            delete character.settings.secrets;
+            character.settings.secrets = undefined;
         }
 
         res.json({
@@ -263,7 +263,7 @@ export function createApiRouter(
         }
     });
 
-    router.get("/tee/agents", async (req, res) => {
+    router.get("/tee/agents", async (_req, res) => {
         try {
             const allAgents = [];
 

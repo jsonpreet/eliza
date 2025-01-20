@@ -99,7 +99,7 @@ function safeParseInt(
 ): number {
     if (!value) return defaultValue;
     const parsed = Number.parseInt(value, 10);
-    return isNaN(parsed) ? defaultValue : Math.max(1, parsed);
+    return Number.isNaN(parsed) ? defaultValue : Math.max(1, parsed);
 }
 
 /**

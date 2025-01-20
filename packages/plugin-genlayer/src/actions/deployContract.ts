@@ -6,7 +6,7 @@ import {
     type State,
     elizaLogger,
 } from "@elizaos/core";
-import fs from "fs";
+import fs from "node:fs";
 import type { DeployContractParams } from "../types";
 import { ClientProvider } from "../providers/client";
 import { getParamsWithLLM } from "../utils/llm";

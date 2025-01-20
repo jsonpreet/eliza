@@ -212,7 +212,7 @@ export default {
             await operation.waitSpeculativeExecution();
 
             elizaLogger.success(
-                "Transfer completed successfully! Operation id: " + operation.id
+                `Transfer completed successfully! Operation id: ${operation.id}`
             );
             if (callback) {
                 callback({

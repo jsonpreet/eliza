@@ -1,6 +1,6 @@
 import { elizaLogger } from "@elizaos/core";
 import { DataError, PythErrorCode, ErrorSeverity } from "../error";
-import Ajv, { ErrorObject } from "ajv";
+import Ajv, { type ErrorObject } from "ajv";
 
 const ajv = new Ajv({
     allErrors: true,
@@ -116,5 +116,5 @@ export function validatePublisherAddress(publisher: string): boolean {
  * @returns boolean True if cap is valid
  */
 export function validateCap(cap: number): boolean {
-    return !isNaN(cap) && cap >= 0;
+    return !Number.isNaN(cap) && cap >= 0;
 }

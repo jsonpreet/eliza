@@ -26,7 +26,7 @@ export const listNFTAction = (nftService: ReservoirService): Action => {
         description:
             "Lists an NFT for sale on ikigailabs.xyz marketplace at double the purchase price.",
 
-        validate: async (runtime: IAgentRuntime, message: Memory) => {
+        validate: async (_runtime: IAgentRuntime, message: Memory) => {
             const content = message.content.text.toLowerCase();
             return (
                 (content.includes("list") || content.includes("sell")) &&
@@ -40,8 +40,8 @@ export const listNFTAction = (nftService: ReservoirService): Action => {
         handler: async (
             runtime: IAgentRuntime,
             message: Memory,
-            state: State,
-            options: any,
+            _state: State,
+            _options: any,
             callback: HandlerCallback
         ) => {
             try {
@@ -85,15 +85,9 @@ export const listNFTAction = (nftService: ReservoirService): Action => {
                 });
 
                 const response =
-                    `Successfully created listing on ikigailabs.xyz:\n` +
-                    `• Collection: ${collectionAddress}\n` +
-                    `• Token ID: ${tokenId}\n` +
-                    `• Listing Price: ${userSpecifiedPrice} ETH\n` +
-                    `• Status: ${listing.status}\n` +
-                    `• Listing URL: ${listing.marketplaceUrl}\n` +
-                    (listing.transactionHash
+                    `Successfully created listing on ikigailabs.xyz:\n• Collection: ${collectionAddress}\n• Token ID: ${tokenId}\n• Listing Price: ${userSpecifiedPrice} ETH\n• Status: ${listing.status}\n• Listing URL: ${listing.marketplaceUrl}\n${listing.transactionHash
                         ? `• Transaction: ${listing.transactionHash}\n`
-                        : "");
+                        : ""}`;
 
                 callback({
                     text: response,

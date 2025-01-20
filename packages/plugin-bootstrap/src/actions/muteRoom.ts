@@ -23,7 +23,7 @@ Respond with YES if:
 - {{agentName}}'s responses are not well-received or are annoying the user(s)
 
 Otherwise, respond with NO.
-` + booleanFooter;
+${booleanFooter}`;
 
 export const muteRoomAction: Action = {
     name: "MUTE_ROOM",

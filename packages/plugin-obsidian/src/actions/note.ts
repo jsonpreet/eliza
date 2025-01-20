@@ -45,7 +45,7 @@ export const getNoteAction: Action = {
         runtime: IAgentRuntime,
         message: Memory,
         state: State,
-        options: any,
+        _options: any,
         callback?: HandlerCallback
     ) => {
         elizaLogger.info("Starting get note handler");

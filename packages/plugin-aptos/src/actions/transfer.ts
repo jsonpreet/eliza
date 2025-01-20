@@ -63,7 +63,7 @@ export default {
         "SEND_APT",
         "PAY",
     ],
-    validate: async (runtime: IAgentRuntime, message: Memory) => {
+    validate: async (_runtime: IAgentRuntime, message: Memory) => {
         elizaLogger.log("Validating apt transfer from user:", message.userId);
         //add custom validate logic here
         /*
@@ -148,7 +148,7 @@ export default {
 
             const APT_DECIMALS = 8;
             const adjustedAmount = BigInt(
-                Number(content.amount) * Math.pow(10, APT_DECIMALS)
+                Number(content.amount) * 10 ** APT_DECIMALS
             );
             elizaLogger.log(
                 `Transferring: ${content.amount} tokens (${adjustedAmount} base units)`

@@ -8,10 +8,10 @@ import {
 
 import {
     initLightningProvider,
-    LightningProvider,
+    type LightningProvider,
 } from "../providers/lightning";
-import { PayResult } from "astra-lightning";
-import { PayArgs } from "../types";
+import type { PayResult } from "astra-lightning";
+import type { PayArgs } from "../types";
 import { payInvoiceTemplate } from "../templates";
 
 export { payInvoiceTemplate };
@@ -88,7 +88,7 @@ export const payInvoiceAction = {
             elizaLogger.log("🚀 ~ payInvoiceResp:", payInvoiceResp);
 
             if (callback) {
-                const text = "";
+                const _text = "";
                 if (payInvoiceResp.is_confirmed) {
                     callback({
                         text: `Successfully paid invoice ${content.request} from ${payInvoiceResp.outgoing_channel};\nAmount: ${payInvoiceResp.tokens};\nFee: ${payInvoiceResp.fee};\nPayment Hash: ${payInvoiceResp.id};`,

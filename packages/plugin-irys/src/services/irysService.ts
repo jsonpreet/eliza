@@ -15,7 +15,7 @@ import {
 import { Uploader } from "@irys/upload";
 import { BaseEth } from "@irys/upload-ethereum";
 import { GraphQLClient, gql } from 'graphql-request';
-import crypto from 'crypto';
+import crypto from 'node:crypto';
 
 interface NodeGQL {
     id: string;
@@ -116,9 +116,9 @@ export class IrysService extends Service implements IIrysService {
     }
 
     private async orchestrateRequest(requestMessage: string, tags: GraphQLTag[], timestamp: IrysTimestamp = null): Promise<DataIrysFetchedFromGQL> {
-        const serviceCategory = tags.find((tag) => tag.name == "Service-Category")?.values;
-        const protocol = tags.find((tag) => tag.name == "Protocol")?.values;
-        const minimumProviders = Number(tags.find((tag) => tag.name == "Minimum-Providers")?.values);
+        const serviceCategory = tags.find((tag) => tag.name === "Service-Category")?.values;
+        const protocol = tags.find((tag) => tag.name === "Protocol")?.values;
+        const minimumProviders = Number(tags.find((tag) => tag.name === "Minimum-Providers")?.values);
         /*
             Further implementation of the orchestrator
             { name: "Validation-Threshold", values: validationThreshold },
@@ -162,9 +162,9 @@ export class IrysService extends Service implements IIrysService {
             { name: "Message-Type", values: [IrysMessageType.REQUEST_RESPONSE] },
             { name: "Service-Category", values: [serviceCategory] },
             { name: "Protocol", values: [protocol] },
-            { name: "Request-Id", values: [tags.find((tag) => tag.name == "Request-Id")?.values[0]] },
+            { name: "Request-Id", values: [tags.find((tag) => tag.name === "Request-Id")?.values[0]] },
         ];
-        if (dataArray.length == 0) {
+        if (dataArray.length === 0) {
             const response = await this.uploadDataOnIrys("No relevant data found from providers", responseTags, IrysMessageType.REQUEST_RESPONSE);
             console.log("Response from Irys: ", response);
             return { success: false, data: null, error: "No relevant data found from providers" };
@@ -209,9 +209,9 @@ export class IrysService extends Service implements IIrysService {
                 data: data,
             };
             const receipt = await this.irysUploader.upload(JSON.stringify(dataToStore), { tags: formattedTags });
-            if (messageType == IrysMessageType.DATA_STORAGE || messageType == IrysMessageType.REQUEST_RESPONSE) {
+            if (messageType === IrysMessageType.DATA_STORAGE || messageType === IrysMessageType.REQUEST_RESPONSE) {
                 return { success: true, url: `https://gateway.irys.xyz/${receipt.id}`};
-            } else if (messageType == IrysMessageType.REQUEST) {
+            }if (messageType === IrysMessageType.REQUEST) {
                 const response = await this.orchestrateRequest(data, tags, timestamp);
                 return {
                     success: response.success,
@@ -223,7 +223,7 @@ export class IrysService extends Service implements IIrysService {
             }
             return { success: true, url: `https://gateway.irys.xyz/${receipt.id}` };
         } catch (error) {
-            return { success: false, error: "Error uploading to Irys, " + error };
+            return { success: false, error: `Error uploading to Irys, ${error}` };
         }
     }
 
@@ -244,7 +244,7 @@ export class IrysService extends Service implements IIrysService {
             const receipt = await this.irysUploader.uploadFile(data, { tags: formattedTags });
             return { success: true, url: `https://gateway.irys.xyz/${receipt.id}` };
         } catch (error) {
-            return { success: false, error: "Error uploading to Irys, " + error };
+            return { success: false, error: `Error uploading to Irys, ${error}` };
         }
     }
 
@@ -255,7 +255,7 @@ export class IrysService extends Service implements IIrysService {
     }
 
     private normalizeArraySize(arr: any[]): any {
-        if (arr.length == 1) {
+        if (arr.length === 1) {
             return arr[0];
         }
         return arr;
@@ -272,7 +272,7 @@ export class IrysService extends Service implements IIrysService {
             { name: "Protocol", values: this.normalizeArraySize(protocol) },
         ] as GraphQLTag[];
 
-        if (messageType == IrysMessageType.REQUEST) {
+        if (messageType === IrysMessageType.REQUEST) {
             if (validationThreshold.length > 0) {
                 tags.push({ name: "Validation-Threshold", values: this.normalizeArraySize(validationThreshold) });
             }
@@ -286,7 +286,7 @@ export class IrysService extends Service implements IIrysService {
                 tags.push({ name: "Reputation", values: this.normalizeArraySize(reputation) });
             }
         }
-        if (dataType == IrysDataType.FILE || dataType == IrysDataType.IMAGE) {
+        if (dataType === IrysDataType.FILE || dataType === IrysDataType.IMAGE) {
             return await this.uploadFileOrImageOnIrys(data, tags);
         }
 
@@ -300,7 +300,7 @@ export class IrysService extends Service implements IIrysService {
             { name: "Protocol", values: protocol },
         ] as GraphQLTag[];
 
-        if (dataType == IrysDataType.FILE || dataType == IrysDataType.IMAGE) {
+        if (dataType === IrysDataType.FILE || dataType === IrysDataType.IMAGE) {
             return await this.uploadFileOrImageOnIrys(data, tags);
         }
 
@@ -314,7 +314,7 @@ export class IrysService extends Service implements IIrysService {
             const transactionIdsAndResponse = transactionIdsResponse.data.map((node: NodeGQL) => node);
             const dataPromises: Promise<any>[] = transactionIdsAndResponse.map(async (node: NodeGQL) => {
                 const fetchDataFromTransactionIdResponse = await this.fetchDataFromTransactionId(node.id);
-                if (await fetchDataFromTransactionIdResponse.data.headers.get('content-type') == "application/octet-stream") {
+                if (await fetchDataFromTransactionIdResponse.data.headers.get('content-type') === "application/octet-stream") {
                     let data = null;
                     const responseText = await fetchDataFromTransactionIdResponse.data.text();
                     try {
@@ -327,17 +327,16 @@ export class IrysService extends Service implements IIrysService {
                         address: node.address
                     }
                 }
-                else {
+                
                     return {
                         data: fetchDataFromTransactionIdResponse.data.url,
                         address: node.address
                     }
-                }
             });
             const data = await Promise.all(dataPromises);
             return { success: true, data: data };
         } catch (error) {
-            return { success: false, data: null, error: "Error fetching data from transaction IDs " + error };
+            return { success: false, data: null, error: `Error fetching data from transaction IDs ${error}` };
         }
     }
 }

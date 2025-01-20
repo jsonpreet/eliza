@@ -37,7 +37,7 @@ export async function getAgentKitActions({
             runtime: IAgentRuntime,
             message: Memory,
             state: State | undefined,
-            options?: Record<string, unknown>,
+            _options?: Record<string, unknown>,
             callback?: HandlerCallback
         ): Promise<boolean> => {
             try {

@@ -100,7 +100,7 @@ describe("Wallet provider", () => {
                 customRpcUrls.mainnet
             );
             const wp = new WalletProvider(pk, mockCacheManager as any, {
-                ["mainnet"]: chain,
+                "mainnet": chain,
             });
 
             const client = wp.getPublicClient("mainnet");
@@ -132,7 +132,7 @@ describe("Wallet provider", () => {
                 customRpcUrls.mainnet
             );
             const wp = new WalletProvider(pk, mockCacheManager as any, {
-                ["mainnet"]: chain,
+                "mainnet": chain,
             });
 
             const client = wp.getWalletClient("mainnet");

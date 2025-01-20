@@ -1,15 +1,15 @@
 import { injectable, unmanaged } from "inversify";
-import { z } from "zod";
+import type { z } from "zod";
 import {
-    ActionExample,
+    type ActionExample,
     composeContext,
     elizaLogger,
     generateObject,
-    HandlerCallback,
-    IAgentRuntime,
-    Memory,
+    type HandlerCallback,
+    type IAgentRuntime,
+    type Memory,
     ModelClass,
-    State,
+    type State,
 } from "@elizaos/core";
 import {
     type ContentClass,
@@ -179,9 +179,8 @@ export abstract class BaseInjectableAction<T> implements InjectableAction<T> {
                 JSON.stringify(parsedObj.error?.flatten())
             );
             return null;
-        } else {
-            return parsedObj.data;
         }
+            return parsedObj.data;
     }
 
     /**
@@ -210,8 +209,7 @@ export abstract class BaseInjectableAction<T> implements InjectableAction<T> {
             if (callback) {
                 await callback?.({
                     text:
-                        "Unable to process transfer request. Invalid content: " +
-                        err.message,
+                        `Unable to process transfer request. Invalid content: ${err.message}`,
                     content: {
                         error: "Invalid content",
                     },

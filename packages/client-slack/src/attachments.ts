@@ -15,7 +15,7 @@ import {
 } from "@elizaos/core";
 import type { WebClient } from "@slack/web-api";
 import ffmpeg from "fluent-ffmpeg";
-import fs from "fs";
+import fs from "node:fs";
 
 async function generateSummary(
     runtime: IAgentRuntime,

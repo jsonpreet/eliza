@@ -1,11 +1,11 @@
 
-import { Action } from "@elizaos/core";
+import type { Action } from "@elizaos/core";
 import { validateApiKey, callOpenAiApi } from "./action";
 
 export const transcribeAudioAction: Action = {
     name: "transcribeAudio",
     description: "Transcribe audio using OpenAI Whisper",
-    async handler(runtime, message, state) {
+    async handler(_runtime, message, _state) {
         const file = message.content.file;
         if (!file) {
             throw new Error("No audio file provided");

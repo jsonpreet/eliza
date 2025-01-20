@@ -163,7 +163,7 @@ const genChainsFromRuntime = (
 
     chainNames.forEach((chainName) => {
         const rpcUrl = runtime.getSetting(
-            "ETHEREUM_PROVIDER_" + chainName.toUpperCase()
+            `ETHEREUM_PROVIDER_${chainName.toUpperCase()}`
         );
         const chain = WalletProvider.genChainFromName(chainName, rpcUrl);
         chains[chainName] = chain;

@@ -1,6 +1,6 @@
 import type { Provider, IAgentRuntime } from "@elizaos/core";
 import { CdpAgentkit } from "@coinbase/cdp-agentkit-core";
-import * as fs from "fs";
+import * as fs from "node:fs";
 
 const WALLET_DATA_FILE = "wallet_data.txt";
 
@@ -32,7 +32,7 @@ export async function getClient(): Promise<CdpAgentkit> {
 }
 
 export const walletProvider: Provider = {
-    async get(runtime: IAgentRuntime): Promise<string | null> {
+    async get(_runtime: IAgentRuntime): Promise<string | null> {
         try {
             const client = await getClient();
             const address = (await (client as any).wallet.addresses)[0].id;

@@ -44,7 +44,7 @@ export async function getActorDetails({
  */
 export function formatActors({ actors }: { actors: Actor[] }) {
     const actorStrings = actors.map((actor: Actor) => {
-        const header = `${actor.name}${actor.details?.tagline ? ": " + actor.details?.tagline : ""}${actor.details?.summary ? "\n" + actor.details?.summary : ""}`;
+        const header = `${actor.name}${actor.details?.tagline ? `: ${actor.details?.tagline}` : ""}${actor.details?.summary ? `\n${actor.details?.summary}` : ""}`;
         return header;
     });
     const finalActorStrings = actorStrings.join("\n");
@@ -103,11 +103,10 @@ export const formatTimestamp = (messageDate: number) => {
 
     if (absDiff < 60000) {
         return "just now";
-    } else if (minutes < 60) {
+    }if (minutes < 60) {
         return `${minutes} minute${minutes !== 1 ? "s" : ""} ago`;
-    } else if (hours < 24) {
+    }if (hours < 24) {
         return `${hours} hour${hours !== 1 ? "s" : ""} ago`;
-    } else {
-        return `${days} day${days !== 1 ? "s" : ""} ago`;
     }
+        return `${days} day${days !== 1 ? "s" : ""} ago`;
 };

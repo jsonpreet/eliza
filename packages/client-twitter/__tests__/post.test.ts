@@ -66,13 +66,13 @@ describe('Twitter Post Client', () => {
         const postClient = new TwitterPostClient(baseClient, mockRuntime);
         expect(postClient).toBeDefined();
         expect(postClient.twitterUsername).toBe('testuser');
-        expect(postClient['isDryRun']).toBe(true);
+        expect(postClient.isDryRun).toBe(true);
     });
 
     it('should keep tweets under max length when already valid', () => {
         const postClient = new TwitterPostClient(baseClient, mockRuntime);
         const validTweet = 'This is a valid tweet';
-        const result = postClient['trimTweetLength'](validTweet);
+        const result = postClient.trimTweetLength(validTweet);
         expect(result).toBe(validTweet);
         expect(result.length).toBeLessThanOrEqual(280);
     });
@@ -80,7 +80,7 @@ describe('Twitter Post Client', () => {
     it('should cut at last sentence when possible', () => {
         const postClient = new TwitterPostClient(baseClient, mockRuntime);
         const longTweet = 'First sentence. Second sentence that is quite long. Third sentence that would make it too long.';
-        const result = postClient['trimTweetLength'](longTweet);
+        const result = postClient.trimTweetLength(longTweet);
         const lastPeriod = result.lastIndexOf('.');
         expect(lastPeriod).toBeGreaterThan(0);
         expect(result.length).toBeLessThanOrEqual(280);
@@ -89,7 +89,7 @@ describe('Twitter Post Client', () => {
     it('should add ellipsis when cutting within a sentence', () => {
         const postClient = new TwitterPostClient(baseClient, mockRuntime);
         const longSentence = 'This is an extremely long sentence without any periods that needs to be truncated because it exceeds the maximum allowed length for a tweet on the Twitter platform and therefore must be shortened';
-        const result = postClient['trimTweetLength'](longSentence);
+        const result = postClient.trimTweetLength(longSentence);
         const lastSpace = result.lastIndexOf(' ');
         expect(lastSpace).toBeGreaterThan(0);
         expect(result.length).toBeLessThanOrEqual(280);

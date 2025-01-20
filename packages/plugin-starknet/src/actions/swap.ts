@@ -139,18 +139,17 @@ export const executeSwap: Action = {
             );
 
             elizaLogger.log(
-                "Swap completed successfully! tx: " + swapResult.transactionHash
+                `Swap completed successfully! tx: ${swapResult.transactionHash}`
             );
             callback?.({
                 text:
-                    "Swap completed successfully! tx: " +
-                    swapResult.transactionHash,
+                    `Swap completed successfully! tx: ${swapResult.transactionHash}`,
             });
 
             return true;
         } catch (error) {
             elizaLogger.error("Error during token swap:", error);
-            callback?.({ text: `Error during swap:` });
+            callback?.({ text: "Error during swap:" });
             return false;
         }
     },

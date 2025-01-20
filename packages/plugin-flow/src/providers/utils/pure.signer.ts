@@ -8,7 +8,7 @@ export default class PureSigner {
     static signWithKey(privateKeyHex: string, msg: string) {
         const ec = new elliptic.ec("p256");
         const key = ec.keyFromPrivate(Buffer.from(privateKeyHex, "hex"));
-        const sig = key.sign(this._hashMsg(msg));
+        const sig = key.sign(PureSigner._hashMsg(msg));
         const n = 32;
         const r = sig.r.toArrayLike(Buffer, "be", n);
         const s = sig.s.toArrayLike(Buffer, "be", n);

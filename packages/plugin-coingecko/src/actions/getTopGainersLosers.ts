@@ -62,7 +62,7 @@ export default {
         "PRICE_CHANGES",
         "BEST_WORST_PERFORMERS",
     ],
-    validate: async (runtime: IAgentRuntime, message: Memory) => {
+    validate: async (runtime: IAgentRuntime, _message: Memory) => {
         await validateCoingeckoConfig(runtime);
         return true;
     },

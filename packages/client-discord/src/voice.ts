@@ -39,9 +39,9 @@ import {
     type VoiceChannel,
     type VoiceState,
 } from "discord.js";
-import EventEmitter from "events";
+import EventEmitter from "node:events";
 import prism from "prism-media";
-import { type Readable, pipeline } from "stream";
+import { type Readable, pipeline } from "node:stream";
 import type { DiscordClient } from "./index.ts";
 import {
     discordShouldRespondTemplate,
@@ -262,7 +262,7 @@ export class VoiceManager extends EventEmitter {
                     } catch (e) {
                         // Seems to be a real disconnect, destroy and cleanup
                         elizaLogger.log(
-                            "Disconnection confirmed - cleaning up..." + e
+                            `Disconnection confirmed - cleaning up...${e}`
                         );
                         connection.destroy();
                         this.connections.delete(channel.id);
@@ -538,7 +538,7 @@ export class VoiceManager extends EventEmitter {
 
         const processBuffer = async (buffer: Buffer) => {
             try {
-                state!.buffers.push(buffer);
+                state?.buffers.push(buffer);
                 state!.totalLength += buffer.length;
                 state!.lastActive = Date.now();
                 this.debouncedProcessTranscription(
@@ -634,7 +634,7 @@ export class VoiceManager extends EventEmitter {
         userName: string
     ) {
         try {
-            const roomId = stringToUuid(channelId + "-" + this.runtime.agentId);
+            const roomId = stringToUuid(`${channelId}-${this.runtime.agentId}`);
             const userIdUUID = stringToUuid(userId);
 
             await this.runtime.ensureConnection(
@@ -659,12 +659,12 @@ export class VoiceManager extends EventEmitter {
                 }
             );
 
-            if (message && message.startsWith("/")) {
+            if (message?.startsWith("/")) {
                 return null;
             }
 
             const memory = {
-                id: stringToUuid(channelId + "-voice-message-" + Date.now()),
+                id: stringToUuid(`${channelId}-voice-message-${Date.now()}`),
                 agentId: this.runtime.agentId,
                 content: {
                     text: message,
@@ -723,7 +723,7 @@ export class VoiceManager extends EventEmitter {
 
                 const responseMemory: Memory = {
                     id: stringToUuid(
-                        memory.id + "-voice-response-" + Date.now()
+                        `${memory.id}-voice-response-${Date.now()}`
                     ),
                     agentId: this.runtime.agentId,
                     userId: this.runtime.agentId,
@@ -852,22 +852,21 @@ export class VoiceManager extends EventEmitter {
 
         if (response === "RESPOND") {
             return true;
-        } else if (response === "IGNORE") {
+        }if (response === "IGNORE") {
             return false;
-        } else if (response === "STOP") {
+        }if (response === "STOP") {
             return false;
-        } else {
+        }
             console.error(
                 "Invalid response from response generateText:",
                 response
             );
             return false;
-        }
     }
 
     private async _generateResponse(
         message: Memory,
-        state: State,
+        _state: State,
         context: string
     ): Promise<Content> {
         const { userId, roomId } = message;
@@ -964,7 +963,7 @@ export class VoiceManager extends EventEmitter {
 
             if (!chosenChannel) {
                 const channels = (await guild.channels.fetch()).filter(
-                    (channel) => channel?.type == ChannelType.GuildVoice
+                    (channel) => channel?.type === ChannelType.GuildVoice
                 );
                 for (const [, channel] of channels) {
                     const voiceChannel = channel as BaseGuildVoiceChannel;
@@ -1019,7 +1018,7 @@ export class VoiceManager extends EventEmitter {
         audioPlayer.on(
             "stateChange",
             (_oldState: any, newState: { status: string }) => {
-                if (newState.status == "idle") {
+                if (newState.status === "idle") {
                     const idleTime = Date.now();
                     console.log(
                         `Audio playback took: ${idleTime - audioStartTime}ms`

@@ -112,7 +112,7 @@ export class InjectiveGrpcBase {
     private privateKey: string;
     protected msgBroadcaster!: MsgBroadcasterWithPk;
     constructor(
-        protected readonly networkType: keyof typeof Network = "Mainnet",
+        protected readonly networkType: keyof typeof Network,
         protected readonly injectivePrivateKey: string,
         protected readonly ethPublicKey?: string,
         protected readonly injPublicKey?: string

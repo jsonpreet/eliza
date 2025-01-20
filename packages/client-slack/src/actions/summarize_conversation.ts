@@ -97,7 +97,7 @@ const getDateRange = async (
                 const [_, amount, unit] = match;
                 const value = Number.parseInt(amount);
 
-                if (isNaN(value)) return null;
+                if (Number.isNaN(value)) return null;
 
                 const multipliers: { [key: string]: number } = {
                     second: 1000,
@@ -199,7 +199,7 @@ const summarizeAction: Action = {
     handler: async (
         runtime: IAgentRuntime,
         message: Memory,
-        state: State,
+        _state: State,
         _options: any,
         callback: HandlerCallback
     ): Promise<Content> => {
@@ -300,7 +300,7 @@ const summarizeAction: Action = {
             });
 
             if (summary) {
-                currentSummary = currentSummary + "\n" + summary;
+                currentSummary = `${currentSummary}\n${summary}`;
                 break; // Stop after getting first valid summary
             }
         }

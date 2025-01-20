@@ -1,5 +1,5 @@
-import * as fs from "fs";
-import * as path from "path";
+import * as fs from "node:fs";
+import * as path from "node:path";
 import type { Configuration } from "./Configuration.js";
 
 /**
@@ -88,7 +88,7 @@ export class DirectoryTraversal {
 
             console.log("Files to process:", files);
             return files;
-        } else {
+        }
             console.log(
                 "No PR Files Detected, Scanning all files in root directory"
             );
@@ -115,7 +115,6 @@ export class DirectoryTraversal {
 
             traverseDirectory(this.config.absolutePath);
             return typeScriptFiles;
-        }
     }
 
     /**

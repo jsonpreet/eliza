@@ -113,14 +113,12 @@ export default {
 
         try {
             const resp = await sendPostRequest();
-            if (resp && resp.data && resp.data.app && resp.data.app.id) {
+            if (resp?.data?.app?.id) {
                 elizaLogger.log(
                     "Launching successful, please find your agent on"
                 );
                 elizaLogger.log(
-                    "https://dev.autonome.fun/autonome/" +
-                        resp.data.app.id +
-                        "/details"
+                    `https://dev.autonome.fun/autonome/${resp.data.app.id}/details`
                 );
             }
             if (callback) {
@@ -129,9 +127,7 @@ export default {
                     content: {
                         success: true,
                         appId:
-                            "https://dev.autonome.fun/autonome/" +
-                            resp.data.app.id +
-                            "/details",
+                            `https://dev.autonome.fun/autonome/${resp.data.app.id}/details`,
                     },
                 });
             }

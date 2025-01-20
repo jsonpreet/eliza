@@ -45,7 +45,7 @@ describe("SlackClientProvider", () => {
         mockWebClient = getMockWebClient();
         provider = new SlackClientProvider(mockConfig);
         // @ts-ignore - setting mock client for testing
-        provider['client'] = mockWebClient;
+        provider.client = mockWebClient;
     });
 
     describe("Initialization", () => {
@@ -65,7 +65,7 @@ describe("SlackClientProvider", () => {
             };
             const providerWithOptions = new SlackClientProvider(mockConfig, retryOptions);
             // @ts-ignore - setting mock client for testing
-            providerWithOptions['client'] = mockWebClient;
+            providerWithOptions.client = mockWebClient;
 
             expect(providerWithOptions).toBeInstanceOf(SlackClientProvider);
             const context = providerWithOptions.getContext();

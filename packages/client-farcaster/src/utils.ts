@@ -21,9 +21,9 @@ export function splitPostContent(
     for (const paragraph of paragraphs) {
         if (!paragraph) continue;
 
-        if ((currentTweet + "\n\n" + paragraph).trim().length <= maxLength) {
+        if ((`${currentTweet}\n\n${paragraph}`).trim().length <= maxLength) {
             if (currentTweet) {
-                currentTweet += "\n\n" + paragraph;
+                currentTweet += `\n\n${paragraph}`;
             } else {
                 currentTweet = paragraph;
             }
@@ -57,9 +57,9 @@ export function splitParagraph(paragraph: string, maxLength: number): string[] {
     let currentChunk = "";
 
     for (const sentence of sentences) {
-        if ((currentChunk + " " + sentence).trim().length <= maxLength) {
+        if ((`${currentChunk} ${sentence}`).trim().length <= maxLength) {
             if (currentChunk) {
-                currentChunk += " " + sentence;
+                currentChunk += ` ${sentence}`;
             } else {
                 currentChunk = sentence;
             }
@@ -75,10 +75,10 @@ export function splitParagraph(paragraph: string, maxLength: number): string[] {
                 currentChunk = "";
                 for (const word of words) {
                     if (
-                        (currentChunk + " " + word).trim().length <= maxLength
+                        (`${currentChunk} ${word}`).trim().length <= maxLength
                     ) {
                         if (currentChunk) {
-                            currentChunk += " " + word;
+                            currentChunk += ` ${word}`;
                         } else {
                             currentChunk = word;
                         }

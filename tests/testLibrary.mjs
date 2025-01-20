@@ -1,6 +1,6 @@
 import { spawn } from "node:child_process";
 import { stringToUuid } from "../packages/core/dist/index.js";
-import path from "path";
+import path from "node:path";
 
 export const DEFAULT_CHARACTER = "trump";
 export const DEFAULT_AGENT_ID = stringToUuid(DEFAULT_CHARACTER ?? uuidv4());
@@ -15,11 +15,11 @@ function log(message) {
 }
 
 function logError(error) {
-    log("ERROR: " + error.message);
+    log(`ERROR: ${error.message}`);
     log(error); // Print stack trace
 }
 
-async function runProcess(command, args = [], directory = projectRoot()) {
+async function runProcess(_command, _args = [], _directory = projectRoot()) {
     try {
         throw new Exception("Not implemented yet"); // TODO
         // const result = await $`cd ${directory} && ${command} ${args}`;
@@ -71,19 +71,18 @@ async function startAgent(character = DEFAULT_CHARACTER) {
                 method: "GET",
             });
             if (response.ok) break;
-        } catch (error) {}
+        } catch (_error) {}
         if (Date.now() - startTime > 120000) {
             throw new Error("Timeout waiting for process to start");
-        } else {
-            await sleep(1000);
         }
+            await sleep(1000);
     }
     await sleep(1000);
     return proc;
 }
 
 async function stopAgent(proc) {
-    log("Stopping agent..." + JSON.stringify(proc.pid));
+    log(`Stopping agent...${JSON.stringify(proc.pid)}`);
     proc.kill();
     const startTime = Date.now();
     while (true) {

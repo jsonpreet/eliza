@@ -1,11 +1,11 @@
 
-import { Action } from "@elizaos/core";
+import type { Action } from "@elizaos/core";
 import { validatePrompt, validateApiKey, callOpenAiApi, buildRequestData } from "./action";
 
 export const analyzeSentimentAction: Action = {
     name: "analyzeSentiment",
     description: "Analyze sentiment using OpenAI",
-    async handler(runtime, message, state) {
+    async handler(_runtime, message, _state) {
         const prompt = `Analyze the sentiment of the following text: "${message.content.text?.trim() || ""}"`;
         validatePrompt(prompt);
 

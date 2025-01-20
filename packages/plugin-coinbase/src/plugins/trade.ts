@@ -15,11 +15,11 @@ import {
 import { executeTradeAndCharityTransfer, getWalletDetails } from "../utils";
 import { tradeTemplate } from "../templates";
 import { isTradeContent, type TradeContent, TradeSchema } from "../types";
-import { readFile } from "fs/promises";
+import { readFile } from "node:fs/promises";
 import { parse } from "csv-parse/sync";
-import path from "path";
-import { fileURLToPath } from "url";
-import fs from "fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+import fs from "node:fs";
 import { createArrayCsvWriter } from "csv-writer";
 
 // Dynamically resolve the file path to the src/plugins directory
@@ -74,12 +74,12 @@ export const tradeProvider: Provider = {
             elizaLogger.info("Last Transactions:", transactions);
             return {
                 currentTrades: records.map((record: any) => ({
-                    network: record["Network"] || undefined,
+                    network: record.Network || undefined,
                     amount: Number.parseFloat(record["From Amount"]) || undefined,
                     sourceAsset: record["Source Asset"] || undefined,
                     toAmount: Number.parseFloat(record["To Amount"]) || undefined,
                     targetAsset: record["Target Asset"] || undefined,
-                    status: record["Status"] || undefined,
+                    status: record.Status || undefined,
                     transactionUrl: record["Transaction URL"] || "",
                 })),
                 balances,

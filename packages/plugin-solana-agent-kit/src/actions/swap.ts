@@ -1,13 +1,13 @@
 import {
-    ActionExample,
+    type ActionExample,
     composeContext,
     generateObjectDeprecated,
-    HandlerCallback,
-    IAgentRuntime,
-    Memory,
+    type HandlerCallback,
+    type IAgentRuntime,
+    type Memory,
     ModelClass,
     settings,
-    State,
+    type State,
     type Action,
     elizaLogger,
 } from "@elizaos/core";
@@ -59,7 +59,7 @@ Respond with a JSON markdown block containing only the extracted values. Use nul
 export default {
     name: TRADE_ACTION.name,
     similes: TRADE_ACTION.similes,
-    validate: async (runtime: IAgentRuntime, message: Memory) => {
+    validate: async (_runtime: IAgentRuntime, message: Memory) => {
         // Check if the necessary parameters are provided in the message
         elizaLogger.log("Message:", message);
         return true;

@@ -59,7 +59,7 @@ Here is the current post text again. Remember to include an action if the curren
 {{currentPost}}
 Here is the descriptions of images in the Current post.
 {{imageDescriptions}}
-` + messageCompletionFooter;
+${messageCompletionFooter}`;
 
 export const twitterShouldRespondTemplate = (targetUsersStr: string) =>
     `# INSTRUCTIONS: Determine if {{agentName}} (@{{twitterUserName}}) should respond to the message and participate in the conversation. Do not comment. Just respond with "true" or "false".
@@ -91,7 +91,7 @@ Thread of Tweets You Are Replying To:
 {{formattedConversation}}
 
 # INSTRUCTIONS: Respond with [RESPOND] if {{agentName}} should respond, or [IGNORE] if {{agentName}} should not respond to the last message and [STOP] if {{agentName}} should stop participating in the conversation.
-` + shouldRespondFooter;
+${shouldRespondFooter}`;
 
 export class TwitterInteractionClient {
     client: ClientBase;
@@ -192,7 +192,6 @@ export class TwitterInteractionClient {
                                 `Error fetching tweets for ${username}:`,
                                 error
                             );
-                            continue;
                         }
                     }
 
@@ -237,7 +236,7 @@ export class TwitterInteractionClient {
                 ) {
                     // Generate the tweetId UUID the same way it's done in handleTweet
                     const tweetId = stringToUuid(
-                        tweet.id + "-" + this.runtime.agentId
+                        `${tweet.id}-${this.runtime.agentId}`
                     );
 
                     // Check if we've already processed this tweet
@@ -255,7 +254,7 @@ export class TwitterInteractionClient {
                     elizaLogger.log("New Tweet found", tweet.permanentUrl);
 
                     const roomId = stringToUuid(
-                        tweet.conversationId + "-" + this.runtime.agentId
+                        `${tweet.conversationId}-${this.runtime.agentId}`
                     );
 
                     const userIdUUID =
@@ -374,7 +373,7 @@ export class TwitterInteractionClient {
         });
 
         // check if the tweet exists, save if it doesn't
-        const tweetId = stringToUuid(tweet.id + "-" + this.runtime.agentId);
+        const tweetId = stringToUuid(`${tweet.id}-${this.runtime.agentId}`);
         const tweetExists =
             await this.runtime.messageManager.getMemoryById(tweetId);
 
@@ -391,9 +390,7 @@ export class TwitterInteractionClient {
                     url: tweet.permanentUrl,
                     inReplyTo: tweet.inReplyToStatusId
                         ? stringToUuid(
-                              tweet.inReplyToStatusId +
-                                  "-" +
-                                  this.runtime.agentId
+                              `${tweet.inReplyToStatusId}-${this.runtime.agentId}`
                           )
                         : undefined,
                 },
@@ -465,7 +462,7 @@ export class TwitterInteractionClient {
         const removeQuotes = (str: string) =>
             str.replace(/^['"](.*)['"]$/, "$1");
 
-        const stringId = stringToUuid(tweet.id + "-" + this.runtime.agentId);
+        const stringId = stringToUuid(`${tweet.id}-${this.runtime.agentId}`);
 
         response.inReplyTo = stringId;
 
@@ -558,11 +555,11 @@ export class TwitterInteractionClient {
 
             // Handle memory storage
             const memory = await this.runtime.messageManager.getMemoryById(
-                stringToUuid(currentTweet.id + "-" + this.runtime.agentId)
+                stringToUuid(`${currentTweet.id}-${this.runtime.agentId}`)
             );
             if (!memory) {
                 const roomId = stringToUuid(
-                    currentTweet.conversationId + "-" + this.runtime.agentId
+                    `${currentTweet.conversationId}-${this.runtime.agentId}`
                 );
                 const userId = stringToUuid(currentTweet.userId);
 
@@ -576,7 +573,7 @@ export class TwitterInteractionClient {
 
                 this.runtime.messageManager.createMemory({
                     id: stringToUuid(
-                        currentTweet.id + "-" + this.runtime.agentId
+                        `${currentTweet.id}-${this.runtime.agentId}`
                     ),
                     agentId: this.runtime.agentId,
                     content: {
@@ -585,9 +582,7 @@ export class TwitterInteractionClient {
                         url: currentTweet.permanentUrl,
                         inReplyTo: currentTweet.inReplyToStatusId
                             ? stringToUuid(
-                                  currentTweet.inReplyToStatusId +
-                                      "-" +
-                                      this.runtime.agentId
+                                  `${currentTweet.inReplyToStatusId}-${this.runtime.agentId}`
                               )
                             : undefined,
                     },

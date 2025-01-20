@@ -30,7 +30,7 @@ export class CosmosTransactionFeeEstimator {
         amount: readonly Coin[],
         memo = ""
     ): Promise<number> {
-        return this.estimateGasForTransaction<MsgSendEncodeObject[]>(
+        return CosmosTransactionFeeEstimator.estimateGasForTransaction<MsgSendEncodeObject[]>(
             signingCosmWasmClient,
             senderAddress,
             [

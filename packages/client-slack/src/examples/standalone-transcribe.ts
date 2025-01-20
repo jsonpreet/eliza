@@ -1,7 +1,7 @@
 import { SlackClientProvider } from "../providers/slack-client.provider";
 import type { SlackConfig } from "../types/slack-types";
 import { config } from "dotenv";
-import { resolve } from "path";
+import { resolve } from "node:path";
 import { elizaLogger } from "@elizaos/core";
 
 // Load environment variables from root .env

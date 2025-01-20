@@ -93,7 +93,7 @@ You can use these category IDs when filtering cryptocurrency market data.
 }
 
 export const categoriesProvider: Provider = {
-    get: async (runtime: IAgentRuntime, message: Memory, state?: State): Promise<string> => {
+    get: async (runtime: IAgentRuntime, _message: Memory, _state?: State): Promise<string> => {
         try {
             const categories = await getCategories(runtime);
             return formatCategoriesContext(categories);

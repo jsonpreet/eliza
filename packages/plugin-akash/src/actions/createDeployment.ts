@@ -13,8 +13,8 @@ import { DirectSecp256k1HdWallet, Registry } from "@cosmjs/proto-signing";
 import { SigningStargateClient } from "@cosmjs/stargate";
 import { validateAkashConfig } from "../environment";
 import { AkashError, AkashErrorCode, withRetry } from "../error/error";
-import * as fs from 'fs';
-import * as path from 'path';
+import * as fs from 'node:fs';
+import * as path from 'node:path';
 import { getCertificatePath, getDefaultSDLPath } from "../utils/paths";
 // import { fileURLToPath } from 'url';
 import { inspectRuntime, isPluginLoaded } from "../runtime_inspect";
@@ -148,7 +148,7 @@ const loadSDLFromFile = (filePath: string): string => {
         }
 
         // If we get here, none of the paths worked
-        throw new Error(`SDL file not found in any of the possible locations`);
+        throw new Error("SDL file not found in any of the possible locations");
     } catch (error) {
         elizaLogger.error("Failed to read SDL file", {
             filePath,
@@ -214,7 +214,7 @@ async function initializeWallet(mnemonic: string) {
             error,
             wordCount: words.length,
             expectedCounts: [12, 24],
-            mnemonicPreview: words.slice(0, 3).join(' ') + '...'
+            mnemonicPreview: `${words.slice(0, 3).join(' ')}...`
         });
         throw new AkashError(
             error,
@@ -229,7 +229,7 @@ async function initializeWallet(mnemonic: string) {
     try {
         elizaLogger.debug("Creating wallet with mnemonic", {
             wordCount: words.length,
-            mnemonicPreview: words.slice(0, 3).join(' ') + '...'
+            mnemonicPreview: `${words.slice(0, 3).join(' ')}...`
         });
 
         const wallet = await DirectSecp256k1HdWallet.fromMnemonic(mnemonic, {
@@ -256,7 +256,7 @@ async function initializeWallet(mnemonic: string) {
             error: error instanceof Error ? error.message : String(error),
             stack: error instanceof Error ? error.stack : undefined,
             mnemonicLength: words.length,
-            mnemonicPreview: words.slice(0, 3).join(' ') + '...'
+            mnemonicPreview: `${words.slice(0, 3).join(' ')}...`
         });
 
         // Provide more specific error messages
@@ -340,7 +340,6 @@ async function setupClient(wallet: DirectSecp256k1HdWallet, rpcEndpoint: string)
                     error: heightError instanceof Error ? heightError.message : String(heightError)
                 });
                 lastError = heightError instanceof Error ? heightError : new Error(String(heightError));
-                continue;
             }
         } catch (error) {
             elizaLogger.error("Failed to connect to RPC endpoint", {
@@ -350,7 +349,6 @@ async function setupClient(wallet: DirectSecp256k1HdWallet, rpcEndpoint: string)
                 stack: error instanceof Error ? error.stack : undefined
             });
             lastError = error instanceof Error ? error : new Error(String(error));
-            continue;
         }
     }
 
@@ -443,7 +441,6 @@ async function fetchBid(dseq: number, owner: string, rpcEndpoint: string) {
                         attempt: retry + 1,
                         willRetry: true
                     });
-                    continue;
                 }
             }
 
@@ -471,14 +468,13 @@ async function fetchBid(dseq: number, owner: string, rpcEndpoint: string) {
 
             if (retry < maxRetries - 1) {
                 // Wait before retrying (exponential backoff)
-                const delay = Math.pow(2, retry) * 1000;
+                const delay = 2 ** retry * 1000;
                 elizaLogger.info("Retrying bid fetch after delay", {
                     delay,
                     nextAttempt: retry + 2,
                     maxRetries
                 });
                 await new Promise(resolve => setTimeout(resolve, delay));
-                continue;
             }
         }
     }
@@ -596,7 +592,7 @@ async function queryLeaseStatus(lease: any, providerUri: string, certificate: Ce
     while (retryCount < MAX_RETRIES) {
         try {
             const url = new URL(providerUri);
-            const fullUrl = `${url.protocol}//${url.hostname}${url.port ? ':' + url.port : ''}${leasePath}`;
+            const fullUrl = `${url.protocol}//${url.hostname}${url.port ? `:${url.port}` : ''}${leasePath}`;
 
             elizaLogger.debug("Making request", {
                 url: fullUrl,
@@ -665,7 +661,7 @@ async function queryLeaseStatus(lease: any, providerUri: string, certificate: Ce
             });
 
             if (retryCount < MAX_RETRIES - 1) {
-                const delay = INITIAL_RETRY_DELAY * Math.pow(2, retryCount);
+                const delay = INITIAL_RETRY_DELAY * 2 ** retryCount;
                 elizaLogger.debug("Retrying after error", {
                     delay,
                     nextRetry: retryCount + 1,
@@ -752,7 +748,7 @@ async function sendManifest(sdl: SDL, lease: any, certificate: CertificatePem, r
         });
 
         try {
-            const fullUrl = `${uri.protocol}//${uri.hostname}${uri.port ? ':' + uri.port : ''}${path}`;
+            const fullUrl = `${uri.protocol}//${uri.hostname}${uri.port ? `:${uri.port}` : ''}${path}`;
             elizaLogger.debug("Making manifest request", {
                 url: fullUrl,
                 method: 'PUT',
@@ -1003,7 +999,7 @@ async function parseSDL(sdlContent: string): Promise<SDL> {
             originalLength: sdlContent.length,
             cleanLength: cleanSDL.length,
             yamlSeparatorIndex,
-            cleanContent: cleanSDL.substring(0, 200) + '...',
+            cleanContent: `${cleanSDL.substring(0, 200)}...`,
             firstLine: cleanSDL.split('\n')[0],
             lastLine: cleanSDL.split('\n').slice(-1)[0],
             lineCount: cleanSDL.split('\n').length,
@@ -1040,7 +1036,7 @@ async function parseSDL(sdlContent: string): Promise<SDL> {
         elizaLogger.error("Failed to parse SDL", {
             error: error instanceof Error ? error.message : String(error),
             stack: error instanceof Error ? error.stack : undefined,
-            sdlContent: sdlContent.substring(0, 200) + '...',
+            sdlContent: `${sdlContent.substring(0, 200)}...`,
             sdlLength: sdlContent.length
         });
         throw error;
@@ -1138,7 +1134,7 @@ export const createDeploymentAction: Action = {
     handler: async (
         runtime: IAgentRuntime,
         message: Memory,
-        state: State | undefined,
+        _state: State | undefined,
         _options: { [key: string]: unknown; } = {},
         callback?: HandlerCallback
     ): Promise<boolean> => {

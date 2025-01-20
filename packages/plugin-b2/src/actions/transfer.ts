@@ -57,9 +57,8 @@ export class TransferAction {
         const receipt = await getTxReceipt(this.walletProvider, tx);
         if (receipt.status === "success") {
             return true;
-        } else {
-            return false;
         }
+            return false;
     }
 
     async buildTransferDetails(

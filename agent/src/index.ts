@@ -111,10 +111,10 @@ import { openaiPlugin } from '@elizaos/plugin-openai';
 
 import { zksyncEraPlugin } from "@elizaos/plugin-zksync-era";
 import Database from "better-sqlite3";
-import fs from "fs";
-import net from "net";
-import path from "path";
-import { fileURLToPath } from "url";
+import fs from "node:fs";
+import net from "node:net";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import yargs from "yargs";
 
 const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
@@ -158,7 +158,7 @@ export function parseArguments(): {
 function tryLoadFile(filePath: string): string | null {
     try {
         return fs.readFileSync(filePath, "utf8");
-    } catch (e) {
+    } catch (_e) {
         return null;
     }
 }
@@ -394,7 +394,7 @@ export async function loadCharacters(
                 const character: Character =
                     await loadCharacterTryPath(characterPath);
                 loadedCharacters.push(character);
-            } catch (e) {
+            } catch (_e) {
                 process.exit(1);
             }
         }
@@ -427,10 +427,9 @@ async function handlePluginImporting(plugins: string[]) {
                 try {
                     const importedPlugin = await import(plugin);
                     const functionName =
-                        plugin
+                        `${plugin
                             .replace("@elizaos/plugin-", "")
-                            .replace(/-./g, (x) => x[1].toUpperCase()) +
-                        "Plugin"; // Assumes plugin function is camelCased with Plugin suffix
+                            .replace(/-./g, (x) => x[1].toUpperCase())}Plugin`; // Assumes plugin function is camelCased with Plugin suffix
                     return (
                         importedPlugin.default || importedPlugin[functionName]
                     );
@@ -444,9 +443,8 @@ async function handlePluginImporting(plugins: string[]) {
             })
         );
         return importedPlugins;
-    } else {
-        return [];
     }
+        return [];
 }
 
 export function getTokenForProvider(
@@ -598,10 +596,11 @@ export function getTokenForProvider(
                 character.settings?.secrets?.LIVEPEER_GATEWAY_URL ||
                 settings.LIVEPEER_GATEWAY_URL
             );
-        default:
+        default: {
             const errorMessage = `Failed to get token - unsupported model provider: ${provider}`;
             elizaLogger.error(errorMessage);
             throw new Error(errorMessage);
+        }
     }
 }
 
@@ -625,7 +624,7 @@ function initializeDatabase(dataDir: string) {
             });
 
         return db;
-    } else if (process.env.POSTGRES_URL) {
+    }if (process.env.POSTGRES_URL) {
         elizaLogger.info("Initializing PostgreSQL connection...");
         const db = new PostgresDatabaseAdapter({
             connectionString: process.env.POSTGRES_URL,
@@ -644,14 +643,14 @@ function initializeDatabase(dataDir: string) {
             });
 
         return db;
-    } else if (process.env.PGLITE_DATA_DIR) {
+    }if (process.env.PGLITE_DATA_DIR) {
         elizaLogger.info("Initializing PgLite adapter...");
         // `dataDir: memory://` for in memory pg
         const db = new PGLiteDatabaseAdapter({
             dataDir: process.env.PGLITE_DATA_DIR,
         });
         return db;
-    } else {
+    }
         const filePath =
             process.env.SQLITE_FILE ?? path.resolve(dataDir, "db.sqlite");
         elizaLogger.info(`Initializing SQLite database at ${filePath}...`);
@@ -669,7 +668,6 @@ function initializeDatabase(dataDir: string) {
             });
 
         return db;
-    }
 }
 
 // also adds plugins from character file into the runtime
@@ -897,8 +895,7 @@ export async function createAgent(
                 ? nearPlugin
                 : null,
             getSecret(character, "EVM_PUBLIC_KEY") ||
-            (getSecret(character, "WALLET_PUBLIC_KEY") &&
-                getSecret(character, "WALLET_PUBLIC_KEY")?.startsWith("0x"))
+            (getSecret(character, "WALLET_PUBLIC_KEY")?.startsWith("0x"))
                 ? evmPlugin
                 : null,
             (getSecret(character, "EVM_PUBLIC_KEY") ||
@@ -1110,19 +1107,17 @@ function initializeCache(
                 return new CacheManager(
                     new DbCacheAdapter(redisClient, character.id) // Using DbCacheAdapter since RedisClient also implements IDatabaseCacheAdapter
                 );
-            } else {
-                throw new Error("REDIS_URL environment variable is not set.");
             }
+                throw new Error("REDIS_URL environment variable is not set.");
 
         case CacheStore.DATABASE:
             if (db) {
                 elizaLogger.info("Using Database Cache...");
                 return initializeDbCache(character, db);
-            } else {
+            }
                 throw new Error(
                     "Database adapter is not provided for CacheStore.Database."
                 );
-            }
 
         case CacheStore.FILESYSTEM:
             elizaLogger.info("Using File System Cache...");

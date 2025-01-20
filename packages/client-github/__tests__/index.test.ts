@@ -3,8 +3,8 @@ import { GitHubClient, GitHubClientInterface } from '../src';
 import type { AgentRuntime, IAgentRuntime } from '@elizaos/core';
 import { Octokit } from '@octokit/rest';
 import simpleGit from 'simple-git';
-import type fs from 'fs';
-import type fsPromises from 'fs/promises';
+import type fs from 'node:fs';
+import type fsPromises from 'node:fs/promises';
 
 // Mock external dependencies
 vi.mock('@octokit/rest', () => ({
@@ -60,7 +60,7 @@ describe('GitHubClient', () => {
   });
 
   it('initializes with correct configuration', () => {
-    const client = new GitHubClient(mockRuntime);
+    const _client = new GitHubClient(mockRuntime);
     expect(Octokit).toHaveBeenCalledWith({ auth: mockConfig.GITHUB_API_TOKEN });
   });
 

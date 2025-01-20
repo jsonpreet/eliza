@@ -73,7 +73,7 @@ export interface GetTokenSalesContent extends Content {
 export default {
     name: "GET_TOKEN_SALES",
     similes: ["CHECK_SALES", "RECENT_SALES"],
-    validate: async (runtime: IAgentRuntime, message: Memory) => {
+    validate: async (runtime: IAgentRuntime, _message: Memory) => {
         elizaLogger.log("🔄 Validating Stargaze configuration...");
         try {
             const config = await validateStargazeConfig(runtime);
@@ -161,7 +161,7 @@ export default {
             const formatDate = (dateStr: string) => {
                 try {
                     return new Date(dateStr).toLocaleString();
-                } catch (e) {
+                } catch (_e) {
                     return dateStr;
                 }
             };

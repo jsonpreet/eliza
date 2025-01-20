@@ -81,7 +81,7 @@ export const attachTermsAction = {
         runtime: IAgentRuntime,
         message: Memory,
         state: State,
-        options: any,
+        _options: any,
         callback?: HandlerCallback
     ): Promise<boolean> => {
         elizaLogger.log("Starting ATTACH_TERMS handler...");

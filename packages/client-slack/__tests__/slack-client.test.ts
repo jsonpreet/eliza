@@ -9,7 +9,7 @@ vi.mock('@elizaos/core');
 
 describe('SlackClient', () => {
   let mockRuntime: IAgentRuntime;
-  let slackClient: SlackClient;
+  let _slackClient: SlackClient;
 
   beforeEach(() => {
     // Setup mock runtime
@@ -26,7 +26,7 @@ describe('SlackClient', () => {
   });
 
   it('should initialize with correct settings', () => {
-    slackClient = new SlackClient(mockRuntime);
+    _slackClient = new SlackClient(mockRuntime);
     expect(mockRuntime.getSetting).toHaveBeenCalledWith('SLACK_BOT_TOKEN');
     expect(mockRuntime.getSetting).toHaveBeenCalledWith('SLACK_SIGNING_SECRET');
   });

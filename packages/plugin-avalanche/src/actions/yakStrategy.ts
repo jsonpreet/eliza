@@ -23,7 +23,7 @@ export interface StrategyContent extends Content {
 }
 
 function isStrategyContent(
-    runtime: IAgentRuntime,
+    _runtime: IAgentRuntime,
     content: any
 ): content is StrategyContent {
     elizaLogger.debug("Content for strategy", content);

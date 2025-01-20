@@ -42,7 +42,7 @@ export const saveFileAction: Action = {
         runtime: IAgentRuntime,
         message: Memory,
         state: State,
-        options: any,
+        _options: any,
         callback?: HandlerCallback
     ) => {
         elizaLogger.info("Starting save file handler");

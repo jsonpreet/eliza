@@ -10,13 +10,13 @@ export class EventHandler {
 
     constructor(
         config: SlackConfig,
-        client: WebClient,
+        _client: WebClient,
         messageManager: MessageManager
     ) {
         elizaLogger.log("🎮 Initializing Slack event handler...");
         elizaLogger.debug(
             "Creating event adapter with signing secret:",
-            config.signingSecret.slice(0, 4) + "..."
+            `${config.signingSecret.slice(0, 4)}...`
         );
         this.events = createEventAdapter(config.signingSecret);
         this.messageManager = messageManager;

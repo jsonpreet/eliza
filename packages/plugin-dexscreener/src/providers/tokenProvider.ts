@@ -22,7 +22,7 @@ interface TokenPriceData {
 
 export class TokenPriceProvider implements Provider {
     async get(
-        runtime: IAgentRuntime,
+        _runtime: IAgentRuntime,
         message: Memory,
         _state?: State
     ): Promise<string> {

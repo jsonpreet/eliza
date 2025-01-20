@@ -173,7 +173,7 @@ export const createWebhookAction: Action = {
             {
                 user: "{{agentName}}",
                 content: {
-                    text: `Webhook created successfully: Webhook ID: {{webhookId}}, Network ID: {{networkId}}, Notification URI: {{notificationUri}}, Event Type: {{eventType}}`,
+                    text: "Webhook created successfully: Webhook ID: {{webhookId}}, Network ID: {{networkId}}, Notification URI: {{notificationUri}}, Event Type: {{eventType}}",
                     action: "CREATE_WEBHOOK",
                 },
             },

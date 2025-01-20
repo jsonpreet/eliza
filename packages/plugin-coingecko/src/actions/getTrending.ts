@@ -74,7 +74,7 @@ export default {
         "POPULAR_COINS",
         "TRENDING_SEARCH",
     ],
-    validate: async (runtime: IAgentRuntime, message: Memory) => {
+    validate: async (runtime: IAgentRuntime, _message: Memory) => {
         await validateCoingeckoConfig(runtime);
         return true;
     },

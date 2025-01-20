@@ -34,7 +34,7 @@ import {
     TEAM_COORDINATION,
 } from "./constants";
 
-import fs from "fs";
+import fs from "node:fs";
 
 enum MediaType {
     PHOTO = "photo",
@@ -203,9 +203,7 @@ export class MessageManager {
             ) {
                 try {
                     const roomId = stringToUuid(
-                        this.autoPostConfig.mainChannelId +
-                            "-" +
-                            this.runtime.agentId
+                        `${this.autoPostConfig.mainChannelId}-${this.runtime.agentId}`
                     );
                     const memory = {
                         id: stringToUuid(`autopost-${Date.now()}`),
@@ -258,7 +256,7 @@ export class MessageManager {
                     // Create and store memories
                     const memories = messages.map((m) => ({
                         id: stringToUuid(
-                            m.message_id.toString() + "-" + this.runtime.agentId
+                            `${m.message_id.toString()}-${this.runtime.agentId}`
                         ),
                         userId: this.runtime.agentId,
                         agentId: this.runtime.agentId,
@@ -335,7 +333,7 @@ export class MessageManager {
                     : "New pinned message";
 
             const roomId = stringToUuid(
-                mainChannel + "-" + this.runtime.agentId
+                `${mainChannel}-${this.runtime.agentId}`
             );
             const memory = {
                 id: stringToUuid(`pinned-${Date.now()}`),
@@ -385,7 +383,7 @@ export class MessageManager {
 
             const memories = messages.map((m) => ({
                 id: stringToUuid(
-                    m.message_id.toString() + "-" + this.runtime.agentId
+                    `${m.message_id.toString()}-${this.runtime.agentId}`
                 ),
                 userId: this.runtime.agentId,
                 agentId: this.runtime.agentId,
@@ -406,7 +404,7 @@ export class MessageManager {
             await this.runtime.evaluate(memory, state, true);
         } catch (error) {
             elizaLogger.warn(
-                `[AutoPost Telegram] Error processing pinned message:`,
+                "[AutoPost Telegram] Error processing pinned message:",
                 error
             );
         }
@@ -446,7 +444,7 @@ export class MessageManager {
 
     private _isRelevantToTeamMember(
         content: string,
-        chatId: string,
+        _chatId: string,
         lastAgentMemory: Memory | null = null
     ): boolean {
         const teamConfig = this.runtime.character.clientConfig?.telegram;
@@ -533,7 +531,7 @@ export class MessageManager {
 
         const lastSelfMemories = await this.runtime.messageManager.getMemories({
             roomId: stringToUuid(
-                message.chat.id.toString() + "-" + this.runtime.agentId
+                `${message.chat.id.toString()}-${this.runtime.agentId}`
             ),
             unique: false,
             count: 5,
@@ -601,7 +599,7 @@ export class MessageManager {
         if (timeSinceLastMessage > MESSAGE_CONSTANTS.INTEREST_DECAY_TIME) {
             delete this.interestChats[chatId];
             return false;
-        } else if (
+        }if (
             timeSinceLastMessage > MESSAGE_CONSTANTS.PARTIAL_INTEREST_DECAY
         ) {
             return this._isRelevantToTeamMember(
@@ -694,7 +692,7 @@ export class MessageManager {
             "text" in message &&
             message.text?.includes(`@${this.bot.botInfo?.username}`)
         ) {
-            elizaLogger.info(`Bot mentioned`);
+            elizaLogger.info("Bot mentioned");
             return true;
         }
 
@@ -736,7 +734,7 @@ export class MessageManager {
             if (this._isTeamCoordinationRequest(messageText)) {
                 if (this._isTeamLeader()) {
                     return true;
-                } else {
+                }
                     const randomDelay =
                         Math.floor(
                             Math.random() *
@@ -747,7 +745,6 @@ export class MessageManager {
                         setTimeout(resolve, randomDelay)
                     );
                     return true;
-                }
             }
 
             if (
@@ -845,7 +842,7 @@ export class MessageManager {
                 ).length;
 
                 if (ourMessageCount > 2) {
-                    const responseChance = Math.pow(0.5, ourMessageCount - 2);
+                    const responseChance = 0.5 ** (ourMessageCount - 2);
                     if (Math.random() > responseChance) {
                         return;
                     }
@@ -1131,7 +1128,7 @@ export class MessageManager {
                 const lastSelfMemories =
                     await this.runtime.messageManager.getMemories({
                         roomId: stringToUuid(
-                            chatId + "-" + this.runtime.agentId
+                            `${chatId}-${this.runtime.agentId}`
                         ),
                         unique: false,
                         count: 5,
@@ -1244,7 +1241,7 @@ export class MessageManager {
 
             // Get chat ID
             const chatId = stringToUuid(
-                ctx.chat?.id.toString() + "-" + this.runtime.agentId
+                `${ctx.chat?.id.toString()}-${this.runtime.agentId}`
             ) as UUID;
 
             // Get agent ID
@@ -1264,7 +1261,7 @@ export class MessageManager {
 
             // Get message ID
             const messageId = stringToUuid(
-                message.message_id.toString() + "-" + this.runtime.agentId
+                `${message.message_id.toString()}-${this.runtime.agentId}`
             ) as UUID;
 
             // Handle images
@@ -1294,9 +1291,7 @@ export class MessageManager {
                 inReplyTo:
                     "reply_to_message" in message && message.reply_to_message
                         ? stringToUuid(
-                              message.reply_to_message.message_id.toString() +
-                                  "-" +
-                                  this.runtime.agentId
+                              `${message.reply_to_message.message_id.toString()}-${this.runtime.agentId}`
                           )
                         : undefined,
             };
@@ -1339,9 +1334,7 @@ export class MessageManager {
 
                         const memory: Memory = {
                             id: stringToUuid(
-                                sentMessage.message_id.toString() +
-                                    "-" +
-                                    this.runtime.agentId
+                                `${sentMessage.message_id.toString()}-${this.runtime.agentId}`
                             ),
                             agentId,
                             userId: agentId,

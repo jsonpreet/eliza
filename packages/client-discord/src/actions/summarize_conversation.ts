@@ -139,7 +139,7 @@ const summarizeAction = {
     ],
     description: "Summarizes the conversation and attachments.",
     validate: async (
-        runtime: IAgentRuntime,
+        _runtime: IAgentRuntime,
         message: Memory,
         _state: State
     ) => {
@@ -192,7 +192,7 @@ const summarizeAction = {
         runtime: IAgentRuntime,
         message: Memory,
         state: State,
-        options: any,
+        _options: any,
         callback: HandlerCallback
     ) => {
         state = (await runtime.composeState(message)) as State;
@@ -280,7 +280,7 @@ const summarizeAction = {
                 modelClass: ModelClass.SMALL,
             });
 
-            currentSummary = currentSummary + "\n" + summary;
+            currentSummary = `${currentSummary}\n${summary}`;
         }
 
         if (!currentSummary) {

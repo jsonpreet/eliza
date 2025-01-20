@@ -95,7 +95,7 @@ export const bridgeTransfer: Action = {
             },
         ],
     ],
-    validate: async (runtime: IAgentRuntime, message: Memory) => {
+    validate: async (_runtime: IAgentRuntime, _message: Memory) => {
         // no extra validation needed
         return true;
     },
@@ -103,7 +103,7 @@ export const bridgeTransfer: Action = {
         runtime: IAgentRuntime,
         message: Memory,
         state?: State,
-        options?: { [key: string]: unknown },
+        _options?: { [key: string]: unknown },
         callback?: HandlerCallback
     ) => {
         if (!state) {

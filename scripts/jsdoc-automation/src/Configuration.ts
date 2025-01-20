@@ -1,9 +1,9 @@
 // Configuration.ts
-import * as fs from "fs";
+import * as fs from "node:fs";
 import * as yaml from "yaml";
-import * as path from "path";
-import { fileURLToPath } from "url";
-import { dirname, join } from "path";
+import * as path from "node:path";
+import { fileURLToPath } from "node:url";
+import { dirname, join } from "node:path";
 import type { Repository } from "./types/index.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -112,7 +112,7 @@ export class Configuration implements Omit<ConfigurationData, "rootDirectory"> {
             generateReadme: this._generateReadme,
         });
 
-        let inputs;
+        let _inputs;
 
         console.log("Environment variables:", {
             rootDirectory: process.env.INPUT_ROOT_DIRECTORY,

@@ -58,7 +58,7 @@ export class RESTBase {
     }
 
     async sendRequest(
-        headers: Headers,
+        _headers: Headers,
         requestOptions: RequestInit,
         url: string
     ) {
@@ -83,7 +83,7 @@ export class RESTBase {
                     this.apiSecret
                 )}`
             );
-        else if (isPublic == undefined || isPublic == false)
+        else if (isPublic === undefined || isPublic === false)
             throw new Error(
                 'Attempting to access authenticated endpoint with invalid API_KEY or API_SECRET.'
             );
@@ -115,9 +115,8 @@ export class RESTBase {
                         (item) =>
                             `${encodeURIComponent(key)}=${encodeURIComponent(item)}`
                     );
-                } else {
-                    return `${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
                 }
+                    return `${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
             })
             .join('&');
 

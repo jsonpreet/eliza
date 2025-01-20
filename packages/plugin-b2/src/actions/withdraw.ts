@@ -27,8 +27,8 @@ export class WithdrawAction {
     async withdraw(_params: WithdrawParams): Promise<Hash> {
         try {
             const balance = await this.walletProvider.getNativeBalance(this.walletProvider.getAddress());
-            if ( balance == BigInt(0) ) {
-                throw new Error(`The total cost (gas * gas fee + value) of executing this transaction exceeds the balance of the account.`);
+            if ( balance === BigInt(0) ) {
+                throw new Error("The total cost (gas * gas fee + value) of executing this transaction exceeds the balance of the account.");
             }
             const txHash = await withdraw(
                 this.walletProvider,
@@ -45,9 +45,8 @@ export class WithdrawAction {
         const receipt = await getTxReceipt(this.walletProvider, tx);
         if (receipt.status === "success") {
             return true;
-        } else {
-            return false;
         }
+            return false;
     }
 
     async buildWithdrawDetails(

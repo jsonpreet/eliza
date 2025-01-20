@@ -22,7 +22,7 @@ Respond with YES if:
 - The tone of the conversation has improved and {{agentName}}'s input would be welcome
 
 Otherwise, respond with NO.
-` + booleanFooter;
+${booleanFooter}`;
 
 export const unmuteRoomAction: Action = {
     name: "UNMUTE_ROOM",

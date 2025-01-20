@@ -22,7 +22,7 @@ Respond with YES if:
 - The conversation has shifted to a topic where {{agentName}} has less to add
 
 Otherwise, respond with NO.
-` + booleanFooter;
+${booleanFooter}`;
 
 export const unfollowRoomAction: Action = {
     name: "UNFOLLOW_ROOM",

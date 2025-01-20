@@ -18,7 +18,7 @@ export function createVerifiableLogApiRouter(
 
     router.get(
         "/verifiable/agents",
-        async (req: express.Request, res: express.Response) => {
+        async (_req: express.Request, res: express.Response) => {
             try {
                 // call the listAgent method
                 const agentRuntime: AgentRuntime | undefined = agents.values().next().value;

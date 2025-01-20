@@ -34,8 +34,8 @@ describe("ConnectorProvider", () => {
             const result = connectorProvider.getConnectorStatus(mockedRuntime);
 
             expect(result).toEqual(
-                `Eliza[0] Connected to\n` +
-                    `Flow network: testnet\n` +
+                "Eliza[0] Connected to\n" +
+                    "Flow network: testnet\n" +
                     "Flow Endpoint: https://testnet.onflow.org\n"
             );
         });

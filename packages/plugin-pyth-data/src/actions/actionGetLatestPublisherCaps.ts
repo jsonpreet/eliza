@@ -1,5 +1,5 @@
-import { Action, elizaLogger } from "@elizaos/core";
-import { IAgentRuntime, Memory, State, HandlerCallback, Content, ActionExample } from "@elizaos/core";
+import { type Action, elizaLogger } from "@elizaos/core";
+import type { IAgentRuntime, Memory, State, HandlerCallback, Content, ActionExample } from "@elizaos/core";
 // import { HermesClient } from "../hermes/HermesClient";
 import { HermesClient } from "@pythnetwork/hermes-client";
 import { DataError, ErrorSeverity, DataErrorCode } from "../error";
@@ -103,7 +103,7 @@ export const getLatestPublisherCapsAction: Action = {
 
     handler: async (
         runtime: IAgentRuntime,
-        message: Memory,
+        _message: Memory,
         _state?: State,
         _options: { [key: string]: unknown } = {},
         callback?: HandlerCallback

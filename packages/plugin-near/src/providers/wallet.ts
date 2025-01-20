@@ -114,7 +114,7 @@ export class WalletProvider implements Provider {
                     await new Promise((resolve) =>
                         setTimeout(
                             resolve,
-                            PROVIDER_CONFIG.RETRY_DELAY * Math.pow(2, i)
+                            PROVIDER_CONFIG.RETRY_DELAY * 2 ** i
                         )
                     );
                 }

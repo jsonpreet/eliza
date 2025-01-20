@@ -20,7 +20,7 @@ export interface TokenMillCreateContent extends Content {
 }
 
 function isTokenMillCreateContent(
-    runtime: IAgentRuntime,
+    _runtime: IAgentRuntime,
     content: any
 ): content is TokenMillCreateContent {
     elizaLogger.debug("Content for create", content);

@@ -65,7 +65,7 @@ describe("Wallet provider", () => {
                 "arthera",
                 customRpcUrls.arthera
             );
-            const wp = new WalletProvider(pk, { ["arthera"]: chain });
+            const wp = new WalletProvider(pk, { "arthera": chain });
 
             const client = wp.getPublicClient("arthera");
             expect(client.chain.id).toEqual(arthera.id);
@@ -95,7 +95,7 @@ describe("Wallet provider", () => {
                 "arthera",
                 customRpcUrls.arthera
             );
-            const wp = new WalletProvider(pk, { ["arthera"]: chain });
+            const wp = new WalletProvider(pk, { "arthera": chain });
 
             const client = wp.getWalletClient("arthera");
 

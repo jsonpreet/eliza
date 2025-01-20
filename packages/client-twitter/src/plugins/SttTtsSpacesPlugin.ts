@@ -1,6 +1,6 @@
 // src/plugins/SttTtsPlugin.ts
 
-import { spawn } from "child_process";
+import { spawn } from "node:child_process";
 import { type ITranscriptionService, elizaLogger } from "@elizaos/core";
 import type { Space, JanusClient, AudioDataWithUser } from "agent-twitter-client";
 import type { Plugin } from "@elizaos/core";

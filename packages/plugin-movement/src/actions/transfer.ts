@@ -86,7 +86,7 @@ export default {
         const text = message.content?.text?.toLowerCase() || "";
         return text.includes("send") && text.includes("move") && text.includes("0x");
     },
-    validate: async (runtime: IAgentRuntime, message: Memory) => {
+    validate: async (_runtime: IAgentRuntime, message: Memory) => {
         elizaLogger.debug("Starting transfer validation for user:", message.userId);
         elizaLogger.debug("Message text:", message.content?.text);
         return true; // Let the handler do the validation
@@ -169,7 +169,7 @@ export default {
             }
 
             const adjustedAmount = BigInt(
-                Number(content.amount) * Math.pow(10, MOVE_DECIMALS)
+                Number(content.amount) * 10 ** MOVE_DECIMALS
             );
             console.log(
                 `Transferring: ${content.amount} tokens (${adjustedAmount} base units)`

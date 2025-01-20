@@ -89,7 +89,7 @@ const formatLicenseTerms = (license: IPLicenseDetails): string => {
   • Derivatives: ${terms.derivativesAllowed ? "Allowed" : "Not Allowed"}
   • Derivatives Attribution: ${terms.derivativesAttribution ? "Required" : "Not Required"}
   • Derivatives Approval: ${terms.derivativesApproval ? "Required" : "Not Required"}
-  • Revenue Share: ${terms.commercialRevenueShare ? terms.commercialRevenueShare + "%" : "Not Required"}
+  • Revenue Share: ${terms.commercialRevenueShare ? `${terms.commercialRevenueShare}%` : "Not Required"}
 `;
 };
 
@@ -103,7 +103,7 @@ export const getAvailableLicensesAction = {
         runtime: IAgentRuntime,
         message: Memory,
         state: State,
-        options: any,
+        _options: any,
         callback?: HandlerCallback
     ): Promise<boolean> => {
         elizaLogger.log("Starting GET_AVAILABLE_LICENSES handler...");

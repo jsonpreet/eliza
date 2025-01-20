@@ -18,13 +18,12 @@ vi.stubGlobal(
             return Promise.resolve({
                 json: () => Promise.resolve(mockDepinscanMetrics),
             });
-        } else if (url.includes(DEPIN_PROJECTS_URL)) {
+        }if (url.includes(DEPIN_PROJECTS_URL)) {
             return Promise.resolve({
                 json: () => Promise.resolve(mockDepinscanProjects),
             });
-        } else {
-            return Promise.reject(new Error("Unknown endpoint"));
         }
+            return Promise.reject(new Error("Unknown endpoint"));
     })
 );
 

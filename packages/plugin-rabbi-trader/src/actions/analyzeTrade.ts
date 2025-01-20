@@ -65,7 +65,7 @@ ${JSON.stringify(tokenData, null, 2)}`;
                 throw new Error("No analysis generated");
             }
 
-            elizaLogger.log(`Raw analysis response:`, content);
+            elizaLogger.log("Raw analysis response:", content);
 
             // Parse the response to get the recommended action
             const recommendation = parseJSONObjectFromText(content);
@@ -84,7 +84,7 @@ ${JSON.stringify(tokenData, null, 2)}`;
 
             return true;
         } catch (error) {
-            elizaLogger.error(`Analysis failed:`, {
+            elizaLogger.error("Analysis failed:", {
                 error: error instanceof Error ? error.message : "Unknown error",
                 stack: error instanceof Error ? error.stack : undefined,
             });

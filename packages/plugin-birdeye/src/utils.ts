@@ -435,7 +435,7 @@ export const formatTokenInfo = (
             );
 
         if (links.length > 0) {
-            output += "\n\n📱 Social Links:\n" + links.join("\n");
+            output += `\n\n📱 Social Links:\n${links.join("\n")}`;
         }
     }
 
@@ -533,7 +533,7 @@ export const formatMetadataResponse = (
 
     // Social Links
     response += "\n🔗 Social Links & Extensions\n";
-    response += formatSocialLinks(tokenData) + "\n";
+    response += `${formatSocialLinks(tokenData)}\n`;
 
     // Logo
     if (tokenData.logo_uri) {

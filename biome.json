@@ -14,7 +14,7 @@
           "noDuplicateObjectKeys": "error",
           "noGlobalIsNan": "error",
           "noDuplicateFontNames": "error",
-          "noSelfCompare": "warn",
+          "noSelfCompare": "error",
           "noDoubleEquals": "warn",
           "noImplicitAnyLet": "warn",
           "noAssignInExpressions": "warn",

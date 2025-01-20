@@ -90,7 +90,7 @@ describe("SkipApiAssetsFromSourceFetcher", () => {
         expect(result).toEqual(mockResponse);
 
         const cacheKey = `${sourceAssetDenom}_${sourceAssetChainId}`;
-        expect(fetcher["cache"].has(cacheKey)).toBe(true);
+        expect(fetcher.cache.has(cacheKey)).toBe(true);
 
         const cachedResult = await fetcher.fetch(
             sourceAssetDenom,

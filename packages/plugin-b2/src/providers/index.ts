@@ -150,10 +150,10 @@ export class WalletProvider implements Provider {
                 accountAddress = walletProvider.getAddress();
             }
 
-            let output = `# Wallet Balances\n\n`;
+            let output = "# Wallet Balances\n\n";
             output += `## Wallet Address\n\n\`${accountAddress}\`\n\n`;
 
-            output += `## Latest Token Balances\n\n`;
+            output += "## Latest Token Balances\n\n";
             for (const [token, address] of Object.entries(TOKEN_ADDRESSES)) {
                 const decimals = await this.getDecimals(address);
                 const balance = await this.getTokenBalance(
@@ -162,7 +162,7 @@ export class WalletProvider implements Provider {
                 );
                 output += `${token}: ${formatUnits(balance, decimals)}\n`;
             }
-            output += `Note: These balances can be used at any time.\n\n`;
+            output += "Note: These balances can be used at any time.\n\n";
             elizaLogger.debug("walletProvider::get output:", output);
             return output;
         } catch (error) {
@@ -199,10 +199,10 @@ export const walletProvider: Provider = {
         try {
             const walletProvider = await initWalletProvider(runtime);
             const account = walletProvider.getAccount();
-            let output = `# Wallet Balances\n\n`;
+            let output = "# Wallet Balances\n\n";
             output += `## Wallet Address\n\n\`${account.address}\`\n\n`;
 
-            output += `## Latest Token Balances\n\n`;
+            output += "## Latest Token Balances\n\n";
             for (const [token, address] of Object.entries(TOKEN_ADDRESSES)) {
                 const decimals = await walletProvider.getDecimals(address);
                 const balance = await walletProvider.getTokenBalance(
@@ -211,7 +211,7 @@ export const walletProvider: Provider = {
                 );
                 output += `${token}: ${formatUnits(balance, decimals)}\n`;
             }
-            output += `Note: These balances can be used at any time.\n\n`;
+            output += "Note: These balances can be used at any time.\n\n";
             elizaLogger.debug("walletProvider::get output:", output);
             return output;
         } catch (error) {

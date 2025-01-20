@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, vi, afterEach } from "vitest";
 import { generatePrivateKey, privateKeyToAccount } from "viem/accounts";
-import { Account, Chain } from "viem";
+import type { Account, Chain } from "viem";
 
 import { WalletProvider } from "../providers/wallet";
 import { SwapAction } from "../actions/swap";
@@ -36,13 +36,13 @@ describe("Swap Action", () => {
     });
     describe("Swap", () => {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        let ta: SwapAction;
+        let _ta: SwapAction;
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        let receiver: Account;
+        let _receiver: Account;
 
         beforeEach(() => {
-            ta = new SwapAction(wp);
-            receiver = privateKeyToAccount(generatePrivateKey());
+            _ta = new SwapAction(wp);
+            _receiver = privateKeyToAccount(generatePrivateKey());
         });
 
         it("swap throws if not enough gas/tokens", async () => {

@@ -1,11 +1,11 @@
 
-import { Action } from "@elizaos/core";
+import type { Action } from "@elizaos/core";
 import { validatePrompt, validateApiKey, callOpenAiApi, buildRequestData } from "./action";
 
 export const generateTextAction: Action = {
     name: "generateText",
     description: "Generate text using OpenAI",
-    async handler(runtime, message, state) {
+    async handler(_runtime, message, _state) {
         const prompt = message.content.text?.trim() || "";
         validatePrompt(prompt);
 

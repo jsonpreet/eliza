@@ -97,7 +97,7 @@ You can use these coin IDs when querying specific cryptocurrency data.
 }
 
 export const coinsProvider: Provider = {
-    get: async (runtime: IAgentRuntime, message: Memory, state?: State): Promise<string> => {
+    get: async (runtime: IAgentRuntime, _message: Memory, _state?: State): Promise<string> => {
         try {
             const coins = await getCoins(runtime);
             return formatCoinsContext(coins);

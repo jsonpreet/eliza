@@ -42,7 +42,7 @@ export class SlackUtils {
                 lastError = error as Error;
                 if (attempt < finalRetryOpts.maxRetries - 1) {
                     const delay = Math.min(
-                        finalRetryOpts.initialDelay * Math.pow(2, attempt),
+                        finalRetryOpts.initialDelay * 2 ** attempt,
                         finalRetryOpts.maxDelay
                     );
                     await new Promise((resolve) => setTimeout(resolve, delay));
@@ -99,7 +99,7 @@ export class SlackUtils {
         text: string,
         options: RetryOptions = {}
     ) {
-        return this.sendMessageWithRetry(client, channel, text, {
+        return SlackUtils.sendMessageWithRetry(client, channel, text, {
             ...options,
             threadTs,
         });
@@ -125,7 +125,7 @@ export class SlackUtils {
                     error.message.includes("rate_limited")
                 ) {
                     const delay = Math.min(
-                        retryOpts.initialDelay * Math.pow(2, attempt),
+                        retryOpts.initialDelay * 2 ** attempt,
                         retryOpts.maxDelay
                     );
                     await new Promise((resolve) => setTimeout(resolve, delay));

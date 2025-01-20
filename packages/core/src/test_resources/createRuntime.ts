@@ -104,7 +104,7 @@ export async function createRuntime({
 
                 if (error) {
                     throw new Error(
-                        "Create runtime error: " + JSON.stringify(error)
+                        `Create runtime error: ${JSON.stringify(error)}`
                     );
                 }
 
@@ -135,7 +135,6 @@ export async function createRuntime({
                 };
             }
             break;
-        case "sqlite":
         default:
             {
                 const module = await import("better-sqlite3");
@@ -161,7 +160,7 @@ export async function createRuntime({
     const runtime = new AgentRuntime({
         serverUrl: getEndpoint(ModelProviderName.OPENAI),
         conversationLength,
-        token: env!.OPENAI_API_KEY!,
+        token: env?.OPENAI_API_KEY!,
         modelProvider: ModelProviderName.OPENAI,
         actions: actions ?? [],
         evaluators: evaluators ?? [],

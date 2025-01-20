@@ -11,7 +11,7 @@ import {
     type GenerateObjectResult,
     type StepResult as AIStepResult,
 } from "ai";
-import { Buffer } from "buffer";
+import { Buffer } from "node:buffer";
 import { createOllama } from "ollama-ai-provider";
 import OpenAI from "openai";
 import { encodingForModel, type TiktokenModel } from "js-tiktoken";
@@ -216,9 +216,8 @@ async function getOnChainEternalAISystemPrompt(
                 const content = Buffer.from(value, "hex").toString("utf-8");
                 elizaLogger.info("on-chain system-prompt", content);
                 return await fetchEternalAISystemPrompt(runtime, content);
-            } else {
-                return undefined;
             }
+                return undefined;
         } catch (error) {
             elizaLogger.error(error);
             elizaLogger.error("err", error);
@@ -232,7 +231,7 @@ async function getOnChainEternalAISystemPrompt(
  * @returns System Prompt
  */
 async function fetchEternalAISystemPrompt(
-    runtime: IAgentRuntime,
+    _runtime: IAgentRuntime,
     content: string
 ): Promise<string> | undefined {
     const IPFS = "ipfs://";
@@ -250,7 +249,7 @@ async function fetchEternalAISystemPrompt(
         if (responseLH.ok) {
             const data = await responseLH.text();
             return data;
-        } else {
+        }
             const gcs = content.replace(
                 IPFS,
                 "https://cdn.eternalai.org/upload/"
@@ -263,13 +262,10 @@ async function fetchEternalAISystemPrompt(
             if (responseGCS.ok) {
                 const data = await responseGCS.text();
                 return data;
-            } else {
-                throw new Error("invalid on-chain system prompt");
             }
-        }
-    } else {
-        return content;
+                throw new Error("invalid on-chain system prompt");
     }
+        return content;
 }
 
 /**
@@ -923,7 +919,7 @@ export async function generateText({
                     elizaLogger.debug("Initializing Ollama model.");
 
                     const ollamaProvider = createOllama({
-                        baseURL: getEndpoint(provider) + "/api",
+                        baseURL: `${getEndpoint(provider)}/api`,
                         fetch: runtime.fetch,
                     });
                     const ollama = ollamaProvider(model);
@@ -981,7 +977,7 @@ export async function generateText({
             case ModelProviderName.GAIANET: {
                 elizaLogger.debug("Initializing GAIANET model.");
 
-                var baseURL = getEndpoint(provider);
+                let baseURL = getEndpoint(provider);
                 if (!baseURL) {
                     switch (modelClass) {
                         case ModelClass.SMALL:
@@ -1237,7 +1233,7 @@ export async function generateText({
                     stream: false
                 };
 
-                const fetchResponse = await runtime.fetch(endpoint+'/llm', {
+                const fetchResponse = await runtime.fetch(`${endpoint}/llm`, {
                     method: "POST",
                     headers: {
                         "accept": "text/event-stream",
@@ -1318,9 +1314,8 @@ export async function generateShouldRespond({
             if (parsedResponse) {
                 elizaLogger.debug("Parsed response:", parsedResponse);
                 return parsedResponse;
-            } else {
-                elizaLogger.debug("generateShouldRespond no response");
             }
+                elizaLogger.debug("generateShouldRespond no response");
         } catch (error) {
             elizaLogger.error("Error in generateShouldRespond:", error);
             if (
@@ -1351,7 +1346,7 @@ export async function splitChunks(
     chunkSize = 512,
     bleed = 20
 ): Promise<string[]> {
-    elizaLogger.debug(`[splitChunks] Starting text split`);
+    elizaLogger.debug("[splitChunks] Starting text split");
 
     const textSplitter = new RecursiveCharacterTextSplitter({
         chunkSize: Number(chunkSize),
@@ -1359,7 +1354,7 @@ export async function splitChunks(
     });
 
     const chunks = await textSplitter.splitText(content);
-    elizaLogger.debug(`[splitChunks] Split complete:`, {
+    elizaLogger.debug("[splitChunks] Split complete:", {
         numberOfChunks: chunks.length,
         averageChunkSize:
             chunks.reduce((acc, chunk) => acc + chunk.length, 0) /
@@ -1696,7 +1691,7 @@ export const generateImage = async (
 
             const imageURL = await response.json();
             return { success: true, data: [imageURL] };
-        } else if (
+        }if (
             runtime.imageModelProvider === ModelProviderName.TOGETHER ||
             // for backwards compat
             runtime.imageModelProvider === ModelProviderName.LLAMACLOUD
@@ -1754,7 +1749,7 @@ export const generateImage = async (
 
             elizaLogger.debug(`Generated ${base64s.length} images`);
             return { success: true, data: base64s };
-        } else if (runtime.imageModelProvider === ModelProviderName.FAL) {
+        }if (runtime.imageModelProvider === ModelProviderName.FAL) {
             fal.config({
                 credentials: apiKey as string,
             });
@@ -1807,7 +1802,7 @@ export const generateImage = async (
 
             const base64s = await Promise.all(base64Promises);
             return { success: true, data: base64s };
-        } else if (runtime.imageModelProvider === ModelProviderName.VENICE) {
+        }if (runtime.imageModelProvider === ModelProviderName.VENICE) {
             const response = await fetch(
                 "https://api.venice.ai/api/v1/image/generate",
                 {
@@ -1848,7 +1843,7 @@ export const generateImage = async (
             });
 
             return { success: true, data: base64s };
-        } else if (
+        }if (
             runtime.imageModelProvider === ModelProviderName.NINETEEN_AI
         ) {
             const response = await fetch(
@@ -1887,7 +1882,7 @@ export const generateImage = async (
             });
 
             return { success: true, data: base64s };
-        } else if (runtime.imageModelProvider === ModelProviderName.LIVEPEER) {
+        }if (runtime.imageModelProvider === ModelProviderName.LIVEPEER) {
             if (!apiKey) {
                 throw new Error("Livepeer Gateway is not defined");
             }
@@ -2435,7 +2430,7 @@ async function handleOllama({
     provider,
 }: ProviderOptions): Promise<GenerateObjectResult<unknown>> {
     const ollamaProvider = createOllama({
-        baseURL: getEndpoint(provider) + "/api",
+        baseURL: `${getEndpoint(provider)}/api`,
     });
     const ollama = ollamaProvider(model);
     return await aiGenerateObject({
@@ -2538,9 +2533,8 @@ export async function generateTweetActions({
             if (actions) {
                 console.debug("Parsed tweet actions:", actions);
                 return actions;
-            } else {
-                elizaLogger.debug("generateTweetActions no valid response");
             }
+                elizaLogger.debug("generateTweetActions no valid response");
         } catch (error) {
             elizaLogger.error("Error in generateTweetActions:", error);
             if (

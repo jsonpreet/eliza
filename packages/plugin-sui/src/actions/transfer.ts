@@ -63,7 +63,7 @@ export default {
         "SEND_SUI",
         "PAY",
     ],
-    validate: async (runtime: IAgentRuntime, message: Memory) => {
+    validate: async (_runtime: IAgentRuntime, message: Memory) => {
         console.log("Validating sui transfer from user:", message.userId);
         //add custom validate logic here
         /*
@@ -146,7 +146,7 @@ export default {
             });
 
             const adjustedAmount = BigInt(
-                Number(transferContent.amount) * Math.pow(10, SUI_DECIMALS)
+                Number(transferContent.amount) * 10 ** SUI_DECIMALS
             );
             console.log(
                 `Transferring: ${transferContent.amount} tokens (${adjustedAmount} base units)`

@@ -311,7 +311,7 @@ export const closeDeploymentAction: Action = {
     handler: async (
         runtime: IAgentRuntime,
         message: Memory,
-        state: State | undefined,
+        _state: State | undefined,
         _options: { [key: string]: unknown } = {},
         callback?: HandlerCallback
     ): Promise<boolean> => {
@@ -416,7 +416,7 @@ export const closeDeploymentAction: Action = {
                 }
                 return results.failed.length === 0;
 
-            } else if (params.dseq) {
+            }if (params.dseq) {
                 const success = await closeSingleDeployment(runtime, params.dseq);
 
                 if (callback) {

@@ -12,9 +12,6 @@ import * as Products from './products';
 import * as Public from './public';
 
 export class RESTClient extends RESTBase {
-    constructor(key?: string | undefined, secret?: string | undefined) {
-        super(key, secret);
-    }
 
     // =============== ACCOUNTS endpoints ===============
     public getAccount = Accounts.getAccount.bind(this);

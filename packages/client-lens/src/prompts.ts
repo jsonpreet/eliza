@@ -36,8 +36,7 @@ About {{agentName}} (@{{lensHandle}}):
 {{characterPostExamples}}`;
 
 export const postTemplate =
-    headerTemplate +
-    `
+    `${headerTemplate}
 # Task: Generate a post in the voice and style of {{agentName}}, aka @{{lensHandle}}
 Write a single sentence post that is {{adjective}} about {{topic}} (without mentioning {{topic}} directly), from the perspective of {{agentName}}.
 Try to write something totally different than previous posts. Do not add commentary or ackwowledge this request, just write the post.
@@ -45,8 +44,7 @@ Try to write something totally different than previous posts. Do not add comment
 Your response should not contain any questions. Brief, concise statements only. No emojis. Use \\n\\n (double spaces) between statements.`;
 
 export const messageHandlerTemplate =
-    headerTemplate +
-    `
+    `${headerTemplate}
 Recent interactions between {{agentName}} and other users:
 {{recentPostInteractions}}
 
@@ -54,8 +52,7 @@ Thread of publications You Are Replying To:
 {{formattedConversation}}
 
 # Task: Generate a post in the voice, style and perspective of {{agentName}} (@{{lensHandle}}):
-{{currentPost}}` +
-    messageCompletionFooter;
+{{currentPost}}${messageCompletionFooter}`;
 
 export const shouldRespondTemplate =
     //
@@ -85,4 +82,4 @@ Thread of messages You Are Replying To:
 Current message:
 {{currentPost}}
 
-` + shouldRespondFooter;
+${shouldRespondFooter}`;

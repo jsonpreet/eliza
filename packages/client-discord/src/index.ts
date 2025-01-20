@@ -15,7 +15,7 @@ import {
     Partials,
     type User,
 } from "discord.js";
-import { EventEmitter } from "events";
+import { EventEmitter } from "node:events";
 import chat_with_attachments from "./actions/chat_with_attachments.ts";
 import download_media from "./actions/download_media.ts";
 import joinvoice from "./actions/joinvoice.ts";
@@ -321,13 +321,13 @@ export class DiscordClient extends EventEmitter {
         const messageContent = reaction.message.content;
         const truncatedContent =
             messageContent.length > 50
-                ? messageContent.substring(0, 50) + "..."
+                ? `${messageContent.substring(0, 50)}...`
                 : messageContent;
 
         const reactionMessage = `*Removed <${emoji} emoji> from: "${truncatedContent}"*`;
 
         const roomId = stringToUuid(
-            reaction.message.channel.id + "-" + this.runtime.agentId
+            `${reaction.message.channel.id}-${this.runtime.agentId}`
         );
         const userIdUUID = stringToUuid(user.id);
 
@@ -357,7 +357,7 @@ export class DiscordClient extends EventEmitter {
                     text: reactionMessage,
                     source: "discord",
                     inReplyTo: stringToUuid(
-                        reaction.message.id + "-" + this.runtime.agentId
+                        `${reaction.message.id}-${this.runtime.agentId}`
                     ), // This is the ID of the original message
                 },
                 roomId,

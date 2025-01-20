@@ -1,11 +1,11 @@
 
-import { Action } from "@elizaos/core";
+import type { Action } from "@elizaos/core";
 import { validatePrompt, validateApiKey, callOpenAiApi } from "./action";
 
 export const moderateContentAction: Action = {
     name: "moderateContent",
     description: "Moderate content using OpenAI",
-    async handler(runtime, message, state) {
+    async handler(_runtime, message, _state) {
         const input = message.content.text?.trim() || "";
         validatePrompt(input);
 

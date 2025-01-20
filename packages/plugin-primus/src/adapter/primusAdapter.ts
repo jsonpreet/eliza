@@ -71,7 +71,7 @@ export class PrimusAdapter implements IVerifiableInferenceAdapter {
                     models[provider].model[modelClass].temperature,
             };
             const attestation = await generateProof(endpoint,"POST",headers,JSON.stringify(body),responseParsePath);
-            elizaLogger.log(`model attestation:`, attestation);
+            elizaLogger.log("model attestation:", attestation);
 
             const responseData = JSON.parse(attestation.data);
             const text = JSON.parse(responseData.content);

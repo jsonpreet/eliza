@@ -57,17 +57,15 @@ export const handleBroadcastResult = (
 
     if ("id" in broadcastValue || "txId" in broadcastValue) {
         return broadcastValue;
-    } else {
-        throw new Error();
     }
+        throw new Error();
 };
 
 export const getProfilePictureUri = (picture: any): string | undefined => {
     if ("optimized" in picture) {
         return picture.optimized?.uri || picture.raw?.uri || picture.uri;
-    } else {
-        return picture.uri;
     }
+        return picture.uri;
 };
 
 export function omit<T extends object, K extends string>(

@@ -41,6 +41,7 @@ export function AppSidebar() {
                                     width="100%"
                                     height="100%"
                                     className="size-7"
+                                    alt="ElizaOS Logo"
                                 />
 
                                 <div className="flex flex-col gap-0.5 leading-none">

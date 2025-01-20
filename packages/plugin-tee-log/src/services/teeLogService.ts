@@ -4,7 +4,7 @@ import { SqliteTeeLogDAO } from "../adapters/sqliteDAO";
 import { TeeType, type TeeLogDAO, type TeeAgent, type TeeLog, type TeeLogQuery, type PageQuery } from "../types";
 import { TeeLogManager } from "./teeLogManager";
 import Database from "better-sqlite3";
-import path from "path";
+import path from "node:path";
 
 export class TeeLogService extends Service implements ITeeLogService {
     private readonly dbPath = path.resolve("agent/data/tee_log.sqlite");
@@ -54,7 +54,7 @@ export class TeeLogService extends Service implements ITeeLogService {
 
         if (useSgxGramine && useTdxDstack) {
             throw new Error("Cannot configure both SGX and TDX at the same time.");
-        } else if (useSgxGramine) {
+        }if (useSgxGramine) {
             this.teeType = TeeType.SGX_GRAMINE;
         } else if (useTdxDstack) {
             this.teeType = TeeType.TDX_DSTACK;

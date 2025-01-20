@@ -23,7 +23,7 @@ import * as WasmXModule from "./wasmx";
 
 export class InjectiveGrpcClient extends InjectiveGrpcBase {
     constructor(
-        networkType: keyof typeof Network = "Mainnet",
+        networkType: keyof typeof Network,
         injectivePrivateKey: string,
         ethPublicKey?: string,
         injPublicKey?: string

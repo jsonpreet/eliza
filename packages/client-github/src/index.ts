@@ -1,10 +1,10 @@
 import { Octokit } from "@octokit/rest";
 import { glob } from "glob";
 import simpleGit, { type SimpleGit } from "simple-git";
-import path from "path";
-import fs from "fs/promises";
-import { existsSync } from "fs";
-import { createHash } from "crypto";
+import path from "node:path";
+import fs from "node:fs/promises";
+import { existsSync } from "node:fs";
+import { createHash } from "node:crypto";
 import {
     elizaLogger,
     type AgentRuntime,
@@ -119,7 +119,7 @@ export class GitHubClient {
 
             if (
                 existingDocument &&
-                existingDocument.content["hash"] == contentHash
+                existingDocument.content.hash === contentHash
             ) {
                 continue;
             }

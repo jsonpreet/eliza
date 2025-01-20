@@ -5,8 +5,8 @@ import {
     ModelProviderName,
 } from "@elizaos/core";
 import { Service } from "@elizaos/core";
-import fs from "fs";
-import https from "https";
+import fs from "node:fs";
+import https from "node:https";
 import {
     type GbnfJsonSchema,
     getLlama,
@@ -20,9 +20,9 @@ import {
     type LlamaModel,
     type Token,
 } from "node-llama-cpp";
-import path from "path";
+import path from "node:path";
 import si from "systeminformation";
-import { fileURLToPath } from "url";
+import { fileURLToPath } from "node:url";
 
 const wordsToPunish = [
     " please",
@@ -314,7 +314,7 @@ export class LlamaService extends Service {
                                 10
                             );
                             elizaLogger.info(
-                                `Downloading model: Hermes-3-Llama-3.1-8B.Q8_0.gguf`
+                                "Downloading model: Hermes-3-Llama-3.1-8B.Q8_0.gguf"
                             );
                             elizaLogger.info(
                                 `Download location: ${this.modelPath}`
@@ -556,7 +556,7 @@ export class LlamaService extends Service {
         });
 
         const wordsToPunishTokens = wordsToPunish
-            .flatMap((word) => this.model!.tokenize(word));
+            .flatMap((word) => this.model?.tokenize(word));
 
         const repeatPenalty: LlamaChatSessionRepeatPenalty = {
             punishTokensFilter: () => wordsToPunishTokens,
@@ -733,11 +733,11 @@ export class LlamaService extends Service {
             throw new Error("Sequence not initialized");
         }
 
-        const tokens = this.model!.tokenize(prompt);
+        const tokens = this.model?.tokenize(prompt);
 
         // tokenize the words to punish
         const wordsToPunishTokens = wordsToPunish
-            .flatMap((word) => this.model!.tokenize(word));
+            .flatMap((word) => this.model?.tokenize(word));
 
         const repeatPenalty: LlamaContextSequenceRepeatPenalty = {
             punishTokens: () => wordsToPunishTokens,
@@ -760,14 +760,14 @@ export class LlamaService extends Service {
             }
 
             responseTokens.push(token);
-            process.stdout.write(this.model!.detokenize([token]));
+            process.stdout.write(this.model?.detokenize([token]));
             if (responseTokens.length > 256) {
                 elizaLogger.info("Max tokens reached");
                 break;
             }
         }
 
-        const response = this.model!.detokenize(responseTokens);
+        const response = this.model?.detokenize(responseTokens);
 
         if (!response) {
             throw new Error("Response is undefined");

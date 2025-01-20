@@ -73,7 +73,7 @@ Thread of Tweets You Are Replying To:
 {{formattedConversation}}
 
 # INSTRUCTIONS: Choose the option that best describes {{agentName}}'s response to the last message. Ignore messages if they are addressed to someone else.
-` + shouldRespondFooter;
+${shouldRespondFooter}`;
 
 export const telegramMessageHandlerTemplate =
     // {{goals}}
@@ -111,7 +111,7 @@ Current Post:
 Thread of Tweets You Are Replying To:
 
 {{formattedConversation}}
-` + messageCompletionFooter;
+${messageCompletionFooter}`;
 
 export const telegramAutoPostTemplate =
     `# Action Examples
@@ -149,7 +149,7 @@ Examples of {{agentName}}'s dialog and actions:
 - DO NOT REPEAT THE SAME thing that you just said from your recent chat history, start the message different each time, and be organic, non reptitive.
 
 # Instructions: Write the next message for {{agentName}}. Include the "NONE" action only, as the only valid action for auto-posts is "NONE".
-` + messageCompletionFooter;
+${messageCompletionFooter}`;
 
 export const telegramPinnedMessageTemplate =
     `# Action Examples
@@ -182,4 +182,4 @@ Examples of {{agentName}}'s dialog and actions:
 - Use 1-2 emojis maximum
 
 # Instructions: Write the next message for {{agentName}}. Include an action, if appropriate. The only valid action for pinned message highlights is "NONE".
-` + messageCompletionFooter;
+${messageCompletionFooter}`;

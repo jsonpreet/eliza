@@ -58,7 +58,7 @@ import {
  */
 export async function getModuleParams(
     this: InjectiveGrpcBase,
-    params?: ExchangeTypes.GetModuleParamsParams
+    _params?: ExchangeTypes.GetModuleParamsParams
 ): Promise<StandardResponse> {
     try {
         const result = await this.chainGrpcExchangeApi.fetchModuleParams();
@@ -77,7 +77,7 @@ export async function getModuleParams(
  */
 export async function getModuleState(
     this: InjectiveGrpcBase,
-    params?: ExchangeTypes.GetModuleStateParams
+    _params?: ExchangeTypes.GetModuleStateParams
 ): Promise<StandardResponse> {
     try {
         const result = await this.chainGrpcExchangeApi.fetchModuleState();
@@ -96,7 +96,7 @@ export async function getModuleState(
  */
 export async function getFeeDiscountSchedule(
     this: InjectiveGrpcBase,
-    params?: ExchangeTypes.GetFeeDiscountScheduleParams
+    _params?: ExchangeTypes.GetFeeDiscountScheduleParams
 ): Promise<StandardResponse> {
     try {
         const result =
@@ -138,7 +138,7 @@ export async function getFeeDiscountAccountInfo(
  */
 export async function getTradingRewardsCampaign(
     this: InjectiveGrpcBase,
-    params?: ExchangeTypes.GetTradingRewardsCampaignParams
+    _params?: ExchangeTypes.GetTradingRewardsCampaignParams
 ): Promise<StandardResponse> {
     try {
         const result =
@@ -201,7 +201,7 @@ export async function getPendingTradeRewardPoints(
  */
 export async function getExchangePositions(
     this: InjectiveGrpcBase,
-    params?: ExchangeTypes.GetExchangePositionsParams
+    _params?: ExchangeTypes.GetExchangePositionsParams
 ): Promise<StandardResponse> {
     try {
         const result = await this.chainGrpcExchangeApi.fetchPositions();

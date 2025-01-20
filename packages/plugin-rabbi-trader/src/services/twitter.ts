@@ -161,7 +161,7 @@ export class TwitterService {
       ];
 
       return lines.filter(Boolean).join("\n");
-    } else {
+    }
       // Simplified BUY format
       const lines = [
         `🟢 BUY | ${alert.token}`,
@@ -174,6 +174,5 @@ export class TwitterService {
       ];
 
       return lines.filter(Boolean).join("\n");
-    }
   }
 }

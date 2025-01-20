@@ -1,5 +1,5 @@
 import WebSocket from "ws";
-import EventEmitter from "events";
+import EventEmitter from "node:events";
 
 interface DeviceHandshake {
     identifier: string;

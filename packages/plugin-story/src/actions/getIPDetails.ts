@@ -70,7 +70,7 @@ export const getIPDetailsAction = {
         runtime: IAgentRuntime,
         message: Memory,
         state: State,
-        options: any,
+        _options: any,
         callback?: HandlerCallback
     ): Promise<boolean> => {
         elizaLogger.log("Starting GET_IP_DETAILS handler...");

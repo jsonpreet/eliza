@@ -4,8 +4,8 @@ import type { MediaItem } from "../types";
 import { getIgClient } from "./state";
 
 export async function fetchRecentMedia(
-    runtime: IAgentRuntime,
-    config: InstagramConfig,
+    _runtime: IAgentRuntime,
+    _config: InstagramConfig,
     count = 10
   ): Promise<MediaItem[]> {
     const ig = getIgClient();

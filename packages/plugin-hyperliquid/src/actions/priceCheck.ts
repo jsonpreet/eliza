@@ -23,7 +23,7 @@ export const priceCheck: Action = {
         runtime: IAgentRuntime,
         message: Memory,
         state: State,
-        options: Record<string, unknown>,
+        _options: Record<string, unknown>,
         callback?: HandlerCallback
     ) => {
         try {

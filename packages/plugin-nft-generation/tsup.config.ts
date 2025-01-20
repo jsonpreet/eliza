@@ -1,5 +1,5 @@
 import { defineConfig } from "tsup";
-import * as fs from 'fs'
+import * as fs from 'node:fs'
 
 export default defineConfig({
     entry: ["src/index.ts"],

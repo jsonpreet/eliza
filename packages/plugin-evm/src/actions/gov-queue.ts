@@ -87,8 +87,8 @@ export const queueAction = {
     description: "Queue a DAO governance proposal for execution",
     handler: async (
         runtime: IAgentRuntime,
-        message: Memory,
-        state: State,
+        _message: Memory,
+        _state: State,
         options: any,
         callback?: any
     ) => {

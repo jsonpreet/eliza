@@ -1,4 +1,4 @@
-import fs from "fs";
+import fs from "node:fs";
 
 const EXPORTED_DATA_FILE = "tweets.json";
 const TWEETS_FILE = "exportedtweets.json";
@@ -12,17 +12,15 @@ const tweetTexts = exportedData
         console.log(tweet.username);
         if (tweet.username.toLowerCase().replace("@pmarca", "") !== "pmarca") {
             return null;
-        } else {
-            console.log("pmarca found");
         }
+            console.log("pmarca found");
 
         if (tweet.isRetweet && tweet.retweetedStatus) {
             // If the tweet is a retweet, use the text of the retweeted status
             return tweet.retweetedStatus.text;
-        } else {
+        }
             // Otherwise, use the text of the tweet itself
             return tweet.text;
-        }
     })
     .filter((tweet) => tweet !== null);
 

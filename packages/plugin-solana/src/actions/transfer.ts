@@ -30,7 +30,7 @@ export interface TransferContent extends Content {
 }
 
 function isTransferContent(
-    runtime: IAgentRuntime,
+    _runtime: IAgentRuntime,
     content: any
 ): content is TransferContent {
     elizaLogger.log("Content for transfer", content);
@@ -66,7 +66,7 @@ If no token address is mentioned, respond with null.
 export default {
     name: "SEND_TOKEN",
     similes: ["TRANSFER_TOKEN", "TRANSFER_TOKENS", "SEND_TOKENS", "PAY_TOKEN", "PAY_TOKENS", "PAY"],
-    validate: async (runtime: IAgentRuntime, message: Memory) => {
+    validate: async (_runtime: IAgentRuntime, message: Memory) => {
         // Always return true for token transfers, letting the handler deal with specifics
         elizaLogger.log("Validating token transfer from user:", message.userId);
         return true;
@@ -116,7 +116,7 @@ export default {
 
             const mintInfo = await connection.getParsedAccountInfo(mintPubkey);
             const decimals = (mintInfo.value?.data as any)?.parsed?.info?.decimals ?? 9;
-            const adjustedAmount = BigInt(Number(content.amount) * Math.pow(10, decimals));
+            const adjustedAmount = BigInt(Number(content.amount) * 10 ** decimals);
 
             const senderATA = getAssociatedTokenAddressSync(mintPubkey, senderKeypair.publicKey);
             const recipientATA = getAssociatedTokenAddressSync(mintPubkey, recipientPubkey);

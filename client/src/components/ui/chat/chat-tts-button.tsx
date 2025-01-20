@@ -62,9 +62,8 @@ export default function ChatTtsButton({
         if (audioBlob) {
             play();
             return;
-        } else {
-            mutation.mutate();
         }
+            mutation.mutate();
     };
 
     const iconClass = "text-muted-foreground size-4";
@@ -82,6 +81,15 @@ export default function ChatTtsButton({
                     <source
                         src={URL.createObjectURL(audioBlob)}
                         type="audio/mpeg"
+                    />
+                    <track
+                        kind="captions"
+                        srcLang="en"
+                        label="English captions"
+                        src={URL.createObjectURL(new Blob([
+                            `WEBVTT\n\n1\n00:00:00.000 --> 99:59:59.999\n${text}`
+                        ], {type: 'text/vtt'}))}
+                        default
                     />
                     Your browser does not support the audio element.
                 </audio>

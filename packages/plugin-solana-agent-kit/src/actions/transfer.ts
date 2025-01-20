@@ -7,13 +7,13 @@ import {
 } from "@solana/web3.js";
 
 import {
-    ActionExample,
-    Content,
-    HandlerCallback,
-    IAgentRuntime,
-    Memory,
+    type ActionExample,
+    type Content,
+    type HandlerCallback,
+    type IAgentRuntime,
+    type Memory,
     ModelClass,
-    State,
+    type State,
     type Action,
 } from "@elizaos/core";
 import { composeContext } from "@elizaos/core";
@@ -30,7 +30,7 @@ export interface TransferContent extends Content {
 }
 
 function isTransferContent(
-    runtime: IAgentRuntime,
+    _runtime: IAgentRuntime,
     content: any
 ): content is TransferContent {
     elizaLogger.log("Content for transfer", content);
@@ -65,7 +65,7 @@ Respond with a JSON markdown block containing only the extracted values.`;
 export default {
     name: TRANSFER_ACTION.name,
     similes: TRANSFER_ACTION.similes,
-    validate: async (runtime: IAgentRuntime, message: Memory) => {
+    validate: async (_runtime: IAgentRuntime, message: Memory) => {
         elizaLogger.log("Validating transfer from user:", message.userId);
         //add custom validate logic here
         /*

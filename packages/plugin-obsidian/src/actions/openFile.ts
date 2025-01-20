@@ -40,7 +40,7 @@ export const openFileAction: Action = {
         runtime: IAgentRuntime,
         message: Memory,
         state: State,
-        options: any,
+        _options: any,
         callback?: HandlerCallback
     ) => {
         elizaLogger.info("Starting open file handler");

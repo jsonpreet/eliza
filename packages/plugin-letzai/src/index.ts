@@ -63,13 +63,13 @@ async function pollLetzAiImageStatus(
 
                 if (!finalUrl) {
                     callback({
-                        text: `Image is ready, but no final URL found.`,
+                        text: "Image is ready, but no final URL found.",
                     });
                     return;
                 }
 
                 callback({
-                    text: `Your image is ready!`,
+                    text: "Your image is ready!",
                     attachments: [
                         {
                             id,
@@ -167,7 +167,7 @@ export const letzAiImageGeneration = {
             let imagePrompt = `${userPrompt}`.trim();
 
             //Prepend our Models from the .env config to make sure characters, styles and objects are respected
-            imagePrompt = letzAiModels + ", " + imagePrompt;
+            imagePrompt = `${letzAiModels}, ${imagePrompt}`;
             const prompt = imagePrompt;
 
             elizaLogger.log("Image prompt received:", imagePrompt);

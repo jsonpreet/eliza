@@ -93,9 +93,9 @@ export class SqlJsDatabaseAdapter
         ];
 
         // Add ordering and limit
-        sql += ` ORDER BY createdAt DESC`;
+        sql += " ORDER BY createdAt DESC";
         if (params.limit) {
-            sql += ` LIMIT ?`;
+            sql += " LIMIT ?";
             queryParams.push(params.limit.toString());
         }
 
@@ -247,7 +247,7 @@ export class SqlJsDatabaseAdapter
         const queryParams: any[] = [...memoryIds];
 
         if (tableName) {
-            sql += ` AND type = ?`;
+            sql += " AND type = ?";
             queryParams.push(tableName);
         }
 
@@ -285,7 +285,7 @@ export class SqlJsDatabaseAdapter
         }
 
         // Insert the memory with the appropriate 'unique' value
-        const sql = `INSERT INTO memories (id, type, content, embedding, userId, roomId, agentId, \`unique\`, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+        const sql = "INSERT INTO memories (id, type, content, embedding, userId, roomId, agentId, \`unique\`, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         const stmt = this.db.prepare(sql);
 
         const createdAt = memory.createdAt ?? Date.now();
@@ -361,7 +361,7 @@ export class SqlJsDatabaseAdapter
         }
     ): Promise<Memory[]> {
         let sql =
-            `SELECT *` +
+            "SELECT *" +
             // TODO: Uncomment when we compile sql.js with vss
             // `, (1 - vss_distance_l2(embedding, ?)) AS similarity`+
             ` FROM memories
@@ -499,14 +499,14 @@ export class SqlJsDatabaseAdapter
         if (!params.roomId) {
             throw new Error("roomId is required");
         }
-        let sql = `SELECT * FROM memories WHERE type = ? AND roomId = ?`;
+        let sql = "SELECT * FROM memories WHERE type = ? AND roomId = ?";
 
         if (params.start) {
-            sql += ` AND createdAt >= ?`;
+            sql += " AND createdAt >= ?";
         }
 
         if (params.end) {
-            sql += ` AND createdAt <= ?`;
+            sql += " AND createdAt <= ?";
         }
 
         if (params.unique) {
@@ -545,14 +545,14 @@ export class SqlJsDatabaseAdapter
     }
 
     async removeMemory(memoryId: UUID, tableName: string): Promise<void> {
-        const sql = `DELETE FROM memories WHERE type = ? AND id = ?`;
+        const sql = "DELETE FROM memories WHERE type = ? AND id = ?";
         const stmt = this.db.prepare(sql);
         stmt.run([tableName, memoryId]);
         stmt.free();
     }
 
     async removeAllMemories(roomId: UUID, tableName: string): Promise<void> {
-        const sql = `DELETE FROM memories WHERE type = ? AND roomId = ?`;
+        const sql = "DELETE FROM memories WHERE type = ? AND roomId = ?";
         const stmt = this.db.prepare(sql);
         stmt.run([tableName, roomId]);
         stmt.free();
@@ -567,7 +567,7 @@ export class SqlJsDatabaseAdapter
             throw new Error("tableName is required");
         }
 
-        let sql = `SELECT COUNT(*) as count FROM memories WHERE type = ? AND roomId = ?`;
+        let sql = "SELECT COUNT(*) as count FROM memories WHERE type = ? AND roomId = ?";
         if (unique) {
             sql += " AND `unique` = 1";
         }
@@ -855,12 +855,12 @@ export class SqlJsDatabaseAdapter
         const queryParams: any[] = [params.agentId];
 
         if (params.id) {
-            sql += ` AND id = ?`;
+            sql += " AND id = ?";
             queryParams.push(params.id);
         }
 
         if (params.limit) {
-            sql += ` LIMIT ?`;
+            sql += " LIMIT ?";
             queryParams.push(params.limit);
         }
 
@@ -1011,7 +1011,7 @@ export class SqlJsDatabaseAdapter
                     `Shared knowledge ${knowledge.id} already exists, skipping`
                 );
                 return;
-            } else if (
+            }if (
                 !isShared &&
                 !error.message?.includes("SQLITE_CONSTRAINT_PRIMARYKEY")
             ) {
@@ -1030,7 +1030,7 @@ export class SqlJsDatabaseAdapter
     }
 
     async removeKnowledge(id: UUID): Promise<void> {
-        const sql = `DELETE FROM knowledge WHERE id = ?`;
+        const sql = "DELETE FROM knowledge WHERE id = ?";
         const stmt = this.db.prepare(sql);
         stmt.run([id]);
         stmt.free();

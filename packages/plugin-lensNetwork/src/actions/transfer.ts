@@ -84,7 +84,7 @@ Given the recent messages, extract the following information about the requested
 
 Respond with a JSON markdown block containing only the extracted values.`;
 
-const ETH_ADDRESS = "0x000000000000000000000000000000000000800A";
+const _ETH_ADDRESS = "0x000000000000000000000000000000000000800A";
 
 export async function setupProviders() {
     // Initialize providers for both L2 (Lens) and L1 (Ethereum)
@@ -153,7 +153,7 @@ export default {
         "MOVE_TOKENS_ON_LENS",
         "MOVE_GRASS_ON_LENS",
     ],
-    validate: async (runtime: IAgentRuntime, message: Memory) => {
+    validate: async (runtime: IAgentRuntime, _message: Memory) => {
         await validateLensConfig(runtime);
         return true;
     },
@@ -221,13 +221,12 @@ export default {
             );
 
             elizaLogger.success(
-                "Transfer completed successfully! Transaction hash: " + hash
+                `Transfer completed successfully! Transaction hash: ${hash}`
             );
             if (callback) {
                 callback({
                     text:
-                        "Transfer completed successfully! Transaction hash: " +
-                        hash,
+                        `Transfer completed successfully! Transaction hash: ${hash}`,
                     content: {},
                 });
             }

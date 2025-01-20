@@ -7,13 +7,13 @@ import {
     VersionedTransaction,
 } from "@solana/web3.js";
 import {
-    ActionExample,
-    Content,
-    HandlerCallback,
-    IAgentRuntime,
-    Memory,
+    type ActionExample,
+    type Content,
+    type HandlerCallback,
+    type IAgentRuntime,
+    type Memory,
     ModelClass,
-    State,
+    type State,
     type Action,
 } from "@elizaos/core";
 import { composeContext } from "@elizaos/core";
@@ -54,7 +54,7 @@ Extract the following information about the requested SOL transfer:
 export default {
     name: "SEND_SOL",
     similes: ["TRANSFER_SOL", "PAY_SOL", "TRANSACT_SOL"],
-    validate: async (runtime: IAgentRuntime, message: Memory) => {
+    validate: async (_runtime: IAgentRuntime, message: Memory) => {
         // Always return true for SOL transfers, letting the handler deal with specifics
         elizaLogger.log("Validating SOL transfer from user:", message.userId);
         return true;

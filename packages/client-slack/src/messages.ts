@@ -167,7 +167,7 @@ export class MessageManager {
             console.log(
                 "⚠️ Step 4: Removing CONTINUE action - not a direct interaction"
             );
-            delete response.action;
+            response.action = undefined;
         }
 
         console.log("✅ Step 5: Returning generated response");

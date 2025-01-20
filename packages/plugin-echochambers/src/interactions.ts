@@ -48,7 +48,7 @@ Remember:
 - Stay on topic for the current room
 - Don't repeat information already shared
 - Be natural and conversational
-` + messageCompletionFooter
+${messageCompletionFooter}`
     );
 }
 
@@ -96,7 +96,7 @@ Consider:
 2. Current conversation context
 3. Time since last response
 4. Value of potential contribution
-` + shouldRespondFooter
+${shouldRespondFooter}`
     );
 }
 
@@ -325,7 +325,7 @@ export class InteractionClient {
                 id: message.id,
                 room: message.roomId,
                 sender: message?.sender?.username,
-                content: message.content?.substring(0, 50) + "...", // First 50 chars
+                content: `${message.content?.substring(0, 50)}...`, // First 50 chars
             });
 
             const roomId = stringToUuid(message.roomId);

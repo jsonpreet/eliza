@@ -172,9 +172,9 @@ export class SqliteDatabaseAdapter
         ];
 
         // Add ordering and limit
-        sql += ` ORDER BY createdAt DESC`;
+        sql += " ORDER BY createdAt DESC";
         if (params.limit) {
-            sql += ` LIMIT ?`;
+            sql += " LIMIT ?";
             queryParams.push(params.limit.toString());
         }
 
@@ -216,7 +216,7 @@ export class SqliteDatabaseAdapter
         queryParams.push(...memoryIds);
 
         if (tableName) {
-            sql += ` AND type = ?`;
+            sql += " AND type = ?";
             queryParams.push(tableName);
         }
 
@@ -265,7 +265,7 @@ export class SqliteDatabaseAdapter
         }
 
         // Insert the memory with the appropriate 'unique' value
-        const sql = `INSERT OR REPLACE INTO memories (id, type, content, embedding, userId, roomId, agentId, \`unique\`, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+        const sql = "INSERT OR REPLACE INTO memories (id, type, content, embedding, userId, roomId, agentId, \`unique\`, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         this.db
             .prepare(sql)
             .run(
@@ -311,7 +311,7 @@ export class SqliteDatabaseAdapter
             sql += " AND agentId = ?";
             queryParams.push(params.agentId);
         }
-        sql += ` ORDER BY similarity ASC LIMIT ?`; // ASC for lower distance
+        sql += " ORDER BY similarity ASC LIMIT ?"; // ASC for lower distance
         queryParams.push(params.match_count.toString()); // Convert number to string
 
         // Execute the prepared statement with the correct number of parameters
@@ -360,7 +360,7 @@ export class SqliteDatabaseAdapter
             sql += " AND roomId = ?";
             queryParams.push(params.roomId);
         }
-        sql += ` ORDER BY similarity DESC`;
+        sql += " ORDER BY similarity DESC";
 
         if (params.count) {
             sql += " LIMIT ?";
@@ -479,7 +479,7 @@ export class SqliteDatabaseAdapter
         if (!params.roomId) {
             throw new Error("roomId is required");
         }
-        let sql = `SELECT * FROM memories WHERE type = ? AND agentId = ? AND roomId = ?`;
+        let sql = "SELECT * FROM memories WHERE type = ? AND agentId = ? AND roomId = ?";
 
         const queryParams = [
             params.tableName,
@@ -492,12 +492,12 @@ export class SqliteDatabaseAdapter
         }
 
         if (params.start) {
-            sql += ` AND createdAt >= ?`;
+            sql += " AND createdAt >= ?";
             queryParams.push(params.start);
         }
 
         if (params.end) {
-            sql += ` AND createdAt <= ?`;
+            sql += " AND createdAt <= ?";
             queryParams.push(params.end);
         }
 
@@ -521,12 +521,12 @@ export class SqliteDatabaseAdapter
     }
 
     async removeMemory(memoryId: UUID, tableName: string): Promise<void> {
-        const sql = `DELETE FROM memories WHERE type = ? AND id = ?`;
+        const sql = "DELETE FROM memories WHERE type = ? AND id = ?";
         this.db.prepare(sql).run(tableName, memoryId);
     }
 
     async removeAllMemories(roomId: UUID, tableName: string): Promise<void> {
-        const sql = `DELETE FROM memories WHERE type = ? AND roomId = ?`;
+        const sql = "DELETE FROM memories WHERE type = ? AND roomId = ?";
         this.db.prepare(sql).run(tableName, roomId);
     }
 
@@ -539,7 +539,7 @@ export class SqliteDatabaseAdapter
             throw new Error("tableName is required");
         }
 
-        let sql = `SELECT COUNT(*) as count FROM memories WHERE type = ? AND roomId = ?`;
+        let sql = "SELECT COUNT(*) as count FROM memories WHERE type = ? AND roomId = ?";
         const queryParams = [tableName, roomId] as string[];
 
         if (unique) {
@@ -765,16 +765,16 @@ export class SqliteDatabaseAdapter
         limit?: number;
         query?: string;
     }): Promise<RAGKnowledgeItem[]> {
-        let sql = `SELECT * FROM knowledge WHERE (agentId = ? OR isShared = 1)`;
+        let sql = "SELECT * FROM knowledge WHERE (agentId = ? OR isShared = 1)";
         const queryParams: any[] = [params.agentId];
 
         if (params.id) {
-            sql += ` AND id = ?`;
+            sql += " AND id = ?";
             queryParams.push(params.id);
         }
 
         if (params.limit) {
-            sql += ` LIMIT ?`;
+            sql += " LIMIT ?";
             queryParams.push(params.limit);
         }
 
@@ -948,7 +948,7 @@ export class SqliteDatabaseAdapter
                     `Shared knowledge ${knowledge.id} already exists, skipping`
                 );
                 return;
-            } else if (
+            }if (
                 !isShared &&
                 !error.message?.includes("SQLITE_CONSTRAINT_PRIMARYKEY")
             ) {
@@ -986,7 +986,7 @@ export class SqliteDatabaseAdapter
                         `[Knowledge Remove] Pattern deletion affected ${result.changes} rows`
                     );
                     return result.changes; // Return changes for logging
-                } else {
+                }
                     // Log queries before execution
                     const selectSql = "SELECT id FROM knowledge WHERE id = ?";
                     const chunkSql =
@@ -1002,7 +1002,7 @@ export class SqliteDatabaseAdapter
                         .prepare(chunkSql)
                         .all(id) as ChunkRow[];
 
-                    elizaLogger.debug(`[Knowledge Remove] Found:`, {
+                    elizaLogger.debug("[Knowledge Remove] Found:", {
                         mainEntryExists: !!mainEntry?.id,
                         chunkCount: chunks.length,
                         chunkIds: chunks.map((c) => c.id),
@@ -1039,7 +1039,7 @@ export class SqliteDatabaseAdapter
                     const verifyMain = this.db.prepare(selectSql).get(id);
                     const verifyChunks = this.db.prepare(chunkSql).all(id);
                     elizaLogger.debug(
-                        `[Knowledge Remove] Post-deletion check:`,
+                        "[Knowledge Remove] Post-deletion check:",
                         {
                             mainStillExists: !!verifyMain,
                             remainingChunks: verifyChunks.length,
@@ -1047,7 +1047,6 @@ export class SqliteDatabaseAdapter
                     );
 
                     return totalChanges; // Return changes for logging
-                }
             })(); // Important: Call the transaction function
 
             elizaLogger.debug(
@@ -1071,8 +1070,8 @@ export class SqliteDatabaseAdapter
 
     async clearKnowledge(agentId: UUID, shared?: boolean): Promise<void> {
         const sql = shared
-            ? `DELETE FROM knowledge WHERE (agentId = ? OR isShared = 1)`
-            : `DELETE FROM knowledge WHERE agentId = ?`;
+            ? "DELETE FROM knowledge WHERE (agentId = ? OR isShared = 1)"
+            : "DELETE FROM knowledge WHERE agentId = ?";
         try {
             this.db.prepare(sql).run(agentId);
         } catch (error) {

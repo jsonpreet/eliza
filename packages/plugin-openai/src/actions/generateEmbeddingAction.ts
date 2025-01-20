@@ -1,11 +1,11 @@
 
-import { Action } from "@elizaos/core";
+import type { Action } from "@elizaos/core";
 import { validatePrompt, validateApiKey, callOpenAiApi } from "./action";
 
 export const generateEmbeddingAction: Action = {
     name: "generateEmbedding",
     description: "Generate embeddings using OpenAI",
-    async handler(runtime, message, state) {
+    async handler(_runtime, message, _state) {
         const input = message.content.text?.trim() || "";
         validatePrompt(input);
 

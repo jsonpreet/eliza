@@ -29,7 +29,7 @@ import type {
 import * as viemChains from "viem/chains";
 import { DeriveKeyProvider, TEEMode } from "@elizaos/plugin-tee";
 import NodeCache from "node-cache";
-import * as path from "path";
+import * as path from "node:path";
 
 import type { SupportedChain } from "../types";
 
@@ -109,12 +109,11 @@ export class WalletProvider {
     }
 
     async getWalletBalance(): Promise<string | null> {
-        const cacheKey = "walletBalance_" + this.currentChain;
+        const cacheKey = `walletBalance_${this.currentChain}`;
         const cachedData = await this.getCachedData<string>(cacheKey);
         if (cachedData) {
             elizaLogger.log(
-                "Returning cached wallet balance for chain: " +
-                    this.currentChain
+                `Returning cached wallet balance for chain: ${this.currentChain}`
             );
             return cachedData;
         }
@@ -273,7 +272,7 @@ const genChainsFromRuntime = (
 
     chainNames.forEach((chainName) => {
         const rpcUrl = runtime.getSetting(
-            "ETHEREUM_PROVIDER_" + chainName.toUpperCase()
+            `ETHEREUM_PROVIDER_${chainName.toUpperCase()}`
         );
         const chain = WalletProvider.genChainFromName(chainName, rpcUrl);
         chains[chainName] = chain;
@@ -285,7 +284,7 @@ const genChainsFromRuntime = (
             "mainnet",
             mainnet_rpcurl
         );
-        chains["mainnet"] = chain;
+        chains.mainnet = chain;
     }
 
     return chains;
@@ -315,7 +314,7 @@ export const initWalletProvider = async (runtime: IAgentRuntime) => {
             runtime.cacheManager,
             chains
         );
-    } else {
+    }
         const privateKey = runtime.getSetting(
             "EVM_PRIVATE_KEY"
         ) as `0x${string}`;
@@ -323,7 +322,6 @@ export const initWalletProvider = async (runtime: IAgentRuntime) => {
             throw new Error("EVM_PRIVATE_KEY is missing");
         }
         return new WalletProvider(privateKey, runtime.cacheManager, chains);
-    }
 };
 
 export const evmWalletProvider: Provider = {

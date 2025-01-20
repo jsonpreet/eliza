@@ -38,7 +38,7 @@ export const readContractAction: Action = {
     handler: async (
         runtime: IAgentRuntime,
         message: Memory,
-        state: State,
+        _state: State,
         _options: any,
         callback: HandlerCallback
     ) => {

@@ -9,8 +9,8 @@ import {
     ModelClass,
 } from "@elizaos/core";
 import { generateImage } from "@elizaos/core";
-import fs from "fs";
-import path from "path";
+import fs from "node:fs";
+import path from "node:path";
 import { validateImageGenConfig } from "./environment";
 
 export function saveBase64Image(base64Data: string, filename: string): string {
@@ -105,7 +105,7 @@ const imageGeneration: Action = {
     handler: async (
         runtime: IAgentRuntime,
         message: Memory,
-        state: State,
+        _state: State,
         options: {
             width?: number;
             height?: number;
@@ -124,7 +124,7 @@ const imageGeneration: Action = {
         callback: HandlerCallback
     ) => {
         elizaLogger.log("Composing state for message:", message);
-        state = (await runtime.composeState(message)) as State;
+        _state = (await runtime.composeState(message)) as State;
         const userId = runtime.agentId;
         elizaLogger.log("User ID:", userId);
 

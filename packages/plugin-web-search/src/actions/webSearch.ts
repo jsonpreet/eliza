@@ -47,7 +47,7 @@ export const webSearch: Action = {
     suppressInitialMessage: true,
     description:
         "Perform a web search to find information related to the message.",
-    validate: async (runtime: IAgentRuntime, message: Memory) => {
+    validate: async (runtime: IAgentRuntime, _message: Memory) => {
         const tavilyApiKeyOk = !!runtime.getSetting("TAVILY_API_KEY");
 
         return tavilyApiKeyOk;
@@ -55,12 +55,12 @@ export const webSearch: Action = {
     handler: async (
         runtime: IAgentRuntime,
         message: Memory,
-        state: State,
-        options: any,
+        _state: State,
+        _options: any,
         callback: HandlerCallback
     ) => {
         elizaLogger.log("Composing state for message:", message);
-        state = (await runtime.composeState(message)) as State;
+        _state = (await runtime.composeState(message)) as State;
         const userId = runtime.agentId;
         elizaLogger.log("User ID:", userId);
 
@@ -73,7 +73,7 @@ export const webSearch: Action = {
             webSearchPrompt,
         );
 
-        if (searchResponse && searchResponse.results.length) {
+        if (searchResponse?.results.length) {
             const responseList = searchResponse.answer
                 ? `${searchResponse.answer}${
                       Array.isArray(searchResponse.results) &&

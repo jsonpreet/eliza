@@ -162,7 +162,7 @@ export default {
             const decimals = await erc20Token.decimals();
             // Convert decimal amount to integer before converting to BigInt
             const amountInteger = Math.floor(
-                Number(content.amount) * Math.pow(10, Number(decimals))
+                Number(content.amount) * 10 ** Number(decimals)
             );
             const amountWei = BigInt(amountInteger.toString());
             const recipient =
@@ -182,13 +182,12 @@ export default {
             const tx = await account.execute(transferCall);
 
             elizaLogger.success(
-                "Transfer completed successfully! tx: " + tx.transaction_hash
+                `Transfer completed successfully! tx: ${tx.transaction_hash}`
             );
             if (callback) {
                 callback({
                     text:
-                        "Transfer completed successfully! tx: " +
-                        tx.transaction_hash,
+                        `Transfer completed successfully! tx: ${tx.transaction_hash}`,
                     content: {},
                 });
             }

@@ -52,7 +52,7 @@ export default {
         "CHECK_TOKEN_PRICE_BY_ADDRESS",
         "LOOKUP_TOKEN_BY_ADDRESS",
     ],
-    validate: async (runtime: IAgentRuntime, message: Memory) => {
+    validate: async (runtime: IAgentRuntime, _message: Memory) => {
         await validateCoingeckoConfig(runtime);
         return true;
     },

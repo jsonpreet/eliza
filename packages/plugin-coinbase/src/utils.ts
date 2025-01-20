@@ -7,10 +7,10 @@ import {
     type Webhook,
 } from "@coinbase/coinbase-sdk";
 import { elizaLogger, type IAgentRuntime, settings } from "@elizaos/core";
-import fs from "fs";
-import path from "path";
+import fs from "node:fs";
+import path from "node:path";
 import type { EthereumTransaction } from "@coinbase/coinbase-sdk/dist/client";
-import { fileURLToPath } from "url";
+import { fileURLToPath } from "node:url";
 import { createArrayCsvWriter } from "csv-writer";
 import type { Transaction } from "./types";
 
@@ -440,7 +440,7 @@ export async function executeTransferAndCharityTransfer(
         amount: transferAmount,
         assetId: assetIdLowercase,
         destination: targetAddress,
-        gasless: assetIdLowercase === "usdc" ? true : false,
+        gasless: assetIdLowercase  === "usdc",
     };
     elizaLogger.log("Initiating transfer:", transferDetails);
     const transfer = await wallet.createTransfer(transferDetails);
@@ -488,7 +488,7 @@ export async function executeTransfer(
         amount,
         assetId: assetIdLowercase,
         destination: targetAddress,
-        gasless: assetIdLowercase === "usdc" ? true : false,
+        gasless: assetIdLowercase  === "usdc",
     };
     elizaLogger.log("Initiating transfer:", transferDetails);
     let transfer: Transfer | undefined;

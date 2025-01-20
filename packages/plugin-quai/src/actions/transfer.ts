@@ -45,7 +45,7 @@ export default {
         "SEND_QUAI",
         "PAY_ON_QUAI",
     ],
-    validate: async (runtime: IAgentRuntime, message: Memory) => {
+    validate: async (runtime: IAgentRuntime, _message: Memory) => {
         return validateSettings(runtime);
     },
     description:
@@ -97,7 +97,7 @@ export default {
             const account = getQuaiAccount(runtime);
             const amount =  formatUnits(content.amount, "wei");
 
-            var txObj: TransactionRequest = {};
+            let txObj: TransactionRequest = {};
             if (content.tokenAddress) {
                 // TODO: transfer QRC20s
             } else {
@@ -119,13 +119,12 @@ export default {
             const tx = await account.sendTransaction(txObj)
 
             console.log(
-                "Transfer completed successfully! tx: " + tx.hash
+                `Transfer completed successfully! tx: ${tx.hash}`
             );
             if (callback) {
                 callback({
                     text:
-                        "Transfer completed successfully! tx: " +
-                        tx.hash,
+                        `Transfer completed successfully! tx: ${tx.hash}`,
                     content: {},
                 });
             }

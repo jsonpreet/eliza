@@ -6,9 +6,9 @@ import {
 } from "@/components/ui/chat/chat-bubble";
 import { ChatInput } from "@/components/ui/chat/chat-input";
 import { ChatMessageList } from "@/components/ui/chat/chat-message-list";
-import { useTransition, animated, AnimatedProps } from "@react-spring/web";
+import { useTransition, animated, type AnimatedProps } from "@react-spring/web";
 import { Paperclip, Send, X } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import type { Content, UUID } from "@elizaos/core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiClient } from "@/lib/api";
@@ -49,19 +49,19 @@ export default function Page({ agentId }: { agentId: UUID }) {
     const getMessageVariant = (role: string) =>
         role !== "user" ? "received" : "sent";
 
-    const scrollToBottom = () => {
+    const scrollToBottom = useCallback(() => {
         if (messagesContainerRef.current) {
             messagesContainerRef.current.scrollTop =
                 messagesContainerRef.current.scrollHeight;
         }
-    };
+    }, []);
     useEffect(() => {
         scrollToBottom();
-    }, [queryClient.getQueryData(["messages", agentId])]);
+    }, [scrollToBottom]);
 
     useEffect(() => {
         scrollToBottom();
-    }, []);
+    }, [scrollToBottom]);
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
         if (e.key === "Enter" && !e.shiftKey) {
@@ -153,7 +153,7 @@ export default function Page({ agentId }: { agentId: UUID }) {
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
-        if (file && file.type.startsWith("image/")) {
+        if (file?.type.startsWith("image/")) {
             setSelectedFile(file);
         }
     };
@@ -211,10 +211,10 @@ export default function Page({ agentId }: { agentId: UUID }) {
                                             {/* Attachments */}
                                             <div>
                                                 {message?.attachments?.map(
-                                                    (attachment, idx) => (
+                                                    (attachment: IAttachment, idx: number) => (
                                                         <div
                                                             className="flex flex-col gap-1 mt-2"
-                                                            key={idx}
+                                                            key={`${attachment.url}-${idx}`}
                                                         >
                                                             <img
                                                                 src={
@@ -223,10 +223,11 @@ export default function Page({ agentId }: { agentId: UUID }) {
                                                                 width="100%"
                                                                 height="100%"
                                                                 className="w-64 rounded-md"
+                                                                alt={`Attachment: ${attachment.title || 'Untitled'}`}
                                                             />
                                                             <div className="flex items-center justify-between gap-4">
-                                                                <span></span>
-                                                                <span></span>
+                                                                <span />
+                                                                <span />
                                                             </div>
                                                         </div>
                                                     )
@@ -302,6 +303,7 @@ export default function Page({ agentId }: { agentId: UUID }) {
                                     height="100%"
                                     width="100%"
                                     className="aspect-square object-contain w-16"
+                                    alt={`Selected file preview: ${selectedFile.name}`}
                                 />
                             </div>
                         </div>

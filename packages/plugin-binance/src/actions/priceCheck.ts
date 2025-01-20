@@ -103,7 +103,7 @@ export const priceCheck: Action = {
                 const errorMessage = error.message.includes("Invalid API key")
                     ? "Unable to connect to Binance API"
                     : error.message.includes("Invalid symbol")
-                      ? `Sorry, could not find price for the cryptocurrency symbol you provided`
+                      ? "Sorry, could not find price for the cryptocurrency symbol you provided"
                       : `Sorry, I encountered an error: ${error.message}`;
 
                 callback({

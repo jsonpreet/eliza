@@ -1,5 +1,5 @@
-import { Action, elizaLogger } from "@elizaos/core";
-import { IAgentRuntime, Memory, State, HandlerCallback, Content, ActionExample } from "@elizaos/core";
+import { type Action, elizaLogger } from "@elizaos/core";
+import type { IAgentRuntime, Memory, State, HandlerCallback, Content, ActionExample } from "@elizaos/core";
 // import { HermesClient } from "../hermes/HermesClient";
 import { HermesClient } from "@pythnetwork/hermes-client";
 import { DataError, ErrorSeverity, DataErrorCode } from "../error";
@@ -277,10 +277,10 @@ export const getLatestPriceUpdatesAction: Action = {
                         const metadata = update.metadata;
                         const proofTime = metadata?.proof_available_time;
                         return `Price Feed: ${normalizePriceFeedId(update.id)}
-Current Price: ${(Number(update.price.price) * Math.pow(10, update.price.expo)).toFixed(2)} USD
-Confidence: ±${(Number(update.price.conf) * Math.pow(10, update.price.expo)).toFixed(2)} USD
-EMA Price: ${(Number(update.ema_price.price) * Math.pow(10, update.ema_price.expo)).toFixed(2)} USD
-EMA Confidence: ±${(Number(update.ema_price.conf) * Math.pow(10, update.ema_price.expo)).toFixed(2)} USD
+Current Price: ${(Number(update.price.price) * 10 ** update.price.expo).toFixed(2)} USD
+Confidence: ±${(Number(update.price.conf) * 10 ** update.price.expo).toFixed(2)} USD
+EMA Price: ${(Number(update.ema_price.price) * 10 ** update.ema_price.expo).toFixed(2)} USD
+EMA Confidence: ±${(Number(update.ema_price.conf) * 10 ** update.ema_price.expo).toFixed(2)} USD
 Last Update: ${new Date(update.price.publish_time * 1000).toLocaleString()}${metadata ? `
 Slot: ${metadata.slot}
 Proof Available: ${proofTime ? new Date(proofTime * 1000).toLocaleString() : 'Not available'}` : ''}`;

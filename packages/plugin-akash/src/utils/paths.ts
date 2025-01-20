@@ -1,7 +1,7 @@
-import * as path from 'path';
-import { fileURLToPath } from 'url';
+import * as path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { elizaLogger } from "@elizaos/core";
-import { existsSync } from 'fs';
+import { existsSync } from 'node:fs';
 import { getConfig } from '../environment';
 
 export const getPluginRoot = (importMetaUrl: string) => {

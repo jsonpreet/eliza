@@ -238,7 +238,7 @@ export class LensInteractionManager {
 
         const callback: HandlerCallback = async (
             content: Content,
-            files: any[]
+            _files: any[]
         ) => {
             try {
                 if (memoryId && !content.inReplyTo) {
@@ -256,7 +256,7 @@ export class LensInteractionManager {
                     throw new Error("publication not sent");
 
                 // sendPublication lost response action, so we need to add it back here?
-                result.memory!.content.action = content.action;
+                result.memory?.content.action = content.action;
 
                 await this.runtime.messageManager.createMemory(result.memory!);
                 return [result.memory!];

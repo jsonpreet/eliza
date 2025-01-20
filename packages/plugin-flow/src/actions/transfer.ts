@@ -39,7 +39,7 @@ export interface TransferContent extends Content {
  * Check if the content is a transfer content
  */
 function isTransferContent(
-    runtime: IAgentRuntime,
+    _runtime: IAgentRuntime,
     content: any
 ): content is TransferContent {
     elizaLogger.log("Content for transfer", content);
@@ -191,7 +191,7 @@ export class TransferAction {
                     (arg, t) => [
                         arg(amount.toFixed(1), t.UFix64),
                         arg(recipient, t.Address),
-                        arg("0x" + tokenAddr, t.Address),
+                        arg(`0x${tokenAddr}`, t.Address),
                         arg(tokenContractName, t.String),
                     ],
                     authz
@@ -203,7 +203,7 @@ export class TransferAction {
                     this.walletProvider,
                     content.token
                 );
-                const adjustedAmount = BigInt(amount * Math.pow(10, decimals));
+                const adjustedAmount = BigInt(amount * 10 ** decimals);
 
                 elizaLogger.log(
                     `${logPrefix} Sending ${adjustedAmount} ${content.token}(EVM) to ${recipient}...`
@@ -254,12 +254,11 @@ export class TransferAction {
             }
             if (e instanceof Exception) {
                 throw e;
-            } else {
+            }
                 throw new Exception(
                     50100,
-                    "Error in sending transaction: " + e.message
+                    `Error in sending transaction: ${e.message}`
                 );
-            }
         }
 
         elizaLogger.log("Completed Flow Plugin's SEND_COIN handler.");
@@ -312,8 +311,7 @@ export const transferAction = {
             if (callback) {
                 callback({
                     text:
-                        "Unable to process transfer request. Invalid content: " +
-                        err.message,
+                        `Unable to process transfer request. Invalid content: ${err.message}`,
                     content: {
                         error: "Invalid content",
                     },

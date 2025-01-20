@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { useToast } from "./use-toast";
 import info from "@/lib/info.json";
 import semver from "semver";
@@ -59,14 +59,16 @@ export default function useVersion() {
                     });
                 }
             }
-        } catch (e) {
+        } catch (_e) {
             console.error("Unable to retrieve latest version from GitHub");
         }
     };
 
+    const memoizedCompareVersion = useCallback(compareVersion, []);
+    
     useEffect(() => {
-        compareVersion();
-    }, []);
+        memoizedCompareVersion();
+    }, [memoizedCompareVersion]);
 
     return null;
 }

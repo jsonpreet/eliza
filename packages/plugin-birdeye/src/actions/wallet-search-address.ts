@@ -53,7 +53,7 @@ export const walletSearchAddressAction = {
     handler: async (
         runtime: IAgentRuntime,
         message: Memory,
-        state: State,
+        _state: State,
         _options: any,
         callback?: any
     ) => {
@@ -164,7 +164,7 @@ const formatWalletReport = (
     let header = `Wallet Result ${totalResults > 1 ? `#${index + 1}` : ""}\n`;
     header += `👛 Address ${address.address}*\n`;
     header += `💰 Total Value: $${totalValue.toLocaleString()}\n`;
-    header += `🔖 Top Holdings:`;
+    header += "🔖 Top Holdings:";
     const tokenList = tokens
         .map(
             (token) =>

@@ -66,7 +66,7 @@ export default {
         "PRICE_DETAILS",
         "COIN_PRICE_DATA"
     ],
-    validate: async (runtime: IAgentRuntime, message: Memory) => {
+    validate: async (runtime: IAgentRuntime, _message: Memory) => {
         await validateCoingeckoConfig(runtime);
         return true;
     },
@@ -162,7 +162,7 @@ export default {
             const formattedResponse = Object.entries(response.data).map(([coinId, data]) => {
                 const coin = coins.find(c => c.id === coinId);
                 const coinName = coin ? `${coin.name} (${coin.symbol.toUpperCase()})` : coinId;
-                const parts = [coinName + ':'];
+                const parts = [`${coinName}:`];
 
                 // Add price for each requested currency
                 currencies.forEach(currency => {

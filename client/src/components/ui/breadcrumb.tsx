@@ -66,6 +66,13 @@ const BreadcrumbPage = React.forwardRef<
         role="link"
         aria-disabled="true"
         aria-current="page"
+        tabIndex={0}
+        onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                props.onClick?.(e as unknown as React.MouseEvent<HTMLSpanElement>);
+            }
+        }}
         className={cn("font-normal text-foreground", className)}
         {...props}
     />

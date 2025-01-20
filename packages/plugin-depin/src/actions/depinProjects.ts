@@ -250,7 +250,7 @@ export const depinProjects: Action = {
             console.error("Error in depin project plugin:", error);
             if (callback) {
                 callback({
-                    text: `Error processing request, try again`,
+                    text: "Error processing request, try again",
                     content: { error: error.message },
                 });
             }

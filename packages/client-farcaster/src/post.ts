@@ -67,7 +67,7 @@ export class FarcasterPostManager {
 
             const lastPost = await this.runtime.cacheManager.get<{
                 timestamp: number;
-            }>("farcaster/" + this.fid + "/lastPost");
+            }>(`farcaster/${this.fid}/lastPost`);
 
             const lastPostTimestamp = lastPost?.timestamp ?? 0;
             const minMinutes = this.client.farcasterConfig.POST_INTERVAL_MIN;

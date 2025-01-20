@@ -20,15 +20,15 @@ import {
     type Relationship,
     type UUID,
 } from "@elizaos/core";
-import fs from "fs";
-import path from "path";
+import fs from "node:fs";
+import path from "node:path";
 import type {
     QueryConfig,
     QueryConfigValues,
     QueryResult,
     QueryResultRow,
 } from "pg";
-import { fileURLToPath } from "url";
+import { fileURLToPath } from "node:url";
 
 const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
 const __dirname = path.dirname(__filename); // get the name of the directory
@@ -109,7 +109,7 @@ export class PostgresDatabaseAdapter
                 if (attempt < this.maxRetries) {
                     // Calculate delay with exponential backoff
                     const backoffDelay = Math.min(
-                        this.baseDelay * Math.pow(2, attempt - 1),
+                        this.baseDelay * 2 ** (attempt - 1),
                         this.maxDelay
                     );
 
@@ -723,7 +723,7 @@ export class PostgresDatabaseAdapter
         return this.withDatabase(async () => {
             try {
                 await this.pool.query(
-                    `UPDATE goals SET name = $1, status = $2, objectives = $3 WHERE id = $4`,
+                    "UPDATE goals SET name = $1, status = $2, objectives = $3 WHERE id = $4",
                     [
                         goal.name,
                         goal.status,
@@ -1228,7 +1228,7 @@ export class PostgresDatabaseAdapter
                 values.push(params.match_threshold);
             }
 
-            sql += ` ORDER BY embedding <-> $1::vector`;
+            sql += " ORDER BY embedding <-> $1::vector";
 
             if (params.count) {
                 paramCount++;

@@ -34,7 +34,7 @@ async function authenticate(
                 };
             } catch {
                 elizaLogger.warn(
-                    `Cached session invalid, proceeding with fresh login`
+                    "Cached session invalid, proceeding with fresh login"
                 );
             }
         }

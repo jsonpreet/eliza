@@ -211,7 +211,7 @@ export class SimulationSellingService {
         // start the process in the sonar backend
         tokenPerformances.forEach(async (tokenPerformance) => {
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            const tokenProvider = new TokenProvider(
+            const _tokenProvider = new TokenProvider(
                 tokenPerformance.tokenAddress,
                 this.walletProvider,
                 this.runtime.cacheManager
@@ -258,7 +258,7 @@ export class SimulationSellingService {
                 this.trustScoreDb.getTokenPerformance(tokenAddress);
 
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            const tokenProvider = new TokenProvider(
+            const _tokenProvider = new TokenProvider(
                 tokenPerformance.tokenAddress,
                 this.walletProvider,
                 this.runtime.cacheManager

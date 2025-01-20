@@ -42,8 +42,8 @@ export class ReservoirService {
 
     async makeRequest<T>(
         endpoint: string,
-        params: Record<string, any> = {},
-        priority = 0,
+        params: Record<string, any>,
+        priority,
         runtime: IAgentRuntime
     ): Promise<T> {
         const endOperation = this.performanceMonitor.startOperation(
@@ -156,7 +156,7 @@ export class ReservoirService {
 
                 promises.push(
                     this.makeRequest<any>(
-                        `/collections/v6`,
+                        "/collections/v6",
                         {
                             limit: currentLimit,
                             offset,

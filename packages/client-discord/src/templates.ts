@@ -67,7 +67,7 @@ If {{agentName}} is conversing with a user and they have not asked to stop, it i
 {{recentMessages}}
 
 # INSTRUCTIONS: Choose the option that best describes {{agentName}}'s response to the last message. Ignore messages if they are addressed to someone else.
-` + shouldRespondFooter;
+${shouldRespondFooter}`;
 
 export const discordVoiceHandlerTemplate =
     `# Task: Generate conversational voice dialog for {{agentName}}.
@@ -87,7 +87,7 @@ Note that {{agentName}} is capable of reading/seeing/hearing various forms of me
 {{recentMessages}}
 
 # Instructions: Write the next message for {{agentName}}. Include an optional action if appropriate. {{actionNames}}
-` + messageCompletionFooter;
+${messageCompletionFooter}`;
 
 export const discordMessageHandlerTemplate =
     // {{goals}}
@@ -120,7 +120,7 @@ Note that {{agentName}} is capable of reading/seeing/hearing various forms of me
 {{recentMessages}}
 
 # Instructions: Write the next message for {{agentName}}. Include an action, if appropriate. {{actionNames}}
-` + messageCompletionFooter;
+${messageCompletionFooter}`;
 
 export const discordAutoPostTemplate =
     `# Action Examples
@@ -158,7 +158,7 @@ Examples of {{agentName}}'s dialog and actions:
 - DO NOT REPEAT THE SAME thing that you just said from your recent chat history, start the message different each time, and be organic, non reptitive.
 
 # Instructions: Write the next message for {{agentName}}. Include the "NONE" action only, as the only valid action for auto-posts is "NONE".
-` + messageCompletionFooter;
+${messageCompletionFooter}`;
 
 export const discordAnnouncementHypeTemplate =
     `# Action Examples
@@ -192,4 +192,4 @@ Examples of {{agentName}}'s dialog and actions:
 - Use 1-2 emojis maximum
 
 # Instructions: Write the next message for {{agentName}}. Include the "NONE" action only, as no other actions are appropriate for announcement hype.
-` + messageCompletionFooter;
+${messageCompletionFooter}`;

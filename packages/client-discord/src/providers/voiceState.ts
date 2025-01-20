@@ -3,7 +3,7 @@ import { ChannelType, type Message as DiscordMessage } from "discord.js";
 import type { IAgentRuntime, Memory, Provider, State } from "@elizaos/core";
 
 const voiceStateProvider: Provider = {
-    get: async (runtime: IAgentRuntime, message: Memory, state?: State) => {
+    get: async (_runtime: IAgentRuntime, _message: Memory, state?: State) => {
         // Voice doesn't get a discord message, so we need to use the channel for guild data
         const discordMessage = (state?.discordMessage ||
             state.discordChannel) as DiscordMessage;
@@ -12,7 +12,7 @@ const voiceStateProvider: Provider = {
         );
         const agentName = state?.agentName || "The agent";
         if (!connection) {
-            return agentName + " is not currently in a voice channel";
+            return `${agentName} is not currently in a voice channel`;
         }
 
         const channel = (
@@ -23,7 +23,7 @@ const voiceStateProvider: Provider = {
         );
 
         if (!channel || channel.type !== ChannelType.GuildVoice) {
-            return agentName + " is in an invalid voice channel";
+            return `${agentName} is in an invalid voice channel`;
         }
 
         return `${agentName} is currently in the voice channel: ${channel.name} (ID: ${channel.id})`;

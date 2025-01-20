@@ -1,6 +1,6 @@
 import NodeCache from "node-cache";
-import fs from "fs";
-import path from "path";
+import fs from "node:fs";
+import path from "node:path";
 
 export class Cache {
     private cache: NodeCache;
@@ -33,9 +33,8 @@ export class Cache {
                 const now = Date.now();
                 if (now < parsed.expiry) {
                     return parsed.data as T;
-                } else {
-                    fs.unlinkSync(filePath);
                 }
+                    fs.unlinkSync(filePath);
             } catch (error) {
                 console.error(
                     `Error reading cache file for key ${cacheKey}:`,
@@ -45,7 +44,7 @@ export class Cache {
                 try {
                     fs.unlinkSync(filePath);
                 } catch (e) {
-                    console.error(`Error deleting corrupted cache file:`, e);
+                    console.error("Error deleting corrupted cache file:", e);
                 }
             }
         }

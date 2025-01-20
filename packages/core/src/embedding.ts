@@ -183,7 +183,7 @@ export async function embed(runtime: IAgentRuntime, input: string) {
     elizaLogger.debug("Embedding request:", {
         modelProvider: runtime.character.modelProvider,
         useOpenAI: process.env.USE_OPENAI_EMBEDDING,
-        input: input?.slice(0, 50) + "...",
+        input: `${input?.slice(0, 50)}...`,
         inputType: typeof input,
         inputLength: input?.length,
         isString: typeof input === "string",
@@ -228,7 +228,7 @@ export async function embed(runtime: IAgentRuntime, input: string) {
         });
     }
 
-    if (config.provider == EmbeddingProvider.GaiaNet) {
+    if (config.provider === EmbeddingProvider.GaiaNet) {
         return await getRemoteEmbedding(input, {
             model: config.model,
             endpoint:

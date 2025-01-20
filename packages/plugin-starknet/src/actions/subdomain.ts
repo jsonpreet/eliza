@@ -146,13 +146,12 @@ export default {
             const tx = await account.execute(transferCall);
 
             elizaLogger.success(
-                "Transfer completed successfully! tx: " + tx.transaction_hash
+                `Transfer completed successfully! tx: ${tx.transaction_hash}`
             );
             if (callback) {
                 callback({
                     text:
-                        "Transfer completed successfully! tx: " +
-                        tx.transaction_hash,
+                        `Transfer completed successfully! tx: ${tx.transaction_hash}`,
                     content: {},
                 });
             }

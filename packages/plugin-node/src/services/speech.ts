@@ -1,4 +1,4 @@
-import { PassThrough } from "stream";
+import { PassThrough } from "node:stream";
 import { Readable } from "node:stream";
 import { ReadableStream } from "node:stream/web";
 import { type IAgentRuntime, type ISpeechService, ServiceType } from "@elizaos/core";
@@ -106,7 +106,7 @@ async function textToSpeech(runtime: IAgentRuntime, text: string) {
         );
 
         const status = response.status;
-        if (status != 200) {
+        if (status !== 200) {
             const errorBodyString = await response.text();
             const errorBody = JSON.parse(errorBodyString);
 
@@ -160,14 +160,12 @@ async function textToSpeech(runtime: IAgentRuntime, text: string) {
                     16
                 );
                 return withHeader;
-            } else {
-                return readable;
             }
-        } else {
+                return readable;
+        }
             return new Readable({
                 read() {},
             });
-        }
     } catch (error) {
         if (error.message === "QUOTA_EXCEEDED") {
             // Fall back to VITS

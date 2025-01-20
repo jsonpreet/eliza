@@ -56,7 +56,7 @@ Only respond when explicitly mentioned or when clearly part of an ongoing conver
 {{recentMessages}}
 
 # INSTRUCTIONS: Choose the option that best describes {{agentName}}'s response to the last message. Ignore messages if they are not directed at {{agentName}}.
-` + shouldRespondFooter;
+${shouldRespondFooter}`;
 
 export const slackMessageHandlerTemplate =
     `# Action Examples
@@ -96,4 +96,4 @@ Note that {{agentName}} is capable of reading/seeing/hearing various forms of me
 
 # Instructions: Write the next message for {{agentName}}. Include an action, if appropriate. {{actionNames}}
 Remember to follow the conversation flow rules above.
-` + messageCompletionFooter;
+${messageCompletionFooter}`;

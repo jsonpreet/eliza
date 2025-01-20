@@ -100,9 +100,8 @@ export class WalletProvider {
                 elizaLogger.error(`Attempt ${i + 1} failed:`, error);
                 lastError = error;
                 if (i < PROVIDER_CONFIG.MAX_RETRIES - 1) {
-                    const delay = PROVIDER_CONFIG.RETRY_DELAY * Math.pow(2, i);
+                    const delay = PROVIDER_CONFIG.RETRY_DELAY * 2 ** i;
                     await new Promise((resolve) => setTimeout(resolve, delay));
-                    continue;
                 }
             }
         }

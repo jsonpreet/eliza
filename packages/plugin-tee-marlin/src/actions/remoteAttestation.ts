@@ -6,7 +6,7 @@ export const remoteAttestationAction = {
     description: "Generate a remote attestation to prove that the agent is running in a TEE",
     handler: async (
         runtime: IAgentRuntime,
-        message: Memory,
+        _message: Memory,
         _state: State,
         _options: any,
         callback: HandlerCallback,

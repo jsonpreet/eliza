@@ -22,7 +22,7 @@ const take_order: Action = {
     similes: ["BUY_ORDER", "PLACE_ORDER"],
     description: "Records a buy order based on the user's conviction level.",
     examples: [],
-    validate: async (runtime: IAgentRuntime, message: Memory) => {
+    validate: async (_runtime: IAgentRuntime, message: Memory) => {
         const text = (message.content as Content).text;
         // Check if the message contains a ticker symbol
         const tickerRegex = /\b[A-Z]{1,5}\b/g;
@@ -48,7 +48,8 @@ Determine if the user is trying to shill the ticker. if they are, respond with e
 // - contractAddress: string
 `;
 
-        let ticker, contractAddress;
+        let ticker;
+        let contractAddress;
 
         // TODO:
 

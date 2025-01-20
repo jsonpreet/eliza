@@ -2,7 +2,7 @@ import { config } from "dotenv";
 import { SlackClientProvider } from "../providers/slack-client.provider";
 import { AttachmentManager } from "../attachments";
 import type { SlackConfig } from "../types/slack-types";
-import path from "path";
+import path from "node:path";
 import { elizaLogger } from "@elizaos/core";
 
 // Load environment variables
@@ -55,7 +55,7 @@ async function runExample() {
         // Create a test file
         const testFilePath = path.join(__dirname, "test.txt");
         async function loadFs() {
-            return await import("fs");
+            return await import("node:fs");
         }
         const fs = await loadFs();
         fs.writeFileSync(

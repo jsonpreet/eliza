@@ -50,7 +50,7 @@ export class FarcasterClient {
     async publishCast(
         cast: string,
         parentCastId: CastId | undefined,
-        retryTimes?: number
+        _retryTimes?: number
     ): Promise<NeynarCastResponse | undefined> {
         try {
             const result = await this.neynar.publishCast({
@@ -69,10 +69,9 @@ export class FarcasterClient {
             if (isApiErrorResponse(err)) {
                 elizaLogger.error("Neynar error: ", err.response.data);
                 throw err.response.data;
-            } else {
+            }
                 elizaLogger.error("Error: ", err);
                 throw err;
-            }
         }
     }
 
@@ -144,23 +143,23 @@ export class FarcasterClient {
 
         neynarMentionsResponse.notifications.map((notification) => {
             const cast = {
-                hash: notification.cast!.hash,
-                authorFid: notification.cast!.author.fid,
-                text: notification.cast!.text,
+                hash: notification.cast?.hash,
+                authorFid: notification.cast?.author.fid,
+                text: notification.cast?.text,
                 profile: {
-                    fid: notification.cast!.author.fid,
-                    name: notification.cast!.author.display_name || "anon",
-                    username: notification.cast!.author.username,
+                    fid: notification.cast?.author.fid,
+                    name: notification.cast?.author.display_name || "anon",
+                    username: notification.cast?.author.username,
                 },
-                ...(notification.cast!.parent_hash
+                ...(notification.cast?.parent_hash
                     ? {
                           inReplyTo: {
-                              hash: notification.cast!.parent_hash,
-                              fid: notification.cast!.parent_author.fid,
+                              hash: notification.cast?.parent_hash,
+                              fid: notification.cast?.parent_author.fid,
                           },
                       }
                     : {}),
-                timestamp: new Date(notification.cast!.timestamp),
+                timestamp: new Date(notification.cast?.timestamp),
             };
             mentions.push(cast);
             this.cache.set(`farcaster/cast/${cast.hash}`, cast);
@@ -189,7 +188,7 @@ export class FarcasterClient {
             username: "",
         };
 
-        const userDataBodyType = {
+        const _userDataBodyType = {
             1: "pfp",
             2: "name",
             3: "bio",

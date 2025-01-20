@@ -36,7 +36,7 @@ export const idlFactory = ({ IDL }: { IDL: any }) => {
         token_name: IDL.Opt(IDL.Text),
         feature_flags: IDL.Opt(FeatureFlags),
     });
-    const LedgerCanisterPayload = IDL.Variant({
+    const _LedgerCanisterPayload = IDL.Variant({
         Upgrade: IDL.Opt(UpgradeArgs),
         Init: InitArgs,
     });

@@ -40,7 +40,7 @@ Note that {{agentName}} is capable of reading/seeing/hearing various forms of me
 {{actions}}
 
 # Instructions: Write the next message for {{agentName}}.
-` + messageCompletionFooter;
+${messageCompletionFooter}`;
 
 export const shouldContinueTemplate =
     `# Task: Decide if {{agentName}} should continue, or wait for others in the conversation so speak.
@@ -51,7 +51,7 @@ Based on the following conversation, should {{agentName}} continue? YES or NO
 
 {{recentMessages}}
 
-Should {{agentName}} continue? ` + booleanFooter;
+Should {{agentName}} continue? ${booleanFooter}`;
 
 export const continueAction: Action = {
     name: "CONTINUE",
@@ -88,7 +88,7 @@ export const continueAction: Action = {
         runtime: IAgentRuntime,
         message: Memory,
         state: State,
-        options: any,
+        _options: any,
         callback: HandlerCallback
     ) => {
         if (!state) {
@@ -134,15 +134,14 @@ export const continueAction: Action = {
 
         // Check if our last message or message ended with a question/exclamation and warrants a stop
         if (
-            (lastAgentMessage &&
-                lastAgentMessage.content.text &&
+            (lastAgentMessage?.content.text &&
                 (lastAgentMessage.content.text.endsWith("?") ||
                     lastAgentMessage.content.text.endsWith("!"))) ||
             message.content.text.endsWith("?") ||
             message.content.text.endsWith("!")
         ) {
             elizaLogger.log(
-                `[CONTINUE] Last message had question/exclamation. Not proceeding.`
+                "[CONTINUE] Last message had question/exclamation. Not proceeding."
             );
             return;
         }

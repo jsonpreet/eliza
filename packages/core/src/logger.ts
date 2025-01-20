@@ -1,4 +1,4 @@
-import pino, { LogFn } from "pino";
+import pino, { type LogFn } from "pino";
 import pretty from "pino-pretty";
 
 const customLevels: Record<string, number> = {
@@ -44,7 +44,7 @@ const options = {
                 );
                 const message = messageParts.join(" ");
                 return method.apply(this, [arg1, message]);
-            } else {
+            }
                 const context = {};
                 const messageParts = [arg1, ...rest].map((arg) =>
                     typeof arg === "string" ? arg : arg
@@ -59,7 +59,6 @@ const options = {
                 Object.assign(context, ...jsonParts);
 
                 return method.apply(this, [context, message]);
-            }
         },
     },
 };

@@ -255,7 +255,7 @@ describe("Generation with Livepeer", () => {
     });
 
     test("should use default image model", () => {
-        delete process.env.IMAGE_LIVEPEER_MODEL;
+        process.env.IMAGE_LIVEPEER_MODEL = undefined;
         expect(models[ModelProviderName.LIVEPEER].model[ModelClass.IMAGE]).toBe("ByteDance/SDXL-Lightning");
     });
 });

@@ -89,7 +89,7 @@ export const transferAction: Action = {
         "MOVE_TOKENS_ON_ABSTRACT",
         "MOVE_ETH_ON_ABSTRACT",
     ],
-    validate: async (runtime: IAgentRuntime, message: Memory) => {
+    validate: async (runtime: IAgentRuntime, _message: Memory) => {
         await validateAbstractConfig(runtime);
         return true;
     },
@@ -231,13 +231,12 @@ export const transferAction: Action = {
             }
 
             elizaLogger.success(
-                "Transfer completed successfully! Transaction hash: " + hash
+                `Transfer completed successfully! Transaction hash: ${hash}`
             );
             if (callback) {
                 callback({
                     text:
-                        "Transfer completed successfully! Transaction hash: " +
-                        hash,
+                        `Transfer completed successfully! Transaction hash: ${hash}`,
                     content: {},
                 });
             }

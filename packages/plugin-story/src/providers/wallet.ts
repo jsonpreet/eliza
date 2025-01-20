@@ -114,8 +114,8 @@ export class WalletProvider {
 export const storyWalletProvider: Provider = {
     async get(
         runtime: IAgentRuntime,
-        message: Memory,
-        state?: State
+        _message: Memory,
+        _state?: State
     ): Promise<string | null> {
         // Check if the user has a Story wallet
         if (!runtime.getSetting("STORY_PRIVATE_KEY")) {

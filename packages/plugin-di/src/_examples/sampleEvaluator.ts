@@ -1,7 +1,7 @@
-import { IAgentRuntime, Memory, elizaLogger } from "@elizaos/core";
+import { type IAgentRuntime, type Memory, elizaLogger } from "@elizaos/core";
 import { injectable } from "inversify";
 import { BaseInjectableEvaluator } from "../evaluators";
-import { EvaluatorOptions } from "../types";
+import type { EvaluatorOptions } from "../types";
 import { globalContainer } from "../di";
 
 const options: EvaluatorOptions = {
@@ -38,7 +38,7 @@ export class SampleEvaluator extends BaseInjectableEvaluator {
         super(options);
     }
 
-    async handler(runtime: IAgentRuntime, memory: Memory) {
+    async handler(_runtime: IAgentRuntime, memory: Memory) {
         // Evaluation logic for the evaluator
         elizaLogger.log("Evaluating data in sampleEvaluator...");
         try {
@@ -55,13 +55,12 @@ export class SampleEvaluator extends BaseInjectableEvaluator {
                     score: 1,
                     reason: "Memory contains important content.",
                 };
-            } else {
+            }
                 elizaLogger.log("No important content found in memory.");
                 return {
                     score: 0,
                     reason: "Memory does not contain important content.",
                 };
-            }
         } catch (error) {
             elizaLogger.error("Error in sampleEvaluator:", error);
             throw error;

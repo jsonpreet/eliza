@@ -181,7 +181,7 @@ export class SupabaseDatabaseAdapter extends DatabaseAdapter {
                 .eq("id", params.roomId);
 
             if (response.error) {
-                elizaLogger.error("Error!" + response.error);
+                elizaLogger.error(`Error!${response.error}`);
                 return [];
             }
             const { data } = response;
@@ -455,7 +455,7 @@ export class SupabaseDatabaseAdapter extends DatabaseAdapter {
 
     async countMemories(
         roomId: UUID,
-        unique = true,
+        unique,
         tableName: string
     ): Promise<number> {
         if (!tableName) {
@@ -640,7 +640,7 @@ export class SupabaseDatabaseAdapter extends DatabaseAdapter {
                 .single();
 
             if (roomsError) {
-                throw new Error("Room creation error: " + roomsError.message);
+                throw new Error(`Room creation error: ${roomsError.message}`);
             }
 
             roomId = (newRoomData as Room)?.id as UUID;
@@ -658,7 +658,7 @@ export class SupabaseDatabaseAdapter extends DatabaseAdapter {
 
         if (participantsError) {
             throw new Error(
-                "Participants creation error: " + participantsError.message
+                `Participants creation error: ${participantsError.message}`
             );
         }
 
@@ -676,7 +676,7 @@ export class SupabaseDatabaseAdapter extends DatabaseAdapter {
 
         if (relationshipError) {
             throw new Error(
-                "Relationship creation error: " + relationshipError.message
+                `Relationship creation error: ${relationshipError.message}`
             );
         }
 

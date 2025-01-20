@@ -114,9 +114,9 @@ export const postTweetAction: Action = {
     name: "POST_TWEET",
     similes: ["TWEET", "POST", "SEND_TWEET"],
     validate: async (
-        runtime: IAgentRuntime,
-        message: Memory,
-        state?: State
+        _runtime: IAgentRuntime,
+        _message: Memory,
+        _state?: State
     ) => {
         const hasCredentials =
             !!process.env.TWITTER_USERNAME && !!process.env.TWITTER_PASSWORD;

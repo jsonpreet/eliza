@@ -53,7 +53,7 @@ async function promptConfirmation(): Promise<boolean> {
 export const executeSwapForDAO: Action = {
     name: "EXECUTE_SWAP_DAO",
     similes: ["SWAP_TOKENS_DAO", "TOKEN_SWAP_DAO"],
-    validate: async (runtime: IAgentRuntime, message: Memory) => {
+    validate: async (_runtime: IAgentRuntime, message: Memory) => {
         elizaLogger.log("Message:", message);
         return true;
     },

@@ -66,10 +66,9 @@ export async function fetchWithRetry(
                 await new Promise((resolve) =>
                     setTimeout(
                         resolve,
-                        PROVIDER_CONFIG.RETRY_DELAY * Math.pow(2, i)
+                        PROVIDER_CONFIG.RETRY_DELAY * 2 ** i
                     )
                 );
-                continue;
             }
         }
     }
@@ -137,8 +136,7 @@ export async function manageAnalyzedTokens(
         const now = Date.now();
         history = history.filter(
             (token) =>
-                token &&
-                token.timestamp &&
+                token?.timestamp &&
                 now - token.timestamp < ANALYSIS_HISTORY_EXPIRY
         );
 

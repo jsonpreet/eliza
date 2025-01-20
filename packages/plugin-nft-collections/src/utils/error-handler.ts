@@ -67,7 +67,7 @@ export class NFTErrorFactory {
 
     static fromError(error: unknown): NFTError {
         if (error instanceof Error) {
-            return this.create(
+            return NFTErrorFactory.create(
                 ErrorType.INTERNAL,
                 ErrorCode.INTERNAL_ERROR,
                 error.message,
@@ -75,7 +75,7 @@ export class NFTErrorFactory {
                 false
             );
         }
-        return this.create(
+        return NFTErrorFactory.create(
             ErrorType.INTERNAL,
             ErrorCode.INTERNAL_ERROR,
             "Unknown error occurred",
@@ -171,7 +171,7 @@ export function getRetryDelay(
     attempt: number,
     baseDelay = 1000
 ): number {
-    return Math.min(baseDelay * Math.pow(2, attempt), 30000); // Max 30 seconds
+    return Math.min(baseDelay * 2 ** attempt, 30000); // Max 30 seconds
 }
 
 // Usage Example:

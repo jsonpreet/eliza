@@ -29,7 +29,7 @@ const mockVideoGenerationPlugin = {
             handler: vi
                 .fn()
                 .mockImplementation(
-                    async (runtime, message, state, options, callback) => {
+                    async (_runtime, _message, _state, _options, callback) => {
                         // Initial response
                         callback({
                             text: "I'll generate a video based on your prompt",

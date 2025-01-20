@@ -1,7 +1,7 @@
 import { generateImage, elizaLogger } from "@elizaos/core";
-import { Connection, Keypair, PublicKey } from "@solana/web3.js";
+import { Connection, Keypair, type PublicKey } from "@solana/web3.js";
 import { VersionedTransaction } from "@solana/web3.js";
-import { Fomo, PurchaseCurrency } from "fomo-sdk-solana";
+import { Fomo, type PurchaseCurrency } from "fomo-sdk-solana";
 import { getAssociatedTokenAddressSync } from "@solana/spl-token";
 import bs58 from "bs58";
 import {
@@ -12,7 +12,7 @@ import {
     type IAgentRuntime,
     type Memory,
     ModelClass,
-    State,
+    type State,
     generateObject,
     composeContext,
     type Action,
@@ -158,14 +158,13 @@ export const createAndBuyToken = async ({
             ca: mint.publicKey.toBase58(),
             creator: deployer.publicKey.toBase58(),
         };
-    } else {
+    }
         elizaLogger.log("Create and Buy failed");
         return {
             success: false,
             ca: mint.publicKey.toBase58(),
             error: confirmation.value.err || "Transaction failed",
         };
-    }
 };
 
 export const buyToken = async ({
@@ -529,7 +528,7 @@ export default {
             const connection = new Connection(settings.SOLANA_RPC_URL!, {
                 commitment: "confirmed",
                 confirmTransactionInitialTimeout: 500000,
-                wsEndpoint: settings.SOLANA_RPC_URL!.replace("https", "wss"),
+                wsEndpoint: settings.SOLANA_RPC_URL?.replace("https", "wss"),
             });
 
             const sdk = new Fomo(connection as any, "devnet", deployerKeypair);

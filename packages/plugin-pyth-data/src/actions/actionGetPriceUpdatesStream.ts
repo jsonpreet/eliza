@@ -1,5 +1,5 @@
-import { Action, elizaLogger } from "@elizaos/core";
-import { IAgentRuntime, Memory, State, HandlerCallback, Content, ActionExample } from "@elizaos/core";
+import { type Action, elizaLogger } from "@elizaos/core";
+import type { IAgentRuntime, Memory, State, HandlerCallback, Content, ActionExample } from "@elizaos/core";
 import { HermesClient } from "@pythnetwork/hermes-client";
 import { DataError, ErrorSeverity, DataErrorCode } from "../error";
 import { validatePythConfig, getNetworkConfig, getConfig } from "../environment";
@@ -181,10 +181,10 @@ function formatPriceUpdateText(streamId: string, messageCount: number, data: Raw
     return `Price Update Stream (ID: stream_${streamId}, Update ${messageCount}/${PYTH_MAX_PRICE_STREAMS}):
 ${data.parsed.map((item: PriceUpdateItem) =>
     `Price Feed: ${item.id}
-Current Price: ${(Number(item.price.price) * Math.pow(10, item.price.expo)).toFixed(2)} USD
-Confidence: ±${(Number(item.price.conf) * Math.pow(10, item.price.expo)).toFixed(2)} USD
-EMA Price: ${(Number(item.ema_price.price) * Math.pow(10, item.ema_price.expo)).toFixed(2)} USD
-EMA Confidence: ±${(Number(item.ema_price.conf) * Math.pow(10, item.ema_price.expo)).toFixed(2)} USD
+Current Price: ${(Number(item.price.price) * 10 ** item.price.expo).toFixed(2)} USD
+Confidence: ±${(Number(item.price.conf) * 10 ** item.price.expo).toFixed(2)} USD
+EMA Price: ${(Number(item.ema_price.price) * 10 ** item.ema_price.expo).toFixed(2)} USD
+EMA Confidence: ±${(Number(item.ema_price.conf) * 10 ** item.ema_price.expo).toFixed(2)} USD
 Last Update: ${new Date(item.price.publish_time * 1000).toLocaleString()}${item.metadata ? `
 Slot: ${item.metadata.slot}
 Proof Available: ${new Date(item.metadata.proof_available_time * 1000).toLocaleString()}` : ''}`
@@ -504,7 +504,7 @@ export const getPriceUpdatesStreamAction: Action = {
     async handler(
         runtime: IAgentRuntime,
         message: Memory,
-        state: State | undefined,
+        _state: State | undefined,
         _options: { [key: string]: unknown } = {},
         callback?: HandlerCallback
     ): Promise<boolean> {

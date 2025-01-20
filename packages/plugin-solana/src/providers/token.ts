@@ -19,7 +19,7 @@ import type {
     TokenCodex,
 } from "../types/token.ts";
 import NodeCache from "node-cache";
-import * as path from "path";
+import * as path from "node:path";
 import { toBN } from "../bignumber.ts";
 import { WalletProvider, type Item } from "./wallet.ts";
 import { Connection } from "@solana/web3.js";
@@ -127,10 +127,9 @@ export class TokenProvider {
                 elizaLogger.error(`Attempt ${i + 1} failed:`, error);
                 lastError = error as Error;
                 if (i < PROVIDER_CONFIG.MAX_RETRIES - 1) {
-                    const delay = PROVIDER_CONFIG.RETRY_DELAY * Math.pow(2, i);
+                    const delay = PROVIDER_CONFIG.RETRY_DELAY * 2 ** i;
                     elizaLogger.log(`Waiting ${delay}ms before retrying...`);
                     await new Promise((resolve) => setTimeout(resolve, delay));
-                    continue;
                 }
             }
         }
@@ -157,9 +156,8 @@ export class TokenProvider {
 
             if (token) {
                 return token.address;
-            } else {
-                return null;
             }
+                return null;
         } catch (error) {
             elizaLogger.error("Error checking token in wallet:", error);
             return null;
@@ -236,7 +234,7 @@ export class TokenProvider {
                 circulatingSupply: token.info?.circulatingSupply,
                 imageThumbUrl: token.info?.imageThumbUrl,
                 blueCheckmark: token.explorerData?.blueCheckmark,
-                isScam: token.isScam ? true : false,
+                isScam: !!token.isScam,
             };
         } catch (error) {
             elizaLogger.error(
@@ -646,7 +644,7 @@ export class TokenProvider {
 
             return dexData;
         } catch (error) {
-            elizaLogger.error(`Error fetching DexScreener data:`, error);
+            elizaLogger.error("Error fetching DexScreener data:", error);
             return {
                 schemaVersion: "1.0.0",
                 pairs: [],
@@ -689,7 +687,7 @@ export class TokenProvider {
             // Return the pair with the highest liquidity and market cap
             return this.getHighestLiquidityPair(dexData);
         } catch (error) {
-            elizaLogger.error(`Error fetching DexScreener data:`, error);
+            elizaLogger.error("Error fetching DexScreener data:", error);
             return null;
         }
     }
@@ -747,11 +745,10 @@ export class TokenProvider {
 
         if (averageChange > increaseThreshold) {
             return "increasing";
-        } else if (averageChange < decreaseThreshold) {
+        }if (averageChange < decreaseThreshold) {
             return "decreasing";
-        } else {
-            return "stable";
         }
+            return "stable";
     }
 
     async fetchHolderList(): Promise<HolderData[]> {
@@ -778,7 +775,7 @@ export class TokenProvider {
                     mint: this.tokenAddress,
                     cursor: cursor,
                 };
-                if (cursor != undefined) {
+                if (cursor !== undefined) {
                     params.cursor = cursor;
                 }
                 elizaLogger.log(`Fetching holders - Page ${page}`);
@@ -1030,11 +1027,11 @@ export class TokenProvider {
     }
 
     formatTokenData(data: ProcessedTokenData): string {
-        let output = `**Token Security and Trade Report**\n`;
+        let output = "**Token Security and Trade Report**\n";
         output += `Token Address: ${this.tokenAddress}\n\n`;
 
         // Security Data
-        output += `**Ownership Distribution:**\n`;
+        output += "**Ownership Distribution:**\n";
         output += `- Owner Balance: ${data.security.ownerBalance}\n`;
         output += `- Creator Balance: ${data.security.creatorBalance}\n`;
         output += `- Owner Percentage: ${data.security.ownerPercentage}%\n`;
@@ -1043,7 +1040,7 @@ export class TokenProvider {
         output += `- Top 10 Holders Percentage: ${data.security.top10HolderPercent}%\n\n`;
 
         // Trade Data
-        output += `**Trade Data:**\n`;
+        output += "**Trade Data:**\n";
         output += `- Holders: ${data.tradeData.holder}\n`;
         output += `- Unique Wallets (24h): ${data.tradeData.unique_wallet_24h}\n`;
         output += `- Price Change (24h): ${data.tradeData.price_change_24h_percent}%\n`;
@@ -1055,15 +1052,15 @@ export class TokenProvider {
         output += `**Holder Distribution Trend:** ${data.holderDistributionTrend}\n\n`;
 
         // High-Value Holders
-        output += `**High-Value Holders (>$5 USD):**\n`;
+        output += "**High-Value Holders (>$5 USD):**\n";
         if (data.highValueHolders.length === 0) {
-            output += `- No high-value holders found or data not available.\n`;
+            output += "- No high-value holders found or data not available.\n";
         } else {
             data.highValueHolders.forEach((holder) => {
                 output += `- ${holder.holderAddress}: $${holder.balanceUsd}\n`;
             });
         }
-        output += `\n`;
+        output += "\n";
 
         // Recent Trades
         output += `**Recent Trades (Last 24h):** ${data.recentTrades ? "Yes" : "No"}\n\n`;
@@ -1076,18 +1073,18 @@ export class TokenProvider {
         if (data.isDexScreenerListed) {
             output += `- Listing Type: ${data.isDexScreenerPaid ? "Paid" : "Free"}\n`;
             output += `- Number of DexPairs: ${data.dexScreenerData.pairs.length}\n\n`;
-            output += `**DexScreener Pairs:**\n`;
+            output += "**DexScreener Pairs:**\n";
             data.dexScreenerData.pairs.forEach((pair, index) => {
                 output += `\n**Pair ${index + 1}:**\n`;
                 output += `- DEX: ${pair.dexId}\n`;
                 output += `- URL: ${pair.url}\n`;
                 output += `- Price USD: $${toBN(pair.priceUsd).toFixed(6)}\n`;
                 output += `- Volume (24h USD): $${toBN(pair.volume.h24).toFixed(2)}\n`;
-                output += `- Boosts Active: ${pair.boosts && pair.boosts.active}\n`;
+                output += `- Boosts Active: ${pair.boosts?.active}\n`;
                 output += `- Liquidity USD: $${toBN(pair.liquidity.usd).toFixed(2)}\n`;
             });
         }
-        output += `\n`;
+        output += "\n";
 
         elizaLogger.log("Formatted token data:", output);
         return output;

@@ -78,7 +78,7 @@ async function ensureAllowance(
         await publicClient.waitForTransactionReceipt({ hash });
         elizaLogger.log(`Approving success: ${hash}`);
     } else {
-        elizaLogger.log(`No need to approve`);
+        elizaLogger.log("No need to approve");
     }
 }
 
@@ -159,7 +159,7 @@ export const confiPump: Action = {
         ],
     ],
 
-    validate: async (runtime: IAgentRuntime, message: Memory) => {
+    validate: async (_runtime: IAgentRuntime, _message: Memory) => {
         return true; // No extra validation needed
     },
 
@@ -167,7 +167,7 @@ export const confiPump: Action = {
         runtime: IAgentRuntime,
         message: Memory,
         state?: State,
-        options?: { [key: string]: unknown },
+        _options?: { [key: string]: unknown },
         callback?: HandlerCallback
     ) => {
         let success = false;
@@ -267,7 +267,7 @@ export const confiPump: Action = {
                     });
                     break;
 
-                case "SELL_TOKEN":
+                case "SELL_TOKEN": {
                     if (!isPumpSellContent(contentObject)) {
                         elizaLogger.error(
                             "Invalid PumpSellContent: ",
@@ -307,6 +307,7 @@ export const confiPump: Action = {
                     });
                     value = 0n;
                     break;
+                }
             }
 
             // Simulate and execute transaction

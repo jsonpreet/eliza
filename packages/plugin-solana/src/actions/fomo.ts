@@ -162,14 +162,13 @@ export const createAndBuyToken = async ({
             ca: mint.publicKey.toBase58(),
             creator: deployer.publicKey.toBase58(),
         };
-    } else {
+    }
         elizaLogger.log("Create and Buy failed");
         return {
             success: false,
             ca: mint.publicKey.toBase58(),
             error: confirmation.value.err || "Transaction failed",
         };
-    }
 };
 
 export const buyToken = async ({
@@ -533,7 +532,7 @@ export default {
             const connection = new Connection(settings.SOLANA_RPC_URL!, {
                 commitment: "confirmed",
                 confirmTransactionInitialTimeout: 500000, // 120 seconds
-                wsEndpoint: settings.SOLANA_RPC_URL!.replace("https", "wss"),
+                wsEndpoint: settings.SOLANA_RPC_URL?.replace("https", "wss"),
             });
 
             const sdk = new Fomo(connection, "devnet", deployerKeypair);

@@ -123,10 +123,10 @@ export class TrustScoreManager {
         const inactiveDays = Math.floor(
             (now.getTime() - lastActive.getTime()) / (1000 * 60 * 60 * 24)
         );
-        const decayFactor = Math.pow(
-            this.DECAY_RATE,
+        const decayFactor = 
+            this.DECAY_RATE ** 
             Math.min(inactiveDays, this.MAX_DECAY_DAYS)
-        );
+        ;
         const decayedScore = recommenderMetrics.trustScore * decayFactor;
         const validationTrustScore =
             this.trustScoreDb.calculateValidationTrust(tokenAddress);
@@ -213,10 +213,10 @@ export class TrustScoreManager {
         const inactiveDays = Math.floor(
             (now.getTime() - lastActive.getTime()) / (1000 * 60 * 60 * 24)
         );
-        const decayFactor = Math.pow(
-            this.DECAY_RATE,
+        const decayFactor = 
+            this.DECAY_RATE ** 
             Math.min(inactiveDays, this.MAX_DECAY_DAYS)
-        );
+        ;
         const decayedScore = recommenderMetrics.trustScore * decayFactor;
 
         const newRecommenderMetrics: RecommenderMetrics = {
@@ -468,7 +468,7 @@ export class TrustScoreManager {
      */
 
     async updateSellDetails(
-        runtime: IAgentRuntime,
+        _runtime: IAgentRuntime,
         tokenAddress: string,
         recommenderId: string,
         sellTimeStamp: string,

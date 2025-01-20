@@ -8,8 +8,8 @@ import type { CertificatePem } from "@akashnetwork/akashjs/build/certificates/ce
 import { getAkashTypeRegistry } from "@akashnetwork/akashjs/build/stargate";
 import { validateAkashConfig } from "../environment";
 import { AkashError, AkashErrorCode, withRetry } from "../error/error";
-import * as fs from 'fs';
-import * as path from 'path';
+import * as fs from 'node:fs';
+import * as path from 'node:path';
 import { Registry } from "@cosmjs/proto-signing";
 import type { SigningStargateClient as AkashSigningStargateClient } from "@akashnetwork/akashjs/node_modules/@cosmjs/stargate";
 import { getCertificatePath } from "../utils/paths";
@@ -97,7 +97,7 @@ async function initializeWallet(mnemonic: string): Promise<DirectSecp256k1HdWall
             error,
             wordCount: words.length,
             expectedCounts: [12, 24],
-            mnemonicPreview: words.slice(0, 3).join(' ') + '...'
+            mnemonicPreview: `${words.slice(0, 3).join(' ')}...`
         });
         throw new AkashError(
             error,
@@ -112,7 +112,7 @@ async function initializeWallet(mnemonic: string): Promise<DirectSecp256k1HdWall
     try {
         elizaLogger.debug("Creating wallet with mnemonic", {
             wordCount: words.length,
-            mnemonicPreview: words.slice(0, 3).join(' ') + '...'
+            mnemonicPreview: `${words.slice(0, 3).join(' ')}...`
         });
 
         const wallet = await DirectSecp256k1HdWallet.fromMnemonic(mnemonic, {
@@ -139,7 +139,7 @@ async function initializeWallet(mnemonic: string): Promise<DirectSecp256k1HdWall
             error: error instanceof Error ? error.message : String(error),
             stack: error instanceof Error ? error.stack : undefined,
             mnemonicLength: words.length,
-            mnemonicPreview: words.slice(0, 3).join(' ') + '...'
+            mnemonicPreview: `${words.slice(0, 3).join(' ')}...`
         });
 
         if (error instanceof AkashError) {
@@ -271,7 +271,7 @@ export const createCertificateAction: Action = {
     handler: async (
         runtime: IAgentRuntime,
         message: Memory,
-        state: State | undefined,
+        _state: State | undefined,
         options: { callback?: HandlerCallback } = {}
     ): Promise<boolean> => {
         const actionId = Date.now().toString();

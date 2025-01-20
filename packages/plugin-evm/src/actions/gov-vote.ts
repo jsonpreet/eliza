@@ -77,8 +77,8 @@ export const voteAction = {
     description: "Vote for a DAO governance proposal",
     handler: async (
         runtime: IAgentRuntime,
-        message: Memory,
-        state: State,
+        _message: Memory,
+        _state: State,
         options: any,
         callback?: any
     ) => {

@@ -96,7 +96,7 @@ export const executeCreateToken: Action = {
     ],
     description:
         "Create a new meme token on PickPump platform (Internet Computer). This action helps users create and launch tokens specifically on the PickPump platform.",
-    validate: async (runtime: IAgentRuntime, message: Memory) => {
+    validate: async (_runtime: IAgentRuntime, message: Memory) => {
         const keywords = [
             "pickpump",
             "pp",

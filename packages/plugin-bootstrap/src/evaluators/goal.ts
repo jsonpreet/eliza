@@ -106,9 +106,8 @@ async function handler(
                         ...(update?.objectives || []),
                     ],
                 }; // Merging the update into the existing goal
-            } else {
-                console.warn("**** ID NOT FOUND");
             }
+                console.warn("**** ID NOT FOUND");
             return null; // No update for this goal
         })
         .filter(Boolean);
@@ -117,7 +116,7 @@ async function handler(
     for (const goal of updatedGoals) {
         const id = goal.id;
         // delete id from goal
-        if (goal.id) delete goal.id;
+        if (goal.id) goal.id = undefined;
         await runtime.databaseAdapter.updateGoal({ ...goal, id });
     }
 

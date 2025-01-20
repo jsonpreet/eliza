@@ -46,7 +46,7 @@ describe('ObsidianProvider', () => {
 
     afterEach(() => {
         vi.clearAllMocks();
-        ObsidianProvider['instance'] = null; // Reset singleton
+        ObsidianProvider.instance = null; // Reset singleton
         obsidianProvider.close();
     });
 
@@ -65,7 +65,7 @@ describe('ObsidianProvider', () => {
 
         it('should throw error if connection fails', async () => {
             vi.clearAllMocks();
-            ObsidianProvider['instance'] = null;
+            ObsidianProvider.instance = null;
             fetchMock.mockRejectedValueOnce(new Error('Connection failed'));
 
             await expect(ObsidianProvider.create(mockRuntime, mockPort, mockToken))
@@ -74,7 +74,7 @@ describe('ObsidianProvider', () => {
 
         it('should handle authentication failure', async () => {
             vi.clearAllMocks();
-            ObsidianProvider['instance'] = null;
+            ObsidianProvider.instance = null;
             fetchMock.mockResolvedValueOnce({
                 ok: true,
                 json: () => Promise.resolve({ ...mockServerInfo, authenticated: false })

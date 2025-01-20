@@ -29,7 +29,7 @@ export const spotTrade: Action = {
         runtime: IAgentRuntime,
         message: Memory,
         state: State,
-        options: Record<string, unknown>,
+        _options: Record<string, unknown>,
         callback?: HandlerCallback
     ) => {
         try {
@@ -137,7 +137,7 @@ export const spotTrade: Action = {
                     throw new HyperliquidError(
                         `Cannot place buy limit order at ${finalPrice.toFixed(2)} USDC because it's above market price (${midPrice.toFixed(2)} USDC). To execute immediately, use a market order. For a limit order, set a price below ${midPrice.toFixed(2)} USDC.`
                     );
-                } else if (!validatedOrder.is_buy && finalPrice < midPrice) {
+                }if (!validatedOrder.is_buy && finalPrice < midPrice) {
                     throw new HyperliquidError(
                         `Cannot place sell limit order at ${finalPrice.toFixed(2)} USDC because it's below market price (${midPrice.toFixed(2)} USDC). To execute immediately, use a market order. For a limit order, set a price above ${midPrice.toFixed(2)} USDC.`
                     );

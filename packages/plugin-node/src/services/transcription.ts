@@ -6,15 +6,15 @@ import {
     TranscriptionProvider,
 } from "@elizaos/core";
 import { Service, ServiceType } from "@elizaos/core";
-import { exec } from "child_process";
+import { exec } from "node:child_process";
 import { File } from "formdata-node";
-import fs from "fs";
+import fs from "node:fs";
 import { nodewhisper } from "nodejs-whisper";
 import OpenAI from "openai"; // todo, can probably move this to model provider or whateer
-import os from "os";
-import path from "path";
-import { fileURLToPath } from "url";
-import { promisify } from "util";
+import os from "node:os";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+import { promisify } from "node:util";
 import { createClient, type DeepgramClient } from "@deepgram/sdk";
 
 // const __dirname = path.dirname(new URL(import.meta.url).pathname); #compatibility issues with windows
@@ -324,7 +324,7 @@ export class TranscriptionService
     ): Promise<string | null> {
         if (this.deepgram) {
             return await this.transcribeWithDeepgram(audioBuffer);
-        } else if (this.openai) {
+        }if (this.openai) {
             return await this.transcribeWithOpenAI(audioBuffer);
         }
         return await this.transcribeLocally(audioBuffer);
@@ -367,7 +367,7 @@ export class TranscriptionService
                 type: "audio/wav",
             });
 
-            const result = await this.openai!.audio.transcriptions.create({
+            const result = await this.openai?.audio.transcriptions.create({
                 model: "whisper-1",
                 language: "en",
                 response_format: "text",

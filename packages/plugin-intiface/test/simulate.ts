@@ -5,10 +5,10 @@ import {
 } from "buttplug";
 import { LovenseNora } from "./fake-buttplug";
 
-import { spawn } from "child_process";
-import net from "net";
-import path from "path";
-import { fileURLToPath } from "url";
+import { spawn } from "node:child_process";
+import net from "node:net";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -163,7 +163,7 @@ async function getTestDevice(): Promise<TestDevice> {
         await client.disconnect();
         console.log("No real devices found, falling back to simulator");
         return new LovenseNora(WEBSOCKET_PORT);
-    } catch (err) {
+    } catch (_err) {
         console.log(
             "Couldn't connect to Buttplug server, attempting to start Intiface Engine..."
         );
@@ -205,7 +205,7 @@ async function runTestSequence(device: TestDevice) {
         try {
             const batteryLevel = await device.getBatteryLevel();
             console.log(`Battery level: ${batteryLevel * 100}%`);
-        } catch (err) {
+        } catch (_err) {
             console.log("Battery level check not supported or failed");
         }
         await new Promise((r) => setTimeout(r, 1000));
@@ -270,7 +270,7 @@ async function runTestSequence(device: TestDevice) {
         try {
             const batteryLevel = await device.getBatteryLevel();
             console.log(`Battery level after tests: ${batteryLevel * 100}%`);
-        } catch (err) {
+        } catch (_err) {
             console.log("Battery level check not supported or failed");
         }
         await new Promise((r) => setTimeout(r, 1000));

@@ -26,7 +26,7 @@ export default {
         "GET_TOKEN_PRICE",
         "CHECK_TOKEN_PRICE",
     ],
-    validate: async (runtime: IAgentRuntime, message: Memory) => {
+    validate: async (runtime: IAgentRuntime, _message: Memory) => {
         await validateCoinMarketCapConfig(runtime);
         return true;
     },

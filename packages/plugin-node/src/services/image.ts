@@ -19,10 +19,10 @@ import {
     RawImage,
     type Tensor,
 } from "@huggingface/transformers";
-import sharp, { AvailableFormatInfo, FormatEnum } from "sharp";
-import fs from "fs";
-import os from "os";
-import path from "path";
+import sharp, { type AvailableFormatInfo, type FormatEnum } from "sharp";
+import fs from "node:fs";
+import os from "node:os";
+import path from "node:path";
 
 const IMAGE_DESCRIPTION_PROMPT =
     "Describe this image and give it a title. The first line should be the title, and then a line break, then a detailed description of the image. Respond with the format 'title\\ndescription'";
@@ -166,7 +166,7 @@ class OpenAIImageProvider implements ImageProvider {
                 ? getEndpoint(this.runtime.imageVisionModelProvider)
                 : "https://api.openai.com/v1";
 
-        const response = await fetch(endpoint + "/chat/completions", {
+        const response = await fetch(`${endpoint}/chat/completions`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -209,7 +209,7 @@ class GroqImageProvider implements ImageProvider {
                 ? getEndpoint(this.runtime.imageVisionModelProvider)
                 : "https://api.groq.com/openai/v1/";
 
-        const response = await fetch(endpoint + "/chat/completions", {
+        const response = await fetch(`${endpoint}/chat/completions`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -338,9 +338,7 @@ export class ImageDescriptionService
                 elizaLogger.debug("Using Groq for vision model");
             } else {
                 elizaLogger.warn(
-                    `Unsupported image vision model provider: ${this.runtime.imageVisionModelProvider}. ` +
-                        `Please use one of the following: ${availableModels}. ` +
-                        `Update the 'imageVisionModelProvider' field in the character file.`
+                    `Unsupported image vision model provider: ${this.runtime.imageVisionModelProvider}. Please use one of the following: ${availableModels}. Update the 'imageVisionModelProvider' field in the character file.`
                 );
                 return false;
             }

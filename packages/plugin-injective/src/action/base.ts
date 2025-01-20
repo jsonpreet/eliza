@@ -138,7 +138,7 @@ export function createGenericAction({
                 // Lets convert the result of the response into something that can be read
                 if (response.success) {
                     console.log("Cleaning up the response");
-                    const additionalTemplate = `Extract the response from the following data, also make sure that you format the response into human readable format, make it the prettiest thing anyone can read basically a very nice comprehensive summary in a string format.`;
+                    const additionalTemplate = "Extract the response from the following data, also make sure that you format the response into human readable format, make it the prettiest thing anyone can read basically a very nice comprehensive summary in a string format.";
                     const responseResult = JSON.stringify(response.result);
                     const newContext = `${additionalTemplate}\n${responseResult}`;
                     const totalContext = `Previous chat context:${context} \n New information : ${newContext}`;

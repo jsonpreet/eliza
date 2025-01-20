@@ -45,7 +45,7 @@ Your response must be formatted as a JSON block with this structure:
 
 const getAttachmentIds = async (
     runtime: IAgentRuntime,
-    message: Memory,
+    _message: Memory,
     state: State
 ): Promise<{ objective: string; attachmentIds: string[] } | null> => {
     const context = composeContext({
@@ -94,7 +94,7 @@ const summarizeAction: Action = {
     description:
         "Answer a user request informed by specific attachments based on their IDs. If a user asks to chat with a PDF, or wants more specific information about a link or video or anything else they've attached, this is the action to use.",
     validate: async (
-        runtime: IAgentRuntime,
+        _runtime: IAgentRuntime,
         message: Memory,
         _state: State | undefined
     ): Promise<boolean> => {
@@ -136,7 +136,7 @@ const summarizeAction: Action = {
         runtime: IAgentRuntime,
         message: Memory,
         state: State | undefined,
-        options: any,
+        _options: any,
         callback: HandlerCallback
     ): Promise<Content> => {
         const currentState =
@@ -219,7 +219,7 @@ const summarizeAction: Action = {
             modelClass: ModelClass.SMALL,
         });
 
-        currentSummary = currentSummary + "\n" + summary;
+        currentSummary = `${currentSummary}\n${summary}`;
 
         if (!currentSummary) {
             console.error("No summary found!");

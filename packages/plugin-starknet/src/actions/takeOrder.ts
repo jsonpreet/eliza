@@ -9,7 +9,7 @@ import {
     ModelClass,
     settings,
 } from "@elizaos/core";
-import * as fs from "fs";
+import * as fs from "node:fs";
 import { validateStarknetConfig } from "../environment";
 
 interface Order {
@@ -54,7 +54,8 @@ const take_order: Action = {
         const _text = (message.content as Content).text;
         const userId = message.userId;
 
-        let ticker, contractAddress;
+        let ticker;
+        let contractAddress;
 
         // TODO:
 

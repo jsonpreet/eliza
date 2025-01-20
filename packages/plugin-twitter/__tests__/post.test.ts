@@ -176,8 +176,8 @@ describe('Twitter Post Action', () => {
         });
 
         it('should fail validation without credentials', async () => {
-            delete process.env.TWITTER_USERNAME;
-            delete process.env.TWITTER_PASSWORD;
+            process.env.TWITTER_USERNAME = undefined;
+            process.env.TWITTER_PASSWORD = undefined;
 
             const result = await postAction.validate(
                 mockRuntime,

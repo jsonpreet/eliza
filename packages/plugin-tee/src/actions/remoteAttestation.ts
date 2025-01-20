@@ -18,7 +18,7 @@ function hexToUint8Array(hex: string) {
     const array = new Uint8Array(hex.length / 2);
     for (let i = 0; i < hex.length; i += 2) {
       const byte = Number.parseInt(hex.slice(i, i + 2), 16);
-      if (isNaN(byte)) {
+      if (Number.isNaN(byte)) {
         throw new Error("Invalid hex string");
       }
       array[i / 2] = byte;

@@ -2,7 +2,7 @@ import type { Character, Client as ElizaClient, IAgentRuntime } from "@elizaos/c
 import { elizaLogger } from "@elizaos/core";
 import { WebClient } from "@slack/web-api";
 import express, { type Request } from "express";
-import { EventEmitter } from "events";
+import { EventEmitter } from "node:events";
 import { MessageManager } from "./messages";
 import { validateSlackConfig } from "./environment";
 import chat_with_attachments from "./actions/chat_with_attachments";
@@ -41,7 +41,7 @@ export class SlackClient extends EventEmitter {
         this.server = express();
 
         this.server.use(express.raw({ type: "application/json" }));
-        this.server.use((req: SlackRequest, res, next) => {
+        this.server.use((req: SlackRequest, _res, next) => {
             if (req.body) {
                 req.rawBody = Buffer.from(req.body);
                 try {
@@ -191,7 +191,7 @@ export class SlackClient extends EventEmitter {
             this.runtime.providers.push(channelStateProvider);
 
             // Add request logging middleware
-            this.server.use((req: SlackRequest, res, next) => {
+            this.server.use((req: SlackRequest, _res, next) => {
                 elizaLogger.debug("🌐 [HTTP] Incoming request:", {
                     method: req.method,
                     path: req.path,
@@ -299,12 +299,12 @@ export class SlackClient extends EventEmitter {
                     `🤖 [READY] Bot user: @${auth.user} (${this.botUserId})`
                 );
                 elizaLogger.success(
-                    `📡 [EVENTS] Listening for events at: /slack/events`
+                    "📡 [EVENTS] Listening for events at: /slack/events"
                 );
                 elizaLogger.success(
-                    `💡 [INTERACTIONS] Listening for interactions at: /slack/interactions`
+                    "💡 [INTERACTIONS] Listening for interactions at: /slack/interactions"
                 );
-                elizaLogger.success(`💡 [HELP] To interact with the bot:`);
+                elizaLogger.success("💡 [HELP] To interact with the bot:");
                 elizaLogger.success(
                     `   1. Direct message: Find @${auth.user} in DMs`
                 );

@@ -9,8 +9,8 @@ import {
     getEmbeddingZeroVector,
     stringToUuid,
 } from "@elizaos/core";
-import { promises as fs } from "fs";
-import path from "path";
+import { promises as fs } from "node:fs";
+import path from "node:path";
 import sharp from "sharp";
 import { getIgClient } from "../lib/state";
 import type { InstagramState } from "../types";
@@ -103,7 +103,7 @@ export class InstagramPostService {
             elizaLogger.log("Generating new Instagram post");
 
             const roomId = stringToUuid(
-                "instagram_generate_room-" + this.state.profile?.username
+                `instagram_generate_room-${this.state.profile?.username}`
             );
 
             await this.runtime.ensureUserExists(
@@ -137,7 +137,7 @@ export class InstagramPostService {
                 template: instagramPostTemplate,
             });
 
-            elizaLogger.debug("generate post prompt:\n" + context);
+            elizaLogger.debug(`generate post prompt:\n${context}`);
 
             const content = await generateText({
                 runtime: this.runtime,
@@ -231,8 +231,7 @@ export class InstagramPostService {
 
             if (!result.success || !result.data || result.data.length === 0) {
                 throw new Error(
-                    "Failed to generate image: " +
-                        (result.error || "No image data returned")
+                    `Failed to generate image: ${result.error || "No image data returned"}`
                 );
             }
 

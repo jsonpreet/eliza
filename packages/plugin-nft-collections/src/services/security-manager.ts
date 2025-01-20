@@ -1,4 +1,4 @@
-import * as crypto from "crypto";
+import * as crypto from "node:crypto";
 
 interface SecurityConfig {
     algorithm: string;
@@ -27,7 +27,7 @@ export class SecurityManager {
         encrypted += cipher.final("hex");
 
         // Return IV + encrypted data
-        return this.iv.toString("hex") + ":" + encrypted;
+        return `${this.iv.toString("hex")}:${encrypted}`;
     }
 
     decryptSensitiveData<T>(encryptedData: string): T {

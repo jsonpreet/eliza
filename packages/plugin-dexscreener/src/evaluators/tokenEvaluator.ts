@@ -5,7 +5,7 @@ export class TokenPriceEvaluator implements Evaluator {
     similes = ["price", "token price", "check price"];
     description = "Evaluates messages for token price requests";
 
-    async validate(runtime: IAgentRuntime, message: Memory): Promise<boolean> {
+    async validate(_runtime: IAgentRuntime, message: Memory): Promise<boolean> {
         const content = typeof message.content === 'string'
             ? message.content
             : message.content?.text;

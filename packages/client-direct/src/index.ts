@@ -23,13 +23,13 @@ import {
     type IAgentRuntime,
 } from "@elizaos/core";
 import { createApiRouter } from "./api.ts";
-import * as fs from "fs";
-import * as path from "path";
+import * as fs from "node:fs";
+import * as path from "node:path";
 import { createVerifiableLogApiRouter } from "./verifiable-log-api.ts";
 import OpenAI from "openai";
 
 const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
+    destination: (_req, _file, cb) => {
         const uploadDir = path.join(process.cwd(), "data", "uploads");
         // Create the directory if it doesn't exist
         if (!fs.existsSync(uploadDir)) {
@@ -37,7 +37,7 @@ const storage = multer.diskStorage({
         }
         cb(null, uploadDir);
     },
-    filename: (req, file, cb) => {
+    filename: (_req, file, cb) => {
         const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
         cb(null, `${uniqueSuffix}-${file.originalname}`);
     },
@@ -74,7 +74,7 @@ Note that {{agentName}} is capable of reading/seeing/hearing various forms of me
 {{actions}}
 
 # Instructions: Write the next message for {{agentName}}.
-` + messageCompletionFooter;
+${messageCompletionFooter}`;
 
 export const hyperfiHandlerTemplate = `{{actionExamples}}
 (Action examples are for reference only. Do not use the information from them in your response.)
@@ -195,7 +195,7 @@ export class DirectClient {
             async (req: express.Request, res: express.Response) => {
                 const agentId = req.params.agentId;
                 const roomId = stringToUuid(
-                    req.body.roomId ?? "default-room-" + agentId
+                    req.body.roomId ?? `default-room-${agentId}`
                 );
                 const userId = stringToUuid(req.body.userId ?? "user");
 
@@ -266,7 +266,7 @@ export class DirectClient {
                 };
 
                 const memory: Memory = {
-                    id: stringToUuid(messageId + "-" + userId),
+                    id: stringToUuid(`${messageId}-${userId}`),
                     ...userMessage,
                     agentId: runtime.agentId,
                     userId,
@@ -302,7 +302,7 @@ export class DirectClient {
 
                 // save response to memory
                 const responseMessage: Memory = {
-                    id: stringToUuid(messageId + "-" + runtime.agentId),
+                    id: stringToUuid(`${messageId}-${runtime.agentId}`),
                     ...userMessage,
                     userId: runtime.agentId,
                     content: response,
@@ -534,13 +534,13 @@ export class DirectClient {
                     if (hfOut.lookAt !== null || hfOut.emote !== null) {
                         contentObj.text += ". Then I ";
                         if (hfOut.lookAt !== null) {
-                            contentObj.text += "looked at " + hfOut.lookAt;
+                            contentObj.text += `looked at ${hfOut.lookAt}`;
                             if (hfOut.emote !== null) {
                                 contentObj.text += " and ";
                             }
                         }
                         if (hfOut.emote !== null) {
-                            contentObj.text = "emoted " + hfOut.emote;
+                            contentObj.text = `emoted ${hfOut.emote}`;
                         }
                     }
 
@@ -731,7 +731,7 @@ export class DirectClient {
         this.app.post("/:agentId/speak", async (req, res) => {
             const agentId = req.params.agentId;
             const roomId = stringToUuid(
-                req.body.roomId ?? "default-room-" + agentId
+                req.body.roomId ?? `default-room-${agentId}`
             );
             const userId = stringToUuid(req.body.userId ?? "user");
             const text = req.body.text;

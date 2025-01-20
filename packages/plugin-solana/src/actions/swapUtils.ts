@@ -88,7 +88,7 @@ export const executeSwap = async (
             elizaLogger.log("Confirmation error", confirmation.value.err);
 
             throw new Error("Confirmation error");
-        } else {
+        }
             if (type === "buy") {
                 elizaLogger.log(
                     "Buy successful: https://solscan.io/tx/${signature}"
@@ -98,7 +98,6 @@ export const executeSwap = async (
                     "Sell successful: https://solscan.io/tx/${signature}"
                 );
             }
-        }
 
         return signature;
     } catch (error) {

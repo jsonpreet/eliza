@@ -40,7 +40,7 @@ Aim for 1-2 short sentences maximum. Be concise and direct.
 
 Your response should not contain any questions. Brief, concise statements only. No emojis. Use \\n\\n (double spaces) between statements.
 
-` + messageCompletionFooter;
+${messageCompletionFooter}`;
 
 export class TwitterSearchClient {
     client: ClientBase;
@@ -92,12 +92,11 @@ export class TwitterSearchClient {
             await this.client.cacheTimeline(homeTimeline);
 
             const formattedHomeTimeline =
-                `# ${this.runtime.character.name}'s Home Timeline\n\n` +
-                homeTimeline
+                `# ${this.runtime.character.name}'s Home Timeline\n\n${homeTimeline
                     .map((tweet) => {
                         return `ID: ${tweet.id}\nFrom: ${tweet.name} (@${tweet.username})${tweet.inReplyToStatusId ? ` In reply to: ${tweet.inReplyToStatusId}` : ""}\nText: ${tweet.text}\n---\n`;
                     })
-                    .join("\n");
+                    .join("\n")}`;
 
             // randomly slice .tweets down to 20
             const slicedTweets = recentTweets.tweets
@@ -169,7 +168,7 @@ export class TwitterSearchClient {
 
             const conversationId = selectedTweet.conversationId;
             const roomId = stringToUuid(
-                conversationId + "-" + this.runtime.agentId
+                `${conversationId}-${this.runtime.agentId}`
             );
 
             const userIdUUID = stringToUuid(selectedTweet.userId as string);
@@ -186,16 +185,14 @@ export class TwitterSearchClient {
             await buildConversationThread(selectedTweet, this.client);
 
             const message = {
-                id: stringToUuid(selectedTweet.id + "-" + this.runtime.agentId),
+                id: stringToUuid(`${selectedTweet.id}-${this.runtime.agentId}`),
                 agentId: this.runtime.agentId,
                 content: {
                     text: selectedTweet.text,
                     url: selectedTweet.permanentUrl,
                     inReplyTo: selectedTweet.inReplyToStatusId
                         ? stringToUuid(
-                              selectedTweet.inReplyToStatusId +
-                                  "-" +
-                                  this.runtime.agentId
+                              `${selectedTweet.inReplyToStatusId}-${this.runtime.agentId}`
                           )
                         : undefined,
                 },

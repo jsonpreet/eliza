@@ -72,13 +72,13 @@ describe("Wallet provider", () => {
                 await walletProvider.getFormattedPortfolio(mockedRuntime);
 
             const prices = await walletProvider.fetchPrices().catch((error) => {
-                console.error(`Error fetching TON price:`, error);
+                console.error("Error fetching TON price:", error);
                 throw error;
             });
             const nativeTokenBalance = await walletProvider
                 .getWalletBalance()
                 .catch((error) => {
-                    console.error(`Error fetching TON amount:`, error);
+                    console.error("Error fetching TON amount:", error);
                     throw error;
                 });
 

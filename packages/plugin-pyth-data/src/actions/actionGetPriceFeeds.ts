@@ -1,5 +1,5 @@
-import { Action, elizaLogger } from "@elizaos/core";
-import { IAgentRuntime, Memory, State, HandlerCallback, Content, ActionExample } from "@elizaos/core";
+import { type Action, elizaLogger } from "@elizaos/core";
+import type { IAgentRuntime, Memory, State, HandlerCallback, Content, ActionExample } from "@elizaos/core";
 // import { HermesClient } from "../hermes/HermesClient";
 import { HermesClient } from "@pythnetwork/hermes-client";
 import { DataError, ErrorSeverity, DataErrorCode } from "../error";
@@ -186,7 +186,7 @@ export const getPriceFeedsAction: Action = {
     async handler(
         runtime: IAgentRuntime,
         message: Memory,
-        state: State | undefined,
+        _state: State | undefined,
         _options: { [key: string]: unknown } = {},
         callback?: HandlerCallback
     ): Promise<boolean> {

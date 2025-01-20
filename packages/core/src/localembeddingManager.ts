@@ -1,5 +1,5 @@
 import path from "node:path";
-import { fileURLToPath } from "url";
+import { fileURLToPath } from "node:url";
 import { FlagEmbedding, EmbeddingModel } from "fastembed";
 import elizaLogger from "./logger";
 
@@ -24,7 +24,7 @@ class LocalEmbeddingModelManager {
         const __dirname = path.dirname(__filename);
         const rootPath = path.resolve(__dirname, "..");
         return rootPath.includes("/eliza/")
-            ? rootPath.split("/eliza/")[0] + "/eliza/"
+            ? `${rootPath.split("/eliza/")[0]}/eliza/`
             : path.resolve(__dirname, "..");
     }
 
@@ -70,8 +70,8 @@ class LocalEmbeddingModelManager {
         }
 
         try {
-            const fs = await import("fs");
-            const cacheDir = (await this.getRootPath()) + "/cache/";
+            const fs = await import("node:fs");
+            const cacheDir = `${await this.getRootPath()}/cache/`;
 
             if (!fs.existsSync(cacheDir)) {
                 fs.mkdirSync(cacheDir, { recursive: true });

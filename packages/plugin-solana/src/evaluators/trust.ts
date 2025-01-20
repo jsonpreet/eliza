@@ -31,7 +31,7 @@ const shouldProcessTemplate =
 
     {{recentMessages}}
 
-    Should the messages be processed for recommendations? ` + booleanFooter;
+    Should the messages be processed for recommendations? ${booleanFooter}`;
 
 export const formatRecommendations = (recommendations: Memory[]) => {
     const messageStrings = recommendations
@@ -292,7 +292,7 @@ export const trustEvaluator: Evaluator = {
     ],
     alwaysRun: true,
     validate: async (
-        runtime: IAgentRuntime,
+        _runtime: IAgentRuntime,
         message: Memory
     ): Promise<boolean> => {
         if (message.content.text.length < 5) {

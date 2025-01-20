@@ -116,7 +116,7 @@ export const deployToken: Action = {
             modelClass: ModelClass.MEDIUM,
         });
 
-        elizaLogger.log("init supply." + response.initialSupply);
+        elizaLogger.log(`init supply.${response.initialSupply}`);
         elizaLogger.log(response);
 
         if (!isDeployTokenContent(response)) {
@@ -148,10 +148,7 @@ export const deployToken: Action = {
             );
 
             elizaLogger.log(
-                "Token deployment initiated for: " +
-                    response.name +
-                    " at address: " +
-                    tokenAddress
+                `Token deployment initiated for: ${response.name} at address: ${tokenAddress}`
             );
 
             await launchOnEkubo(config, {
@@ -182,10 +179,7 @@ export const deployToken: Action = {
 
             callback?.({
                 text:
-                    "Token Deployment completed successfully!" +
-                    response.symbol +
-                    " deployed in tx: " +
-                    transactionHash,
+                    `Token Deployment completed successfully!${response.symbol} deployed in tx: ${transactionHash}`,
             });
 
             return true;

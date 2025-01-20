@@ -11,8 +11,8 @@ import {
 import { TokenProvider } from "./providers/token";
 import { Connection, PublicKey } from "@solana/web3.js";
 import type { Chain, WalletClient, Signature, Balance } from "@goat-sdk/core";
-import * as fs from "fs";
-import * as path from "path";
+import * as fs from "node:fs";
+import * as path from "node:path";
 import { TrustScoreProvider } from "./providers/trustScoreProvider";
 import { SimulationService } from "./services/simulationService";
 import { SAFETY_LIMITS } from "./constants";
@@ -147,7 +147,7 @@ interface SkipWaitCache {
 }
 
 // Add near other cache instances
-const skipWaitCache = new NodeCache({
+const _skipWaitCache = new NodeCache({
     stdTTL: 7200, // 2 hours in seconds
     checkperiod: 600, // Check for expired entries every 10 minutes
 });
@@ -267,7 +267,7 @@ async function updateSellDetails(
     tokenAddress: string,
     recommenderId: string,
     tradeAmount: number,
-    latestTrade: any,
+    _latestTrade: any,
     tokenData: any
 ) {
     const trustScoreDb = new TrustScoreDatabase(runtime.databaseAdapter.db);
@@ -354,8 +354,8 @@ async function updateSellDetails(
                 success,
                 tokenAddress,
                 recommenderId,
-                profitPercent: profitPercent.toFixed(2) + "%",
-                profitUsd: profitUsd.toFixed(4) + " USD",
+                profitPercent: `${profitPercent.toFixed(2)}%`,
+                profitUsd: `${profitUsd.toFixed(4)} USD`,
             });
         } catch (dbError) {
             elizaLogger.error("Database error during trade update:", {
@@ -486,7 +486,7 @@ async function createRabbiTraderPlugin(
         connection,
         getChain: () => ({ type: "solana" }),
         getAddress: () => keypair.publicKey.toBase58(),
-        signMessage: async (message: string): Promise<Signature> => {
+        signMessage: async (_message: string): Promise<Signature> => {
             throw new Error(
                 "Message signing not implemented for Solana wallet"
             );
@@ -507,7 +507,7 @@ async function createRabbiTraderPlugin(
                         symbol: "ETH",
                         name: "Base",
                     };
-                } else {
+                }
                     // Existing Solana logic
                     const tokenPublicKey = new PublicKey(tokenAddress);
                     const amount = await getTokenBalance(
@@ -522,8 +522,7 @@ async function createRabbiTraderPlugin(
                         symbol: "SOL",
                         name: "Solana",
                     };
-                }
-            } catch (error) {
+            } catch (_error) {
                 return {
                     value: BigInt(0),
                     decimals: tokenAddress.startsWith("0x") ? 18 : 9,
@@ -543,13 +542,12 @@ async function createRabbiTraderPlugin(
                         tokenAddress
                     );
                     return (baseBalance * 0.9) / 1e18; // Base uses 18 decimals
-                } else {
+                }
                     // Handle Solana balance
                     const balance = await connection.getBalance(
                         keypair.publicKey
                     );
                     return (balance * 0.9) / 1e9; // Solana uses 9 decimals
-                }
             } catch (error) {
                 elizaLogger.error(
                     `Failed to get max buy amount for ${tokenAddress}:`,
@@ -558,12 +556,8 @@ async function createRabbiTraderPlugin(
                 return 0;
             }
         },
-        executeTrade: async (params) => {
-            try {
+        executeTrade: async (_params) => {
                 return { success: true };
-            } catch (error) {
-                throw error;
-            }
         },
         getFormattedPortfolio: async () => "",
     };
@@ -711,7 +705,7 @@ async function analyzeToken(
             new PublicKey(walletPublicKey)
         );
 
-        const walletSolBalance = {
+        const _walletSolBalance = {
             formatted: (balance / 1e9).toString(),
         };
 
@@ -843,7 +837,7 @@ async function analyzeToken(
                             result
                         );
                     }
-                } catch (parseError) {}
+                } catch (_parseError) {}
                 return [];
             }
         );
@@ -994,7 +988,7 @@ async function buy({
                             solanaPubkey:
                                 runtime.getSetting("WALLET_PUBLIC_KEY") || "",
                         });
-                    elizaLogger.log(`Created/retrieved recommender:`, {
+                    elizaLogger.log("Created/retrieved recommender:", {
                         recommender,
                         chainType: tokenAddress.startsWith("0x")
                             ? "base"
@@ -1021,7 +1015,7 @@ async function buy({
                                     0
                             ),
                     };
-                    elizaLogger.log(`Prepared trade data:`, tradeData);
+                    elizaLogger.log("Prepared trade data:", tradeData);
 
                     // Create trade record directly using trustScoreDb
                     await trustScoreDb.addTradePerformance(
@@ -1118,7 +1112,7 @@ async function sell({
     const tradeAmount = Number(latestTrade?.buy_amount || 0);
 
     // Create and save trade memory object for sell
-    const tradeMemory: Memory = {
+    const _tradeMemory: Memory = {
         userId: state.userId,
         agentId: runtime.agentId,
         roomId: state.roomId,

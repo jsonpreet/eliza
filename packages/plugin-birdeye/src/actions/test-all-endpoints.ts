@@ -16,9 +16,9 @@ export const testAllEndpointsAction = {
     description: "Test all Birdeye endpoints with sample data",
     handler: async (
         runtime: IAgentRuntime,
-        message: Memory,
-        state: State,
-        options: any,
+        _message: Memory,
+        _state: State,
+        _options: any,
         callback?: any
     ) => {
         try {

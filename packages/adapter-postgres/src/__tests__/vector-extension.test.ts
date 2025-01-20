@@ -1,7 +1,7 @@
 import { PostgresDatabaseAdapter } from '../index';
 import pg from 'pg';
-import fs from 'fs';
-import path from 'path';
+import fs from 'node:fs';
+import path from 'node:path';
 import { describe, test, expect, beforeEach, afterEach, vi, beforeAll } from 'vitest';
 import { elizaLogger, type Memory, type Content } from '@elizaos/core';
 

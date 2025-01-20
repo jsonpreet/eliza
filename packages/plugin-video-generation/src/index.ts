@@ -7,7 +7,7 @@ import type {
     Plugin,
     State,
 } from "@elizaos/core";
-import fs from "fs";
+import fs from "node:fs";
 import { LUMA_CONSTANTS } from "./constants";
 
 const generateVideo = async (prompt: string, runtime: IAgentRuntime) => {
@@ -71,7 +71,7 @@ const generateVideo = async (prompt: string, runtime: IAgentRuntime) => {
                     error: errorText,
                 });
                 throw new Error(
-                    "Failed to check generation status: " + errorText
+                    `Failed to check generation status: ${errorText}`
                 );
             }
 

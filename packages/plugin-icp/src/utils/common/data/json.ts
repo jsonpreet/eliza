@@ -6,13 +6,13 @@ export const customStringify = (v: any): string =>
     JSON.stringify(v, (_key, value) => {
         if (typeof value === "bigint") {
             return `${value}`;
-        } else if (
+        }if (
             value &&
             typeof value === "object" &&
             value._isPrincipal === true
         ) {
             return value.toText();
-        } else if (
+        }if (
             value &&
             typeof value === "object" &&
             value.__principal__ &&

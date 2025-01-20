@@ -140,7 +140,7 @@ export default {
                     content.recipient
                 );
                 elizaLogger.log(
-                    `Balance before the transfer call: ${oldBalance["data"]["free"].toHuman()}`
+                    `Balance before the transfer call: ${oldBalance.data.free.toHuman()}`
                 );
 
                 // Transaction call
@@ -166,8 +166,8 @@ export default {
                 // Error handling
                 const error = txResult.dispatchError;
                 if (txResult.isError) {
-                    elizaLogger.log(`Transaction was not executed`);
-                } else if (error != undefined) {
+                    elizaLogger.log("Transaction was not executed");
+                } else if (error !== undefined) {
                     if (error.isModule) {
                         const decoded = api.registry.findMetaError(
                             error.asModule
@@ -185,12 +185,11 @@ export default {
                     content.recipient
                 );
                 elizaLogger.log(
-                    `Balance after the transfer call: ${newBalance["data"]["free"].toHuman()}`
+                    `Balance after the transfer call: ${newBalance.data.free.toHuman()}`
                 );
 
                 elizaLogger.success(
-                    "Transfer completed successfully! tx: \n " +
-                        `Tx Hash: ${txResult.txHash as H256}, Block Hash: ${txResult.status.asFinalized as H256}`
+                    `Transfer completed successfully! tx: \n Tx Hash: ${txResult.txHash as H256}, Block Hash: ${txResult.status.asFinalized as H256}`
                 );
                 if (callback) {
                     callback({

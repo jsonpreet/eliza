@@ -164,13 +164,13 @@ export const xChainSwapAction = {
             const txReceipt = await tx.wait();
 
             // Show the transaction receipt with Axelarscan link
-            const axelarScanLink = "https://axelarscan.io/gmp/" + txReceipt.hash;
+            const axelarScanLink = `https://axelarscan.io/gmp/${txReceipt.hash}`;
             elizaLogger.log(`Finished! Check Axelarscan for details: ${axelarScanLink}`);
 
             if (callback) {
                 callback({
                     text:
-                        "Swap completed successfully! Check Axelarscan for details:\n " + axelarScanLink,
+                        `Swap completed successfully! Check Axelarscan for details:\n ${axelarScanLink}`,
                     content: {},
                 });
             }

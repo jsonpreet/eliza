@@ -2,8 +2,8 @@ import { SlackClientProvider } from "../providers/slack-client.provider";
 import type { SlackConfig } from "../types/slack-types";
 import { EventHandler } from "../events";
 import { config } from "dotenv";
-import { resolve } from "path";
-import { createReadStream } from "fs";
+import { resolve } from "node:path";
+import { createReadStream } from "node:fs";
 import express from "express";
 
 // Load environment variables

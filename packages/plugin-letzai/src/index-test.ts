@@ -14,10 +14,10 @@ export const letzAiImageGeneration = {
 
     // Add a simple handler that outputs "OK" when triggered
     handler: (
-        runtime: any,
-        message: any,
-        state: any,
-        options: any,
+        _runtime: any,
+        _message: any,
+        _state: any,
+        _options: any,
         callback: any,
     ) => {
         // For now, just call the callback with "OK"

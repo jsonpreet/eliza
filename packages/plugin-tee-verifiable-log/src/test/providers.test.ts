@@ -3,8 +3,8 @@ import { SQLite3VerifiableDAO } from "../adapters/sqliteVerifiableDAO.ts";
 import Database from "better-sqlite3";
 import type { Database as DatabaseType } from "better-sqlite3";
 import { v4 as uuidv4 } from "uuid";
-import os from "os";
-import path from "path";
+import os from "node:os";
+import path from "node:path";
 import type {
     VerifiableAgent,
     VerifiableLog,
@@ -137,7 +137,7 @@ describe("SQLite3VerifiableDAO", () => {
                 agent_keypair_path: "/secretKey/path/",
                 agent_keypair_vlog_pk: "dddd的的的",
             });
-            var agent = await sqLite3VerifiableDAO.getAgent(agentId);
+            const agent = await sqLite3VerifiableDAO.getAgent(agentId);
             expect(agent).not.toBeNull();
 
             console.log("get agent:", agent);

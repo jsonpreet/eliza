@@ -5,8 +5,6 @@ import { verifyProof, generateProof } from "./primusUtil.ts";
 export class TwitterScraper {
     private scraper: Scraper;
 
-    constructor() {}
-
     public getScraper(): Scraper {
         return this.scraper;
     }

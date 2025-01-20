@@ -89,10 +89,7 @@ const buildTransferDetails = async (
 
     if (!existingChain) {
         throw new Error(
-            "The chain " +
-                transferDetails.fromChain +
-                " not configured yet. Add the chain or choose one from configured: " +
-                chains.toString()
+            `The chain ${transferDetails.fromChain} not configured yet. Add the chain or choose one from configured: ${chains.toString()}`
         );
     }
 

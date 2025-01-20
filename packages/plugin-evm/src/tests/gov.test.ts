@@ -87,7 +87,7 @@ describe("Vote Action", () => {
         });
 
         const voteTokenDeployHash: Hash = await tc.deployContract({
-            chain: customChains["hardhat"],
+            chain: customChains.hardhat,
             account: account,
             abi: voteTokenArtifacts.abi,
             bytecode: voteTokenArtifacts.bytecode as `0x${string}`,
@@ -96,7 +96,7 @@ describe("Vote Action", () => {
         });
 
         const timelockDeployHash: Hash = await tc.deployContract({
-            chain: customChains["hardhat"],
+            chain: customChains.hardhat,
             account: account,
             abi: timelockArtifacts.abi,
             bytecode: timelockArtifacts.bytecode as `0x${string}`,
@@ -108,7 +108,7 @@ describe("Vote Action", () => {
         timelockAddress = await getDeployedAddress(timelockDeployHash);
 
         const governorDeployHash: Hash = await tc.deployContract({
-            chain: customChains["hardhat"],
+            chain: customChains.hardhat,
             account: account,
             abi: governorArtifacts.abi,
             bytecode: governorArtifacts.bytecode as `0x${string}`,

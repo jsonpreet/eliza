@@ -52,7 +52,7 @@ export async function createNFTMetadata({
     elizaLogger.log("User ID:", userId);
     const awsS3Service: AwsS3Service = runtime.getService(ServiceType.AWS_S3);
     const agentName = runtime.character.name;
-    const roomId = stringToUuid("nft_generate_room-" + agentName);
+    const roomId = stringToUuid(`nft_generate_room-${agentName}`);
     // Create memory for the message
     const memory: Memory = {
         agentId: userId,

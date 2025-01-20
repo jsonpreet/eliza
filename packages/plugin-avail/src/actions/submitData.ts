@@ -155,12 +155,12 @@ export default {
 
                 // Rejected Transaction handling
                 if (txResult.isError) {
-                    console.log(`Transaction was not executed`);
+                    console.log("Transaction was not executed");
                 }
 
                 // Failed Transaction handling
                 const error = txResult.dispatchError;
-                if (error != undefined) {
+                if (error !== undefined) {
                     if (error.isModule) {
                         const decoded = api.registry.findMetaError(
                             error.asModule
@@ -173,8 +173,7 @@ export default {
                 }
 
                 elizaLogger.success(
-                    "Data submitted successfully! tx: \n " +
-                        `Tx Hash: ${txResult.txHash as H256}, Block Hash: ${txResult.status.asFinalized as H256}`
+                    `Data submitted successfully! tx: \n Tx Hash: ${txResult.txHash as H256}, Block Hash: ${txResult.status.asFinalized as H256}`
                 );
                 if (callback) {
                     callback({

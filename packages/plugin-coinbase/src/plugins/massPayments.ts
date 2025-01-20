@@ -19,11 +19,11 @@ import {
     type Transaction,
 } from "../types";
 import { transferTemplate } from "../templates";
-import { readFile } from "fs/promises";
+import { readFile } from "node:fs/promises";
 import { parse } from "csv-parse/sync";
-import path from "path";
-import { fileURLToPath } from "url";
-import fs from "fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+import fs from "node:fs";
 import { createArrayCsvWriter } from "csv-writer";
 import {
     appendTransactionsToCsv,
@@ -85,9 +85,9 @@ export const massPayoutProvider: Provider = {
 
             return {
                 currentTransactions: records.map((record: any) => ({
-                    address: record["Address"] || undefined,
-                    amount: Number.parseFloat(record["Amount"]) || undefined,
-                    status: record["Status"] || undefined,
+                    address: record.Address || undefined,
+                    amount: Number.parseFloat(record.Amount) || undefined,
+                    status: record.Status || undefined,
                     errorCode: record["Error Code"] || "",
                     transactionUrl: record["Transaction URL"] || "",
                 })),

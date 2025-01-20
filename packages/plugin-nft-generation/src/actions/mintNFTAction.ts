@@ -68,7 +68,7 @@ const mintNFTAction: Action = {
         runtime: IAgentRuntime,
         message: Memory,
         state: State,
-        options: { [key: string]: unknown },
+        _options: { [key: string]: unknown },
         callback: HandlerCallback
     ) => {
         try {
@@ -136,7 +136,7 @@ const mintNFTAction: Action = {
                 );
                 elizaLogger.log("Collection Info", collectionInfo);
                 const metadata = collectionInfo.metadata;
-                if (metadata.collection?.["value"]) {
+                if (metadata.collection?.value) {
                     callback({
                         text: `Unable to process mint request. Invalid collection address ${content.collectionAddress}.`,
                         content: { error: "Invalid collection address." },

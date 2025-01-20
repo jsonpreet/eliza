@@ -135,7 +135,7 @@ export default {
         runtime: IAgentRuntime,
         message: Memory,
         state: State,
-        options: any,
+        _options: any,
         callback?: HandlerCallback
     ) => {
         elizaLogger.log("Starting SEND_TOKEN handler...");
@@ -188,7 +188,7 @@ export default {
         }
     },
     template: transferTemplate,
-    validate: async (runtime: IAgentRuntime) => {
+    validate: async (_runtime: IAgentRuntime) => {
         //console.log("Validating TON transfer from user:", message.userId);
         return true;
     },

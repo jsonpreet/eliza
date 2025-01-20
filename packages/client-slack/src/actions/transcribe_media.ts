@@ -36,7 +36,7 @@ Your response must be formatted as a JSON block with this structure:
 
 const getMediaAttachmentId = async (
     runtime: IAgentRuntime,
-    message: Memory,
+    _message: Memory,
     state: State
 ): Promise<string | null> => {
     const context = composeContext({
@@ -106,7 +106,7 @@ const transcribeMediaAction: Action = {
     handler: (async (
         runtime: IAgentRuntime,
         message: Memory,
-        state: State | undefined,
+        _state: State | undefined,
         _options: any,
         callback: HandlerCallback
     ): Promise<Content> => {
