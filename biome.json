@@ -8,10 +8,10 @@
       "rules": {
         "recommended": true,
         "suspicious": {
-          "noExplicitAny": "warn",
-          "noArrayIndexKey": "warn",
-          "noPrototypeBuiltins": "warn",
-          "noDuplicateObjectKeys": "warn",
+          "noExplicitAny": "error",
+          "noArrayIndexKey": "error",
+          "noPrototypeBuiltins": "error",
+          "noDuplicateObjectKeys": "error",
           "noGlobalIsNan": "warn",
           "noDuplicateFontNames": "warn",
           "noSelfCompare": "warn",
