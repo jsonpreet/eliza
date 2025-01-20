@@ -13,7 +13,7 @@
           "noPrototypeBuiltins": "error",
           "noDuplicateObjectKeys": "error",
           "noGlobalIsNan": "error",
-          "noDuplicateFontNames": "warn",
+          "noDuplicateFontNames": "error",
           "noSelfCompare": "warn",
           "noDoubleEquals": "warn",
           "noImplicitAnyLet": "warn",
