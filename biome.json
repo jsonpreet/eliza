@@ -12,7 +12,7 @@
           "noArrayIndexKey": "error",
           "noPrototypeBuiltins": "error",
           "noDuplicateObjectKeys": "error",
-          "noGlobalIsNan": "warn",
+          "noGlobalIsNan": "error",
           "noDuplicateFontNames": "warn",
           "noSelfCompare": "warn",
           "noDoubleEquals": "warn",
