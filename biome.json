@@ -15,7 +15,7 @@
           "noGlobalIsNan": "error",
           "noDuplicateFontNames": "error",
           "noSelfCompare": "error",
-          "noDoubleEquals": "warn",
+          "noDoubleEquals": "error",
           "noImplicitAnyLet": "warn",
           "noAssignInExpressions": "warn",
           "noExportsInTest": "warn",
